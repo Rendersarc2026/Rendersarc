@@ -1,0 +1,223 @@
+import { Mail, Phone, MapPin, Send, Check } from 'lucide-react';
+import { useState } from 'react';
+import { motion } from 'motion/react';
+
+export function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    }, 3000);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const contactInfo = [
+    { icon: Mail, title: 'Email', content: 'hello@growaz.com' },
+    { icon: Phone, title: 'Phone', content: '+1 (555) 123-4567' },
+    { icon: MapPin, title: 'Location', content: '123 Design Street, Creative City, CA 94000' },
+  ];
+
+  return (
+    <section id="contact" className="py-32 px-6" style={{ backgroundColor: '#3C3D4B' }}>
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <motion.div
+          className="mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-10" style={{ backgroundColor: '#8B7B6A' }} />
+            <span style={{ color: '#8B7B6A' }} className="text-xs tracking-widest uppercase">
+              Contact
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl leading-tight" style={{ color: '#DDD0BC' }}>
+            Let's create{' '}
+            <span className="italic font-serif" style={{ color: '#8B7B6A' }}>
+              together
+            </span>
+          </h2>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-16">
+          {/* Info */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <p className="leading-relaxed mb-12 text-base" style={{ color: '#8B7B6A' }}>
+              Ready to bring your vision to life? We'd love to hear about your project. Our team
+              is ready to answer any questions and guide you from concept to completion.
+            </p>
+
+            <div className="space-y-8">
+              {contactInfo.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <div key={index} className="flex items-start gap-5">
+                    <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{
+                        backgroundColor: 'rgba(139,123,106,0.12)',
+                        border: '1px solid rgba(139,123,106,0.25)',
+                      }}
+                    >
+                      <Icon size={18} style={{ color: '#8B7B6A' }} />
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-widest mb-1" style={{ color: '#8B7B6A' }}>
+                        {item.title}
+                      </p>
+                      <p className="text-sm" style={{ color: '#DDD0BC' }}>
+                        {item.content}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div
+              className="rounded-2xl p-8 md:p-10"
+              style={{
+                backgroundColor: '#1E2130',
+                border: '1px solid rgba(139,123,106,0.2)',
+              }}
+            >
+              {submitted ? (
+                <motion.div
+                  className="flex flex-col items-center justify-center min-h-[420px] text-center"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: 'spring', duration: 0.5 }}
+                >
+                  <div
+                    className="w-16 h-16 rounded-full flex items-center justify-center mb-6"
+                    style={{ backgroundColor: '#8B7B6A' }}
+                  >
+                    <Check size={28} style={{ color: '#1E2130' }} />
+                  </div>
+                  <h3 className="text-2xl mb-2" style={{ color: '#DDD0BC' }}>
+                    Message Sent!
+                  </h3>
+                  <p style={{ color: '#8B7B6A' }}>We'll get back to you shortly.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {[
+                    { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
+                    { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
+                    { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
+                  ].map((field) => (
+                    <div key={field.id}>
+                      <label
+                        htmlFor={field.id}
+                        className="block text-xs uppercase tracking-widest mb-2"
+                        style={{ color: '#8B7B6A' }}
+                      >
+                        {field.label}
+                      </label>
+                      <input
+                        type={field.type}
+                        id={field.id}
+                        name={field.id}
+                        value={formData[field.id as keyof typeof formData]}
+                        onChange={handleChange}
+                        required
+                        placeholder={field.placeholder}
+                        className="w-full px-4 py-3 rounded-xl outline-none transition text-sm"
+                        style={{
+                          backgroundColor: 'rgba(60,61,75,0.6)',
+                          border: '1px solid rgba(139,123,106,0.2)',
+                          color: '#DDD0BC',
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(139,123,106,0.6)';
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(139,123,106,0.2)';
+                        }}
+                      />
+                    </div>
+                  ))}
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-xs uppercase tracking-widest mb-2"
+                      style={{ color: '#8B7B6A' }}
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      placeholder="Tell us about your project..."
+                      className="w-full px-4 py-3 rounded-xl outline-none transition resize-none text-sm"
+                      style={{
+                        backgroundColor: 'rgba(60,61,75,0.6)',
+                        border: '1px solid rgba(139,123,106,0.2)',
+                        color: '#DDD0BC',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(139,123,106,0.6)';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(139,123,106,0.2)';
+                      }}
+                    />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    className="w-full py-4 px-6 rounded-full flex items-center justify-center gap-2 transition-all text-sm tracking-widest uppercase"
+                    style={{ backgroundColor: '#8B7B6A', color: '#1E2130' }}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#a08e7c';
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#8B7B6A';
+                    }}
+                  >
+                    Send Message
+                    <Send size={15} />
+                  </motion.button>
+                </form>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
