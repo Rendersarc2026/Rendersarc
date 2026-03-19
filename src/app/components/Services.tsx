@@ -94,7 +94,16 @@ export function Services() {
                   {service.number}
                 </span>
                 <div>
-                  <h3 className="text-2xl mb-2" style={{ color: '#FFFFFF' }}>{service.title}</h3>
+                  <h3 className="text-2xl mb-2 relative inline-flex" style={{ color: '#FFFFFF' }}>
+                    {service.title}
+                    <motion.div
+                      className="absolute -bottom-1 left-0 h-px bg-white origin-left"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      style={{ width: '100%' }}
+                    />
+                  </h3>
                   <p className="text-sm leading-relaxed max-w-md" style={{ color: 'rgba(255,255,255,0.5)' }}>
                     {service.description}
                   </p>
@@ -114,10 +123,10 @@ export function Services() {
               </div>
 
               <div
-                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all group-hover:scale-110"
-                style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#FFFFFF' }}
+                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-white text-white group-hover:text-black"
+                style={{ border: '1px solid rgba(255,255,255,0.2)' }}
               >
-                <ArrowUpRight size={16} />
+                <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
             </motion.div>
           ))}

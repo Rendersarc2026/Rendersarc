@@ -5,16 +5,50 @@ import { motion, AnimatePresence } from 'motion/react';
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // ScrollSpy with IntersectionObserver
+  useEffect(() => {
+    const sections = ['hero', 'about', 'services', 'contact'];
+    const observers = new Map();
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setActiveSection(id === 'hero' ? 'home' : id);
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+        observer.observe(el);
+        observers.set(id, observer);
+      }
+    });
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect());
+    };
+  }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    if (element) { element.scrollIntoView({ behavior: 'smooth' }); setIsOpen(false); }
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -40,30 +74,43 @@ export function Navigation() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-10">
-            {['Home', 'About', 'Services', 'Contact'].map((item, index) => (
-              <motion.button
-                key={item}
-                onClick={() => scrollToSection(item === 'Home' ? 'hero' : item.toLowerCase())}
-                style={{ color: 'rgba(255,255,255,0.5)' }}
-                className="text-sm tracking-widest uppercase transition-colors"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.05 }}
-                whileHover={{ color: '#FFFFFF' } as any}
-              >
-                {item}
-              </motion.button>
-            ))}
+            {['Home', 'About', 'Services', 'Contact'].map((item, index) => {
+              const itemKey = item.toLowerCase();
+              const isActive = activeSection === itemKey;
+              return (
+                <motion.button
+                  key={item}
+                  onClick={() => scrollToSection(item === 'Home' ? 'hero' : itemKey)}
+                  style={{ color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.5)' }}
+                  className="text-sm tracking-widest uppercase transition-colors relative py-2"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.05 }}
+                  whileHover={{ color: '#FFFFFF' }}
+                >
+                  {item}
+                  {isActive && (
+                    <motion.div
+                      layoutId="active-nav-underline"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-white origin-center"
+                      initial={false}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </motion.button>
+              );
+            })}
           </div>
 
           {/* CTA */}
           <div className="hidden md:flex items-center">
             <button
               onClick={() => scrollToSection('contact')}
-              style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF', backgroundColor: 'transparent' }}
-              className="px-6 py-2.5 rounded-full text-sm tracking-widest uppercase transition-all hover:bg-white hover:text-black"
+              style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
+              className="group relative overflow-hidden px-6 py-2.5 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:border-white"
             >
-              Get in touch
+              <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+              <span className="relative z-10 transition-colors duration-300 group-hover:text-black">Get in touch</span>
             </button>
           </div>
 

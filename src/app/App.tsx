@@ -4,10 +4,14 @@ import { Services } from './components/Services';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { CustomCursor } from './components/CustomCursor';
+import { ScrollProgress } from './components/ScrollProgress';
 
 export default function App() {
   return (
-    <div className="size-full bg-white relative overflow-x-hidden">
+    <div className="size-full bg-black relative overflow-x-hidden cursor-none">
+      <CustomCursor />
+      <ScrollProgress />
       <Navigation />
       <main className="relative">
         <Hero />

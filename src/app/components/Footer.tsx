@@ -131,12 +131,18 @@ export function Footer() {
                         whileHover={{ scale: 1.1, y: -2 }}
                         transition={{ duration: 0.2 }}
                         onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#FFFFFF';
-                          (e.currentTarget as HTMLAnchorElement).style.borderColor = '#FFFFFF';
+                          const el = e.currentTarget as HTMLAnchorElement;
+                          el.style.backgroundColor = '#FFFFFF';
+                          el.style.borderColor = '#FFFFFF';
+                          const svg = el.querySelector('svg');
+                          if (svg) (svg as SVGElement).style.color = '#000000';
                         }}
                         onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'transparent';
-                          (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.15)';
+                          const el = e.currentTarget as HTMLAnchorElement;
+                          el.style.backgroundColor = 'transparent';
+                          el.style.borderColor = 'rgba(255,255,255,0.15)';
+                          const svg = el.querySelector('svg');
+                          if (svg) (svg as SVGElement).style.color = 'rgba(255,255,255,0.6)';
                         }}
                       >
                         <Icon size={15} style={{ color: 'rgba(255,255,255,0.6)' }} />

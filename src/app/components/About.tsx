@@ -84,9 +84,14 @@ export function About() {
                   border: '1px solid rgba(255,255,255,0.08)',
                 }}
               >
-                <span className="text-xs mt-1 flex-shrink-0 tracking-widest" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                <motion.span 
+                  className="text-xs mt-1 flex-shrink-0 tracking-widest" 
+                  style={{ color: 'rgba(255,255,255,0.7)' }}
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                >
                   {v.number}
-                </span>
+                </motion.span>
                 <div>
                   <h4 className="mb-2" style={{ color: '#FFFFFF' }}>{v.title}</h4>
                   <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
