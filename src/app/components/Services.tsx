@@ -34,9 +34,8 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-32 px-6" style={{ backgroundColor: '#1E2130' }}>
+    <section id="services" className="py-32 px-6" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,18 +45,15 @@ export function Services() {
         >
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="h-px w-10" style={{ backgroundColor: '#8B7B6A' }} />
-              <span style={{ color: '#8B7B6A' }} className="text-xs tracking-widest uppercase">
+              <div className="h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.3)' }} />
+              <span style={{ color: 'rgba(255,255,255,0.4)' }} className="text-xs tracking-widest uppercase">
                 What we do
               </span>
             </div>
-            <h2
-              className="text-4xl md:text-5xl lg:text-6xl leading-tight"
-              style={{ color: '#DDD0BC' }}
-            >
+            <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight" style={{ color: '#FFFFFF' }}>
               Services tailored
               <br />
-              <span className="italic font-serif" style={{ color: '#8B7B6A' }}>
+              <span className="italic font-serif" style={{ color: 'rgba(255,255,255,0.45)' }}>
                 to your needs
               </span>
             </h2>
@@ -65,14 +61,15 @@ export function Services() {
 
           <button
             className="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase transition-all"
-            style={{ border: '1px solid rgba(139,123,106,0.35)', color: '#DDD0BC' }}
+            style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#FFFFFF' }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.6)'; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.2)'; }}
           >
             View all projects
             <ArrowUpRight size={14} />
           </button>
         </motion.div>
 
-        {/* Services */}
         <div className="space-y-3">
           {services.map((service, index) => (
             <motion.div
@@ -82,61 +79,43 @@ export function Services() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
               className="group flex flex-col md:flex-row md:items-center justify-between p-8 rounded-2xl cursor-pointer gap-6 transition-all"
-              style={{
-                backgroundColor: '#3C3D4B',
-                border: '1px solid rgba(139,123,106,0.12)',
-              }}
+              style={{ backgroundColor: '#111111', border: '1px solid rgba(255,255,255,0.07)' }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(139,123,106,0.45)';
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = '#44455a';
+                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.2)';
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = '#1A1A1A';
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(139,123,106,0.12)';
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = '#3C3D4B';
+                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.07)';
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = '#111111';
               }}
             >
-              {/* Number + title + desc */}
               <div className="flex items-start gap-6">
-                <span
-                  className="text-xs mt-1 w-6 flex-shrink-0 tracking-widest"
-                  style={{ color: '#8B7B6A' }}
-                >
+                <span className="text-xs mt-1 w-6 flex-shrink-0 tracking-widest" style={{ color: 'rgba(255,255,255,0.3)' }}>
                   {service.number}
                 </span>
                 <div>
-                  <h3 className="text-2xl mb-2" style={{ color: '#DDD0BC' }}>
-                    {service.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed max-w-md" style={{ color: '#8B7B6A' }}>
+                  <h3 className="text-2xl mb-2" style={{ color: '#FFFFFF' }}>{service.title}</h3>
+                  <p className="text-sm leading-relaxed max-w-md" style={{ color: 'rgba(255,255,255,0.5)' }}>
                     {service.description}
                   </p>
                 </div>
               </div>
 
-              {/* Tags */}
               <div className="flex flex-wrap gap-2 md:justify-end md:max-w-xs">
                 {service.tags.map((tag, tagIndex) => (
                   <span
                     key={tagIndex}
                     className="px-3 py-1.5 rounded-full text-xs"
-                    style={{
-                      border: '1px solid rgba(139,123,106,0.25)',
-                      color: '#8B7B6A',
-                      backgroundColor: 'rgba(30,33,48,0.5)',
-                    }}
+                    style={{ border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.5)', backgroundColor: 'rgba(255,255,255,0.03)' }}
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Arrow */}
               <div
                 className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all group-hover:scale-110"
-                style={{
-                  border: '1px solid rgba(139,123,106,0.35)',
-                  color: '#8B7B6A',
-                }}
+                style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#FFFFFF' }}
               >
                 <ArrowUpRight size={16} />
               </div>
