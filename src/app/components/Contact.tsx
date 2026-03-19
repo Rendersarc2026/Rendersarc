@@ -3,12 +3,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,15 +20,14 @@ export function Contact() {
   };
 
   const contactInfo = [
-    { icon: Mail, title: 'Email', content: 'hello@growaz.com' },
+    { icon: Mail, title: 'Email', content: 'hello@rendersarc.com' },
     { icon: Phone, title: 'Phone', content: '+1 (555) 123-4567' },
     { icon: MapPin, title: 'Location', content: '123 Design Street, Creative City, CA 94000' },
   ];
 
   return (
-    <section id="contact" className="py-32 px-6" style={{ backgroundColor: '#3C3D4B' }}>
+    <section id="contact" className="py-32 px-6" style={{ backgroundColor: '#0D0D0D' }}>
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <motion.div
           className="mb-20"
           initial={{ opacity: 0, y: 30 }}
@@ -42,14 +36,14 @@ export function Contact() {
           transition={{ duration: 0.7 }}
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="h-px w-10" style={{ backgroundColor: '#8B7B6A' }} />
-            <span style={{ color: '#8B7B6A' }} className="text-xs tracking-widest uppercase">
+            <div className="h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.3)' }} />
+            <span style={{ color: 'rgba(255,255,255,0.4)' }} className="text-xs tracking-widest uppercase">
               Contact
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl leading-tight" style={{ color: '#DDD0BC' }}>
+          <h2 className="text-4xl md:text-5xl leading-tight" style={{ color: '#FFFFFF' }}>
             Let's create{' '}
-            <span className="italic font-serif" style={{ color: '#8B7B6A' }}>
+            <span className="italic font-serif" style={{ color: 'rgba(255,255,255,0.45)' }}>
               together
             </span>
           </h2>
@@ -63,11 +57,10 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <p className="leading-relaxed mb-12 text-base" style={{ color: '#8B7B6A' }}>
+            <p className="leading-relaxed mb-12 text-base" style={{ color: 'rgba(255,255,255,0.5)' }}>
               Ready to bring your vision to life? We'd love to hear about your project. Our team
               is ready to answer any questions and guide you from concept to completion.
             </p>
-
             <div className="space-y-8">
               {contactInfo.map((item, index) => {
                 const Icon = item.icon;
@@ -75,20 +68,15 @@ export function Contact() {
                   <div key={index} className="flex items-start gap-5">
                     <div
                       className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{
-                        backgroundColor: 'rgba(139,123,106,0.12)',
-                        border: '1px solid rgba(139,123,106,0.25)',
-                      }}
+                      style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
                     >
-                      <Icon size={18} style={{ color: '#8B7B6A' }} />
+                      <Icon size={18} style={{ color: 'rgba(255,255,255,0.6)' }} />
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-widest mb-1" style={{ color: '#8B7B6A' }}>
+                      <p className="text-xs uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
                         {item.title}
                       </p>
-                      <p className="text-sm" style={{ color: '#DDD0BC' }}>
-                        {item.content}
-                      </p>
+                      <p className="text-sm" style={{ color: '#FFFFFF' }}>{item.content}</p>
                     </div>
                   </div>
                 );
@@ -105,10 +93,7 @@ export function Contact() {
           >
             <div
               className="rounded-2xl p-8 md:p-10"
-              style={{
-                backgroundColor: '#1E2130',
-                border: '1px solid rgba(139,123,106,0.2)',
-              }}
+              style={{ backgroundColor: '#111111', border: '1px solid rgba(255,255,255,0.08)' }}
             >
               {submitted ? (
                 <motion.div
@@ -119,14 +104,12 @@ export function Contact() {
                 >
                   <div
                     className="w-16 h-16 rounded-full flex items-center justify-center mb-6"
-                    style={{ backgroundColor: '#8B7B6A' }}
+                    style={{ backgroundColor: '#FFFFFF' }}
                   >
-                    <Check size={28} style={{ color: '#1E2130' }} />
+                    <Check size={28} style={{ color: '#000000' }} />
                   </div>
-                  <h3 className="text-2xl mb-2" style={{ color: '#DDD0BC' }}>
-                    Message Sent!
-                  </h3>
-                  <p style={{ color: '#8B7B6A' }}>We'll get back to you shortly.</p>
+                  <h3 className="text-2xl mb-2" style={{ color: '#FFFFFF' }}>Message Sent!</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.5)' }}>We'll get back to you shortly.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -139,7 +122,7 @@ export function Contact() {
                       <label
                         htmlFor={field.id}
                         className="block text-xs uppercase tracking-widest mb-2"
-                        style={{ color: '#8B7B6A' }}
+                        style={{ color: 'rgba(255,255,255,0.4)' }}
                       >
                         {field.label}
                       </label>
@@ -152,26 +135,14 @@ export function Contact() {
                         required
                         placeholder={field.placeholder}
                         className="w-full px-4 py-3 rounded-xl outline-none transition text-sm"
-                        style={{
-                          backgroundColor: 'rgba(60,61,75,0.6)',
-                          border: '1px solid rgba(139,123,106,0.2)',
-                          color: '#DDD0BC',
-                        }}
-                        onFocus={(e) => {
-                          e.currentTarget.style.borderColor = 'rgba(139,123,106,0.6)';
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.borderColor = 'rgba(139,123,106,0.2)';
-                        }}
+                        style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#FFFFFF' }}
+                        onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
+                        onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
                       />
                     </div>
                   ))}
                   <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-xs uppercase tracking-widest mb-2"
-                      style={{ color: '#8B7B6A' }}
-                    >
+                    <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>
                       Message
                     </label>
                     <textarea
@@ -183,31 +154,19 @@ export function Contact() {
                       rows={5}
                       placeholder="Tell us about your project..."
                       className="w-full px-4 py-3 rounded-xl outline-none transition resize-none text-sm"
-                      style={{
-                        backgroundColor: 'rgba(60,61,75,0.6)',
-                        border: '1px solid rgba(139,123,106,0.2)',
-                        color: '#DDD0BC',
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(139,123,106,0.6)';
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(139,123,106,0.2)';
-                      }}
+                      style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#FFFFFF' }}
+                      onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
+                      onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
                     />
                   </div>
                   <motion.button
                     type="submit"
-                    className="w-full py-4 px-6 rounded-full flex items-center justify-center gap-2 transition-all text-sm tracking-widest uppercase"
-                    style={{ backgroundColor: '#8B7B6A', color: '#1E2130' }}
+                    className="w-full py-4 px-6 rounded-full flex items-center justify-center gap-2 transition-all text-sm tracking-widest uppercase font-semibold"
+                    style={{ backgroundColor: '#FFFFFF', color: '#000000' }}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#a08e7c';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#8B7B6A';
-                    }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#E5E5E5'; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#FFFFFF'; }}
                   >
                     Send Message
                     <Send size={15} />

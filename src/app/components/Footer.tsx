@@ -12,9 +12,9 @@ export function Footer() {
   ];
 
   return (
-    <footer style={{ backgroundColor: '#1E2130', borderTop: '1px solid rgba(139,123,106,0.2)' }}>
+    <footer style={{ backgroundColor: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
       {/* Massive brand name */}
-      <div className="overflow-hidden" style={{ borderBottom: '1px solid rgba(139,123,106,0.12)' }}>
+      <div className="overflow-hidden" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -24,9 +24,9 @@ export function Footer() {
         >
           <h2
             className="text-[6rem] md:text-[10rem] lg:text-[14rem] leading-none tracking-tighter text-center select-none"
-            style={{ color: 'rgba(139,123,106,0.07)' }}
+            style={{ color: 'rgba(255, 255, 255, 0.13)' }}
           >
-            GROWAZ
+            Renders Arc
           </h2>
         </motion.div>
       </div>
@@ -41,20 +41,13 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3
-              className="text-xl tracking-widest uppercase mb-4"
-              style={{ color: '#DDD0BC' }}
-            >
-              Growaz
+            <h3 className="text-xl tracking-widest uppercase mb-4" style={{ color: '#FFFFFF' }}>
+              Renders Arc
             </h3>
-            <p className="text-sm leading-relaxed" style={{ color: '#8B7B6A' }}>
+            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Designing digital futures with innovation and precision.
             </p>
-            {/* Gold accent line */}
-            <div
-              className="mt-6 h-px w-10"
-              style={{ backgroundColor: '#8B7B6A' }}
-            />
+            <div className="mt-6 h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} />
           </motion.div>
 
           {/* Company */}
@@ -64,10 +57,7 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h4
-              className="text-xs uppercase tracking-widest mb-6"
-              style={{ color: '#8B7B6A' }}
-            >
+            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
               Company
             </h4>
             <ul className="space-y-3">
@@ -76,13 +66,9 @@ export function Footer() {
                   <a
                     href="#"
                     className="text-sm transition-colors"
-                    style={{ color: '#8B7B6A' }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = '#DDD0BC';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = '#8B7B6A';
-                    }}
+                    style={{ color: 'rgba(255,255,255,0.5)' }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.5)'; }}
                   >
                     {link}
                   </a>
@@ -98,10 +84,7 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4
-              className="text-xs uppercase tracking-widest mb-6"
-              style={{ color: '#8B7B6A' }}
-            >
+            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
               Resources
             </h4>
             <ul className="space-y-3">
@@ -110,13 +93,9 @@ export function Footer() {
                   <a
                     href="#"
                     className="text-sm transition-colors"
-                    style={{ color: '#8B7B6A' }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = '#DDD0BC';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = '#8B7B6A';
-                    }}
+                    style={{ color: 'rgba(255,255,255,0.5)' }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.5)'; }}
                   >
                     {link}
                   </a>
@@ -132,14 +111,11 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h4
-              className="text-xs uppercase tracking-widest mb-6"
-              style={{ color: '#8B7B6A' }}
-            >
+            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
               Contact
             </h4>
-            <ul className="space-y-3 text-sm" style={{ color: '#8B7B6A' }}>
-              <li>hello@growaz.com</li>
+            <ul className="space-y-3 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              <li>hello@rendersarc.com</li>
               <li>+1 (555) 123-4567</li>
               <li className="pt-4">
                 <div className="flex space-x-3">
@@ -150,23 +126,20 @@ export function Footer() {
                         key={index}
                         href={social.href}
                         aria-label={social.label}
-                        className="w-9 h-9 rounded-full flex items-center justify-center transition-all group"
-                        style={{
-                          border: '1px solid rgba(139,123,106,0.3)',
-                          backgroundColor: 'transparent',
-                        }}
+                        className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+                        style={{ border: '1px solid rgba(255,255,255,0.15)', backgroundColor: 'transparent' }}
                         whileHover={{ scale: 1.1, y: -2 }}
                         transition={{ duration: 0.2 }}
                         onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#8B7B6A';
-                          (e.currentTarget as HTMLAnchorElement).style.borderColor = '#8B7B6A';
+                          (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#FFFFFF';
+                          (e.currentTarget as HTMLAnchorElement).style.borderColor = '#FFFFFF';
                         }}
                         onMouseLeave={(e) => {
                           (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'transparent';
-                          (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(139,123,106,0.3)';
+                          (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.15)';
                         }}
                       >
-                        <Icon size={15} style={{ color: '#8B7B6A' }} />
+                        <Icon size={15} style={{ color: 'rgba(255,255,255,0.6)' }} />
                       </motion.a>
                     );
                   })}
@@ -179,15 +152,15 @@ export function Footer() {
         {/* Bottom bar */}
         <motion.div
           className="pt-8"
-          style={{ borderTop: '1px solid rgba(139,123,106,0.15)' }}
+          style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm" style={{ color: '#8B7B6A' }}>
-              © {currentYear} Growaz. All rights reserved.
+            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              © {currentYear} Renders Arc. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 text-sm">
               {['Terms', 'Privacy', 'Cookies'].map((link) => (
@@ -195,13 +168,9 @@ export function Footer() {
                   key={link}
                   href="#"
                   className="transition-colors"
-                  style={{ color: '#8B7B6A' }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.color = '#DDD0BC';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.color = '#8B7B6A';
-                  }}
+                  style={{ color: 'rgba(255,255,255,0.4)' }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.4)'; }}
                 >
                   {link}
                 </a>
