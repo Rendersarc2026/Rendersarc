@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { motion, useMotionValue, useTransform, animate } from 'motion/react';
 import { useEffect } from 'react';
+import { ParticleVortex } from './ParticleVortex';
 
 function AnimatedNumber({ value, label, suffix = '' }: { value: number; label: string; suffix?: string }) {
   const count = useMotionValue(0);
@@ -17,10 +18,10 @@ function AnimatedNumber({ value, label, suffix = '' }: { value: number; label: s
 
   return (
     <div className="text-center relative">
-      <div className="text-4xl md:text-5xl tracking-tight mb-2 font-light" style={{ color: '#FFFFFF' }}>
+      <div className="text-4xl md:text-5xl tracking-tight mb-2 font-medium" style={{ color: '#FFFFFF' }}>
         <motion.span>{rounded}</motion.span>
       </div>
-      <div className="text-xs tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>
+      <div className="text-xs tracking-widest uppercase font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>
         {label}
       </div>
     </div>
@@ -39,23 +40,7 @@ export function Hero() {
       className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden"
       style={{ backgroundColor: '#000000' }}
     >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,255,255,0.04) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
-        }}
-      />
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }}
-      />
+      <ParticleVortex />
 
       <div className="relative z-10 max-w-5xl mx-auto text-center mt-12 w-full">
         <motion.div
@@ -76,7 +61,7 @@ export function Hero() {
             animate={{ opacity: [1, 0.4, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
-          <span style={{ color: 'rgba(255,255,255,0.6)' }} className="text-xs tracking-widest uppercase">
+          <span style={{ color: 'rgba(255,255,255,0.6)' }} className="text-xs tracking-widest uppercase font-semibold">
             Premium Design &amp; Digital Agency
           </span>
         </motion.div>
@@ -121,8 +106,8 @@ export function Hero() {
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="px-4 py-1.5 rounded-full text-[10px] sm:text-xs tracking-widest uppercase font-bold shadow-xl"
-                style={{ backgroundColor: '#C9A84C', color: '#000000' }}
+                className="px-4 py-1.5 rounded-full text-[10px] sm:text-xs tracking-widest uppercase font-bold shadow-lg"
+                style={{ backgroundColor: '#A855F7', color: '#FFFFFF' }}
               >
                 Award-Winning
               </motion.div>
@@ -161,8 +146,8 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          className="text-lg md:text-xl max-w-2xl mx-auto mb-16 leading-relaxed"
-          style={{ color: 'rgba(255,255,255,0.5)' }}
+          className="text-lg md:text-xl max-w-2xl mx-auto mb-16 leading-relaxed font-medium"
+          style={{ color: 'rgba(255,255,255,0.6)' }}
         >
           We craft purposeful digital experiences — from strategy and branding
           to web design and marketing — built to elevate your business.
@@ -186,7 +171,7 @@ export function Hero() {
           </button>
           <button
             onClick={() => scrollToSection('services')}
-            className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-sm tracking-widest uppercase transition-all"
+            className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-sm tracking-widest uppercase transition-all font-semibold"
             style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.7)'; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.25)'; }}

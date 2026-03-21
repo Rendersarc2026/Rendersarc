@@ -67,7 +67,7 @@ export function Navigation() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <button onClick={() => scrollToSection('hero')} className="transition-opacity hover:opacity-60">
-            <span style={{ color: '#FFFFFF' }} className="text-xl tracking-widest uppercase">
+            <span style={{ color: '#FFFFFF' }} className="text-xl tracking-widest uppercase font-bold">
               Renders Arc
             </span>
           </button>
@@ -82,7 +82,7 @@ export function Navigation() {
                   key={item}
                   onClick={() => scrollToSection(item === 'Home' ? 'hero' : itemKey)}
                   style={{ color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.5)' }}
-                  className="text-sm tracking-widest uppercase transition-colors relative py-2"
+                  className="text-sm tracking-widest uppercase transition-colors relative py-2 font-semibold"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.05 }}
@@ -107,7 +107,7 @@ export function Navigation() {
             <button
               onClick={() => scrollToSection('contact')}
               style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
-              className="group relative overflow-hidden px-6 py-2.5 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:border-white"
+              className="group relative overflow-hidden px-6 py-2.5 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:border-white font-semibold"
             >
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
               <span className="relative z-10 transition-colors duration-300 group-hover:text-black">Get in touch</span>
@@ -138,7 +138,7 @@ export function Navigation() {
                   key={item}
                   onClick={() => scrollToSection(item === 'Home' ? 'hero' : item.toLowerCase())}
                   style={{ color: 'rgba(255,255,255,0.6)' }}
-                  className="block w-full text-left text-sm tracking-widest uppercase py-1"
+                  className="block w-full text-left text-sm tracking-widest uppercase py-1 font-semibold"
                 >
                   {item}
                 </button>
@@ -146,7 +146,7 @@ export function Navigation() {
               <button
                 onClick={() => scrollToSection('contact')}
                 style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
-                className="w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase"
+                className="w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-semibold"
               >
                 Get in touch
               </button>
