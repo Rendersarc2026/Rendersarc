@@ -1,3 +1,5 @@
+'use client';
+
 import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -50,7 +52,6 @@ export function Footer() {
             <div className="mt-6 h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} />
           </motion.div>
 
-          {/* Company */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -63,15 +64,23 @@ export function Footer() {
             <ul className="space-y-3">
               {['About', 'Services', 'Work', 'Careers'].map((link) => (
                 <li key={link}>
-                  <a
-                    href="#"
-                    className="text-sm transition-colors"
+                  <button
+                    onClick={() => {
+                      if (link === 'About' || link === 'Services') {
+                        const id = link.toLowerCase();
+                        const element = document.getElementById(id);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }
+                    }}
+                    className="text-sm transition-colors text-left"
                     style={{ color: 'rgba(255,255,255,0.5)' }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.5)'; }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#FFFFFF'; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = 'rgba(255,255,255,0.5)'; }}
                   >
                     {link}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>

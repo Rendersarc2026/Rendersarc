@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRight } from 'lucide-react';
 import { motion, useMotionValue, useTransform, animate } from 'motion/react';
 import { useEffect } from 'react';

@@ -1,18 +1,43 @@
-import { Mail, Phone, MapPin, Send, Check } from 'lucide-react';
+'use client';
+
+import { Mail, Phone, MapPin, Send, Check, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 3000);
+    setSending(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }, 3000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -113,6 +138,16 @@ export function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-3 rounded-xl text-sm"
+                      style={{ backgroundColor: 'rgba(255,77,77,0.1)', border: '1px solid rgba(255,77,77,0.3)', color: '#FF4D4D' }}
+                    >
+                      {error}
+                    </motion.div>
+                  )}
                   {[
                     { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
                     { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
@@ -161,15 +196,25 @@ export function Contact() {
                   </div>
                   <motion.button
                     type="submit"
-                    className="w-full py-4 px-6 rounded-full flex items-center justify-center gap-2 transition-all text-sm tracking-widest uppercase font-semibold"
+                    disabled={sending}
+                    className="w-full py-4 px-6 rounded-full flex items-center justify-center gap-2 transition-all text-sm tracking-widest uppercase font-semibold disabled:opacity-70"
                     style={{ backgroundColor: '#FFFFFF', color: '#000000' }}
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#E5E5E5'; }}
+                    whileHover={{ scale: sending ? 1 : 1.01 }}
+                    whileTap={{ scale: sending ? 1 : 0.99 }}
+                    onMouseEnter={(e) => { if (!sending) (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#E5E5E5'; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#FFFFFF'; }}
                   >
-                    Send Message
-                    <Send size={15} />
+                    {sending ? (
+                      <>
+                        Sending...
+                        <Loader2 size={15} className="animate-spin" />
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <Send size={15} />
+                      </>
+                    )}
                   </motion.button>
                 </form>
               )}
