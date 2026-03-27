@@ -137,7 +137,7 @@ export function Contact() {
                   <p style={{ color: 'rgba(255,255,255,0.5)' }}>We'll get back to you shortly.</p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form suppressHydrationWarning onSubmit={handleSubmit} className="space-y-6">
                   {error && (
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}
@@ -162,6 +162,7 @@ export function Contact() {
                         {field.label}
                       </label>
                       <input
+                        suppressHydrationWarning
                         type={field.type}
                         id={field.id}
                         name={field.id}
@@ -181,6 +182,7 @@ export function Contact() {
                       Message
                     </label>
                     <textarea
+                      suppressHydrationWarning
                       id="message"
                       name="message"
                       value={formData.message}
@@ -195,6 +197,7 @@ export function Contact() {
                     />
                   </div>
                   <motion.button
+                    suppressHydrationWarning
                     type="submit"
                     disabled={sending}
                     className="w-full py-4 px-6 rounded-full flex items-center justify-center gap-2 transition-all text-sm tracking-widest uppercase font-semibold disabled:opacity-70"

@@ -65,6 +65,7 @@ export function Footer() {
               {['About', 'Services', 'Work', 'Careers'].map((link) => (
                 <li key={link}>
                   <button
+                    suppressHydrationWarning
                     onClick={() => {
                       if (link === 'About' || link === 'Services') {
                         const id = link.toLowerCase();

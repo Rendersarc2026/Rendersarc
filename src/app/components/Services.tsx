@@ -62,6 +62,7 @@ export function Services() {
           </div>
 
           <button
+            suppressHydrationWarning
             className="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase transition-all"
             style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#FFFFFF' }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.6)'; }}

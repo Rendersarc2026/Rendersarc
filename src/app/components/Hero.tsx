@@ -162,6 +162,7 @@ export function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-5"
         >
           <button
+            suppressHydrationWarning
             onClick={() => scrollToSection('contact')}
             className="group inline-flex items-center gap-3 px-9 py-4 rounded-full transition-all font-semibold"
             style={{ backgroundColor: '#FFFFFF', color: '#000000' }}
@@ -172,6 +173,7 @@ export function Hero() {
             <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
           </button>
           <button
+            suppressHydrationWarning
             onClick={() => scrollToSection('services')}
             className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-sm tracking-widest uppercase transition-all font-semibold"
             style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
