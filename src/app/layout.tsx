@@ -3,10 +3,10 @@ import './globals.css';
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Renders Arc — Premium Design & Digital Agency',
+  title: 'Renders Arc',
   description: 'We craft purposeful digital experiences — from strategy and branding to web design and marketing — built to elevate your business.',
   icons: {
     icon: '/Logo.png',

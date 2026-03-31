@@ -81,20 +81,20 @@ export function Services() {
             >
               {/* Hover Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#00ea77]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+
               <div className="relative z-10 flex flex-col gap-6">
                 <div className="flex items-center justify-between">
                   <span className="text-[#00ea77] font-mono text-xl tracking-widest">
                     {service.number}
                   </span>
-                  
+
                   <div
                     className="flex-shrink-0 w-10 h-10 rounded-full bg-[#111111] flex items-center justify-center transition-all duration-300 border border-white/10 group-hover:bg-[#00ea77]/10 text-white"
                   >
                     <ArrowUpRight size={18} className="text-[#00ea77] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 </div>
-                
+
                 <div>
                   <h3 className="text-3xl mb-3 font-semibold text-white group-hover:text-[#00ea77] transition-colors duration-300">
                     {service.title}

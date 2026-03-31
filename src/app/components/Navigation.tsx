@@ -49,7 +49,7 @@ export function Navigation() {
 
   const scrollToSection = (id: string) => {
     setIsOpen(false);
-    
+
     // Slight delay to allow layout to settle after state change
     setTimeout(() => {
       const element = document.getElementById(id);
@@ -82,14 +82,9 @@ export function Navigation() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <button onClick={() => scrollToSection('hero')} className="flex items-center transition-opacity hover:opacity-80 shrink-0">
-            <div className="h-12 w-48 relative overflow-hidden flex items-center">
-              <Image
-                src={Logo}
-                alt="Renders Arc Logo"
-                fill
-                className="object-contain scale-[2.2] origin-center"
-              />
-            </div>
+            <span className="text-xl font-bold tracking-[0.2em] text-white">
+              RENDERS ARC
+            </span>
           </button>
 
           {/* Desktop Nav */}

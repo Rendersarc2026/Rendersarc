@@ -1,14 +1,14 @@
 'use client';
 
-import { 
-  Building2, 
-  ShoppingBag, 
-  Factory, 
-  Stethoscope, 
-  GraduationCap, 
-  Utensils, 
-  Rocket, 
-  Building 
+import {
+  Building2,
+  ShoppingBag,
+  Factory,
+  Stethoscope,
+  GraduationCap,
+  Utensils,
+  Rocket,
+  Building
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -125,7 +125,7 @@ export function Industries() {
                 className="w-[350px] md:w-[420px] min-h-[400px] flex-shrink-0 group flex flex-col p-8 rounded-2xl cursor-pointer gap-6 transition-all relative overflow-hidden bg-[#0a0a0a] border border-white/5 hover:border-[#00ea77]/40"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#00ea77]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Top Accent Line */}
                 <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/0 to-[#00ea77]/0 group-hover:from-[#00ea77]/0 group-hover:via-[#00ea77]/50 group-hover:to-[#00ea77]/0 transition-all duration-700" />
 

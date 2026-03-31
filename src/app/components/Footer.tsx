@@ -51,14 +51,9 @@ export function Footer() {
             transition={{ duration: 0.6 }}
           >
             <div className="mb-8">
-              <div className="h-12 w-48 relative overflow-hidden flex items-center -ml-4">
-                <Image
-                  src={Logo}
-                  alt="Renders Arc Logo"
-                  fill
-                  className="object-contain scale-[2.2] origin-center"
-                />
-              </div>
+              <span className="text-xl font-bold tracking-[0.2em] text-white">
+                RENDERS ARC
+              </span>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Designing digital futures with innovation and precision.
@@ -139,8 +134,11 @@ export function Footer() {
               Contact
             </h4>
             <ul className="space-y-3 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              <li>hello@rendersarc.com</li>
-              <li>+1 (555) 123-4567</li>
+              <li>rendersarcmail@gmail.com</li>
+              <li>+91 81293 21539</li>
+              <li className="pt-4">
+                ERNKULAM, PANAMPILLY NAGAR
+              </li>
               <li className="pt-4">
                 <div className="flex space-x-3">
                   {socialLinks.map((social, index) => {

@@ -82,9 +82,9 @@ export function About() {
                 className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-[#0A0A0A] border border-black/5 hover:border-[#00ea77]/30 shadow-xl"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/5 to-[#00ea77]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <motion.span 
-                  className="text-sm mt-1 flex-shrink-0 font-mono tracking-widest text-[#00ea77] drop-shadow-[0_0_8px_rgba(0,234,119,0.4)]" 
+
+                <motion.span
+                  className="text-sm mt-1 flex-shrink-0 font-mono tracking-widest text-[#00ea77] drop-shadow-[0_0_8px_rgba(0,234,119,0.4)]"
                 >
                   {v.number}
                 </motion.span>

@@ -45,9 +45,9 @@ export function Contact() {
   };
 
   const contactInfo = [
-    { icon: Mail, title: 'Email', content: 'hello@rendersarc.com' },
-    { icon: Phone, title: 'Phone', content: '+1 (555) 123-4567' },
-    { icon: MapPin, title: 'Location', content: '123 Design Street, Creative City, CA 94000' },
+    { icon: Mail, title: 'Email', content: 'rendersarcmail@gmail.com' },
+    { icon: Phone, title: 'Phone', content: '+91 81293 21539' },
+    { icon: MapPin, title: 'Location', content: 'Ernakulam, Panampilly Nagar' },
   ];
 
   return (
