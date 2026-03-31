@@ -1,6 +1,5 @@
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 const services = [
@@ -65,7 +64,6 @@ export function Services() {
             className="group self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm tracking-widest uppercase font-semibold transition-all border border-black/10 hover:border-[#00ea77] text-black bg-white hover:bg-gray-50"
           >
             <span className="relative z-10 transition-colors duration-300">View all projects</span>
-            <ArrowUpRight size={16} className="text-[#00ea77] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </button>
         </motion.div>
 
@@ -87,12 +85,6 @@ export function Services() {
                   <span className="text-[#00ea77] font-mono text-xl tracking-widest">
                     {service.number}
                   </span>
-
-                  <div
-                    className="flex-shrink-0 w-10 h-10 rounded-full bg-[#111111] flex items-center justify-center transition-all duration-300 border border-white/10 group-hover:bg-[#00ea77]/10 text-white"
-                  >
-                    <ArrowUpRight size={18} className="text-[#00ea77] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </div>
                 </div>
 
                 <div>
