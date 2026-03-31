@@ -51,24 +51,27 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-32 px-6" style={{ backgroundColor: '#0D0D0D' }}>
-      <div className="max-w-6xl mx-auto">
+    <section id="contact" className="py-32 px-6 bg-[#000000] relative overflow-hidden">
+      {/* Background ambient light */}
+      <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-[#00ea77]/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           className="mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.3)' }} />
-            <span style={{ color: 'rgba(255,255,255,0.4)' }} className="text-xs tracking-widest uppercase">
+            <div className="h-px w-10 bg-[#00ea77]" />
+            <span className="text-[#00ea77] text-xs tracking-widest uppercase font-semibold drop-shadow-[0_0_8px_rgba(0,234,119,0.5)]">
               Contact
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl leading-tight" style={{ color: '#FFFFFF' }}>
-            Let's create{' '}
-            <span className="italic font-serif" style={{ color: 'rgba(255,255,255,0.45)' }}>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold text-white">
+            Let's connect{' '}
+            <span className="text-[#00ea77] drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">
               together
             </span>
           </h2>
@@ -79,10 +82,10 @@ export function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
-            <p className="leading-relaxed mb-12 text-base" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <p className="leading-relaxed mb-12 text-base md:text-lg font-medium text-white/50">
               Ready to bring your vision to life? We'd love to hear about your project. Our team
               is ready to answer any questions and guide you from concept to completion.
             </p>
@@ -90,18 +93,17 @@ export function Contact() {
               {contactInfo.map((item, index) => {
                 const Icon = item.icon;
                 return (
-                  <div key={index} className="flex items-start gap-5">
+                  <div key={index} className="flex items-start gap-5 group">
                     <div
-                      className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#0a0a0a] border border-white/10 group-hover:border-[#00ea77]/50 transition-colors duration-300"
                     >
-                      <Icon size={18} style={{ color: 'rgba(255,255,255,0.6)' }} />
+                      <Icon size={20} className="text-white/60 group-hover:text-[#00ea77] transition-colors duration-300" />
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                      <p className="text-xs uppercase tracking-widest mb-1 text-white/40">
                         {item.title}
                       </p>
-                      <p className="text-sm" style={{ color: '#FFFFFF' }}>{item.content}</p>
+                      <p className="text-base text-white font-medium group-hover:text-[#00ea77]/80 transition-colors duration-300">{item.content}</p>
                     </div>
                   </div>
                 );
@@ -113,13 +115,15 @@ export function Contact() {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
             <div
-              className="rounded-2xl p-8 md:p-10"
-              style={{ backgroundColor: '#111111', border: '1px solid rgba(255,255,255,0.08)' }}
+              className="rounded-3xl p-8 md:p-10 bg-[#0a0a0a] border border-white/5 relative overflow-hidden"
             >
+              {/* Inner subtle glow for the card */}
+              <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[#00ea77]/20 to-transparent" />
+
               {submitted ? (
                 <motion.div
                   className="flex flex-col items-center justify-center min-h-[420px] text-center"
@@ -128,13 +132,12 @@ export function Contact() {
                   transition={{ type: 'spring', duration: 0.5 }}
                 >
                   <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center mb-6"
-                    style={{ backgroundColor: '#FFFFFF' }}
+                    className="w-20 h-20 rounded-full flex items-center justify-center mb-6 bg-[#00ea77]/10 border border-[#00ea77]/30"
                   >
-                    <Check size={28} style={{ color: '#000000' }} />
+                    <Check size={36} className="text-[#00ea77]" />
                   </div>
-                  <h3 className="text-2xl mb-2" style={{ color: '#FFFFFF' }}>Message Sent!</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.5)' }}>We'll get back to you shortly.</p>
+                  <h3 className="text-3xl mb-3 font-bold text-white">Message Sent!</h3>
+                  <p className="text-white/50 text-lg">We'll get back to you shortly.</p>
                 </motion.div>
               ) : (
                 <form suppressHydrationWarning onSubmit={handleSubmit} className="space-y-6">
@@ -142,80 +145,71 @@ export function Contact() {
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="p-3 rounded-xl text-sm"
-                      style={{ backgroundColor: 'rgba(255,77,77,0.1)', border: '1px solid rgba(255,77,77,0.3)', color: '#FF4D4D' }}
+                      className="p-4 rounded-xl text-sm bg-red-500/10 border border-red-500/30 text-red-500 font-medium"
                     >
                       {error}
                     </motion.div>
                   )}
-                  {[
-                    { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
-                    { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
-                    { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
-                  ].map((field) => (
-                    <div key={field.id}>
-                      <label
-                        htmlFor={field.id}
-                        className="block text-xs uppercase tracking-widest mb-2"
-                        style={{ color: 'rgba(255,255,255,0.4)' }}
-                      >
-                        {field.label}
+                  <div className="grid grid-cols-1 gap-6">
+                    {[
+                      { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
+                      { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
+                      { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
+                    ].map((field) => (
+                      <div key={field.id} className="group/input">
+                        <label
+                          htmlFor={field.id}
+                          className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors"
+                        >
+                          {field.label}
+                        </label>
+                        <input
+                          suppressHydrationWarning
+                          type={field.type}
+                          id={field.id}
+                          name={field.id}
+                          value={formData[field.id as keyof typeof formData]}
+                          onChange={handleChange}
+                          required
+                          placeholder={field.placeholder}
+                          className="w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.03] border border-white/10 text-white placeholder:text-white/40 focus:border-[#00ea77]/50 focus:bg-white/[0.05]"
+                        />
+                      </div>
+                    ))}
+                    <div className="group/input">
+                      <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors">
+                        Message
                       </label>
-                      <input
+                      <textarea
                         suppressHydrationWarning
-                        type={field.type}
-                        id={field.id}
-                        name={field.id}
-                        value={formData[field.id as keyof typeof formData]}
+                        id="message"
+                        name="message"
+                        value={formData.message}
                         onChange={handleChange}
                         required
-                        placeholder={field.placeholder}
-                        className="w-full px-4 py-3 rounded-xl outline-none transition text-sm"
-                        style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#FFFFFF' }}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
-                        onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+                        rows={5}
+                        placeholder="Tell us about your project..."
+                        className="w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.03] border border-white/10 text-white placeholder:text-white/40 focus:border-[#00ea77]/50 focus:bg-white/[0.05]"
                       />
                     </div>
-                  ))}
-                  <div>
-                    <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                      Message
-                    </label>
-                    <textarea
-                      suppressHydrationWarning
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      placeholder="Tell us about your project..."
-                      className="w-full px-4 py-3 rounded-xl outline-none transition resize-none text-sm"
-                      style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#FFFFFF' }}
-                      onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
-                      onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
-                    />
                   </div>
                   <motion.button
                     suppressHydrationWarning
                     type="submit"
                     disabled={sending}
-                    className="w-full py-4 px-6 rounded-full flex items-center justify-center gap-2 transition-all text-sm tracking-widest uppercase font-semibold disabled:opacity-70"
-                    style={{ backgroundColor: '#FFFFFF', color: '#000000' }}
-                    whileHover={{ scale: sending ? 1 : 1.01 }}
-                    whileTap={{ scale: sending ? 1 : 0.99 }}
-                    onMouseEnter={(e) => { if (!sending) (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#E5E5E5'; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#FFFFFF'; }}
+                    className="w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors text-base tracking-widest uppercase font-bold disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 drop-shadow-[0_0_15px_rgba(0,234,119,0.2)] hover:drop-shadow-[0_0_20px_rgba(0,234,119,0.4)] mt-4"
+                    whileHover={{ scale: sending ? 1 : 1.02 }}
+                    whileTap={{ scale: sending ? 1 : 0.98 }}
                   >
                     {sending ? (
                       <>
                         Sending...
-                        <Loader2 size={15} className="animate-spin" />
+                        <Loader2 size={18} className="animate-spin text-black" />
                       </>
                     ) : (
                       <>
                         Send Message
-                        <Send size={15} />
+                        <Send size={18} />
                       </>
                     )}
                   </motion.button>

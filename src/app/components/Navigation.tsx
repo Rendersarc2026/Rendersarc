@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+import Logo from '@/assets/Logo.png';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -19,7 +21,7 @@ export function Navigation() {
 
   // ScrollSpy with IntersectionObserver
   useEffect(() => {
-    const sections = ['hero', 'about', 'services', 'contact'];
+    const sections = ['hero', 'about', 'services', 'industries', 'contact'];
     const observers = new Map();
 
     sections.forEach((id) => {
@@ -46,11 +48,22 @@ export function Navigation() {
   }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
-    }
+    setIsOpen(false);
+    
+    // Slight delay to allow layout to settle after state change
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 80; // height of the navbar
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 150); // Shorter delay for better responsiveness
   };
 
   return (
@@ -59,24 +72,29 @@ export function Navigation() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       style={{
-        backgroundColor: scrolled ? 'rgba(0,0,0,0.9)' : 'transparent',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        backgroundColor: (scrolled || isOpen) ? '#000000' : 'transparent',
+        borderBottom: (scrolled || isOpen) ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+        backdropFilter: (scrolled || isOpen) ? 'blur(12px)' : 'none',
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <button onClick={() => scrollToSection('hero')} className="transition-opacity hover:opacity-60">
-            <span style={{ color: '#FFFFFF' }} className="text-xl tracking-widest uppercase font-bold">
-              Renders Arc
-            </span>
+          <button onClick={() => scrollToSection('hero')} className="flex items-center transition-opacity hover:opacity-80 shrink-0">
+            <div className="h-12 w-48 relative overflow-hidden flex items-center">
+              <Image
+                src={Logo}
+                alt="Renders Arc Logo"
+                fill
+                className="object-contain scale-[2.2] origin-center"
+              />
+            </div>
           </button>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-10">
-            {['Home', 'About', 'Services', 'Contact'].map((item, index) => {
+          <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
+            {['Home', 'About', 'Services', 'Industries', 'Contact'].map((item, index) => {
               const itemKey = item.toLowerCase();
               const isActive = activeSection === itemKey;
               return (
@@ -135,7 +153,7 @@ export function Navigation() {
             style={{ backgroundColor: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)' }}
           >
             <div className="px-6 py-6 space-y-5">
-              {['Home', 'About', 'Services', 'Contact'].map((item) => (
+              {['Home', 'About', 'Services', 'Industries', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item === 'Home' ? 'hero' : item.toLowerCase())}

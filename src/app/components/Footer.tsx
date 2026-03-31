@@ -2,6 +2,9 @@
 
 import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
+import Logo from '@/assets/Logo.png';
+import GradientText from '@/components/GradientText';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,7 +19,7 @@ export function Footer() {
   return (
     <footer style={{ backgroundColor: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
       {/* Massive brand name */}
-      <div className="overflow-hidden" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      {/* <div className="overflow-hidden" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -24,14 +27,18 @@ export function Footer() {
           transition={{ duration: 0.8 }}
           className="max-w-7xl mx-auto px-6 py-16"
         >
-          <h2
-            className="text-[6rem] md:text-[10rem] lg:text-[14rem] leading-none tracking-tighter text-center select-none"
-            style={{ color: 'rgba(255, 255, 255, 0.13)' }}
-          >
-            Renders Arc
-          </h2>
+          <div className="flex flex-col items-center justify-center">
+            <GradientText
+              colors={["#00ea77", "#5227FF", "#FF9FFC", "#B19EEF", "#FF40A3", "#FF8C40", "#FFE47E"]}
+              animationSpeed={8}
+              showBorder={false}
+              className="text-[2rem] md:text-[4rem] lg:text-[5rem] leading-none tracking-tight text-center font-bold mb-4 md:mb-8"
+            >
+              THE POWER TO MANIFEST
+            </GradientText>
+          </div>
         </motion.div>
-      </div>
+      </div> */}
 
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
@@ -43,9 +50,16 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-xl tracking-widest uppercase mb-4" style={{ color: '#FFFFFF' }}>
-              Renders Arc
-            </h3>
+            <div className="mb-8">
+              <div className="h-12 w-48 relative overflow-hidden flex items-center -ml-4">
+                <Image
+                  src={Logo}
+                  alt="Renders Arc Logo"
+                  fill
+                  className="object-contain scale-[2.2] origin-center"
+                />
+              </div>
+            </div>
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Designing digital futures with innovation and precision.
             </p>

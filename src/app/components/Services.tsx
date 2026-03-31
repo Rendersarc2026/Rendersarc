@@ -36,100 +36,84 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-32 px-6" style={{ backgroundColor: '#000000' }}>
-      <div className="max-w-6xl mx-auto">
+    <section id="services" className="py-32 px-6 bg-white relative">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8"
         >
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.3)' }} />
-              <span style={{ color: 'rgba(255,255,255,0.4)' }} className="text-xs tracking-widest uppercase">
+              <div className="h-px w-10 bg-[#00ea77]" />
+              <span className="text-[#00ea77] text-xs tracking-widest uppercase font-semibold">
                 What we do
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight" style={{ color: '#FFFFFF' }}>
-              Services tailored
+            <h2 className="text-4xl md:text-5xl lg:text-5xl leading-tight font-bold text-black">
+              Choose your
               <br />
-              <span className="italic font-serif" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                to your needs
+              <span className="text-black/50">
+                service avenue
               </span>
             </h2>
           </div>
 
           <button
-            suppressHydrationWarning
-            className="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase transition-all"
-            style={{ border: '1px solid rgba(255,255,255,0.2)', color: '#FFFFFF' }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.6)'; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.2)'; }}
+            className="group self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm tracking-widest uppercase font-semibold transition-all border border-black/10 hover:border-[#00ea77] text-black bg-white hover:bg-gray-50"
           >
-            View all projects
-            <ArrowUpRight size={14} />
+            <span className="relative z-10 transition-colors duration-300">View all projects</span>
+            <ArrowUpRight size={16} className="text-[#00ea77] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </button>
         </motion.div>
 
-        <div className="space-y-3">
+        <div className="grid md:grid-cols-2 gap-6">
           {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="group flex flex-col md:flex-row md:items-center justify-between p-8 rounded-2xl cursor-pointer gap-6 transition-all"
-              style={{ backgroundColor: '#111111', border: '1px solid rgba(255,255,255,0.07)' }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.2)';
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = '#1A1A1A';
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.07)';
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = '#111111';
-              }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group flex flex-col justify-between p-8 md:p-10 rounded-[2rem] cursor-pointer gap-8 transition-all relative overflow-hidden bg-[#0a0a0a] border border-white/5 shadow-xl hover:shadow-[#00ea77]/10"
             >
-              <div className="flex items-start gap-6">
-                <span className="text-xs mt-1 w-6 flex-shrink-0 tracking-widest" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                  {service.number}
-                </span>
+              {/* Hover Glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#00ea77]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative z-10 flex flex-col gap-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#00ea77] font-mono text-xl tracking-widest">
+                    {service.number}
+                  </span>
+                  
+                  <div
+                    className="flex-shrink-0 w-10 h-10 rounded-full bg-[#111111] flex items-center justify-center transition-all duration-300 border border-white/10 group-hover:bg-[#00ea77]/10 text-white"
+                  >
+                    <ArrowUpRight size={18} className="text-[#00ea77] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                </div>
+                
                 <div>
-                  <h3 className="text-2xl mb-2 relative inline-flex" style={{ color: '#FFFFFF' }}>
+                  <h3 className="text-3xl mb-3 font-semibold text-white group-hover:text-[#00ea77] transition-colors duration-300">
                     {service.title}
-                    <motion.div
-                      className="absolute -bottom-1 left-0 h-px bg-white origin-left"
-                      initial={{ scaleX: 0 }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
-                      style={{ width: '100%' }}
-                    />
                   </h3>
-                  <p className="text-sm leading-relaxed max-w-md" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  <p className="text-base leading-relaxed text-white/50 group-hover:text-white/80 transition-colors duration-300 pt-2">
                     {service.description}
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 md:justify-end md:max-w-xs">
+              <div className="relative z-10 flex flex-wrap gap-2 mt-auto pt-6">
                 {service.tags.map((tag, tagIndex) => (
                   <span
                     key={tagIndex}
-                    className="px-3 py-1.5 rounded-full text-xs"
-                    style={{ border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.5)', backgroundColor: 'rgba(255,255,255,0.03)' }}
+                    className="px-4 py-2 rounded-full text-xs font-medium tracking-wide bg-white/5 text-white/60 border border-white/5 group-hover:border-[#00ea77]/30 group-hover:text-white transition-colors duration-300"
                   >
                     {tag}
                   </span>
                 ))}
-              </div>
-
-              <div
-                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-white text-white group-hover:text-black"
-                style={{ border: '1px solid rgba(255,255,255,0.2)' }}
-              >
-                <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
             </motion.div>
           ))}

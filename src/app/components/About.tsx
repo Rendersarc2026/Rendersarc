@@ -22,17 +22,17 @@ const values = [
 
 export function About() {
   return (
-    <section id="about" className="py-32 px-6" style={{ backgroundColor: '#0D0D0D' }}>
-      <div className="max-w-6xl mx-auto">
+    <section id="about" className="py-32 px-6 bg-[#fafafa] relative overflow-hidden">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className="flex items-center gap-4 mb-16"
         >
-          <div className="h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.3)' }} />
-          <span style={{ color: 'rgba(255,255,255,0.4)' }} className="text-xs tracking-widest uppercase">
+          <div className="h-px w-10 bg-[#00ea77]" />
+          <span className="text-[#00ea77] text-xs tracking-widest uppercase font-semibold">
             About Renders Arc
           </span>
         </motion.div>
@@ -42,26 +42,25 @@ export function About() {
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl leading-tight mb-8" style={{ color: '#FFFFFF' }}>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8 font-bold text-black tracking-tight">
               A creative studio
               <br />
               driven by{' '}
-              <span className="italic font-serif" style={{ color: 'rgba(255,255,255,0.45)' }}>
+              <span className="text-[#00ea77] drop-shadow-[0_0_10px_rgba(0,234,119,0.2)]">
                 results
               </span>
             </h2>
-            <p className="leading-relaxed mb-6 text-base" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <p className="leading-relaxed mb-6 text-base md:text-lg text-gray-600 font-medium">
               Renders Arc is not just another design agency — it's a creative partner dedicated to helping businesses amplify their growth through exceptional design solutions.
             </p>
-            <p className="leading-relaxed text-base" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <p className="leading-relaxed text-base md:text-lg text-gray-600 font-medium">
               Founded on the belief that design is a business tool, we combine aesthetics with strategy to deliver work that makes a lasting impact.
             </p>
             <div
-              className="mt-12 h-px"
-              style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.2), transparent)' }}
+              className="mt-12 h-px bg-gradient-to-r from-gray-200 to-transparent"
             />
           </motion.div>
 
@@ -69,34 +68,31 @@ export function About() {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="space-y-6"
+            className="space-y-6 relative"
           >
             {values.map((v, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex gap-6 p-7 rounded-2xl transition-all"
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
+                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-[#0A0A0A] border border-black/5 hover:border-[#00ea77]/30 shadow-xl"
               >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/5 to-[#00ea77]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
                 <motion.span 
-                  className="text-xs mt-1 flex-shrink-0 tracking-widest" 
-                  style={{ color: 'rgba(255,255,255,0.7)' }}
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                  className="text-sm mt-1 flex-shrink-0 font-mono tracking-widest text-[#00ea77] drop-shadow-[0_0_8px_rgba(0,234,119,0.4)]" 
                 >
                   {v.number}
                 </motion.span>
-                <div>
-                  <h4 className="mb-2" style={{ color: '#FFFFFF' }}>{v.title}</h4>
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <div className="relative z-10">
+                  <h4 className="mb-2 text-xl font-semibold text-white group-hover:text-[#00ea77] transition-colors duration-300">
+                    {v.title}
+                  </h4>
+                  <p className="text-sm leading-relaxed text-white/50 group-hover:text-white/80 transition-colors duration-300">
                     {v.desc}
                   </p>
                 </div>
