@@ -12,7 +12,7 @@ import { Industries } from './components/Industries';
 
 export default function Home() {
   return (
-    <div className="size-full bg-black relative overflow-x-hidden cursor-none">
+    <div className="size-full bg-black relative overflow-x-clip cursor-none">
       <CustomCursor />
       <ScrollProgress />
       <Navigation />

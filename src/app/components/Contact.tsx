@@ -47,11 +47,11 @@ export function Contact() {
   const contactInfo = [
     { icon: Mail, title: 'Email', content: 'rendersarcmail@gmail.com' },
     { icon: Phone, title: 'Phone', content: '+91 81293 21539' },
-    { icon: MapPin, title: 'Location', content: 'Ernakulam, Panampilly Nagar' },
+    { icon: MapPin, title: 'Location', content: 'G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Ernakulam, Kerala 682036' },
   ];
 
   return (
-    <section id="contact" className="py-32 px-6 bg-[#000000] relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-32 px-6 bg-[#000000] relative overflow-hidden">
       {/* Background ambient light */}
       <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-[#00ea77]/5 rounded-full blur-[100px] pointer-events-none" />
 
@@ -65,14 +65,14 @@ export function Contact() {
         >
           <div className="flex items-center gap-4 mb-6">
             <div className="h-px w-10 bg-[#00ea77]" />
-            <span className="text-[#00ea77] text-xs tracking-widest uppercase font-semibold drop-shadow-[0_0_8px_rgba(0,234,119,0.5)]">
+            <span className="text-[#00ea77] text-xs tracking-widest uppercase font-bold drop-shadow-[0_0_8px_rgba(0,234,119,0.5)]">
               Contact
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold text-white">
-            Let's connect{' '}
+          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-extralight text-white">
+            Let's {' '}
             <span className="text-[#00ea77] drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">
-              together
+              connect
             </span>
           </h2>
         </motion.div>
@@ -85,7 +85,7 @@ export function Contact() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
-            <p className="leading-relaxed mb-12 text-base md:text-lg font-medium text-white/50">
+            <p className="leading-relaxed mb-12 text-base md:text-lg font-light text-white/50">
               Ready to bring your vision to life? We'd love to hear about your project. Our team
               is ready to answer any questions and guide you from concept to completion.
             </p>
@@ -103,7 +103,7 @@ export function Contact() {
                       <p className="text-xs uppercase tracking-widest mb-1 text-white/40">
                         {item.title}
                       </p>
-                      <p className="text-base text-white font-medium group-hover:text-[#00ea77]/80 transition-colors duration-300">{item.content}</p>
+                      <p className="text-base text-white font-light group-hover:text-[#00ea77]/80 transition-colors duration-300">{item.content}</p>
                     </div>
                   </div>
                 );
@@ -136,7 +136,7 @@ export function Contact() {
                   >
                     <Check size={36} className="text-[#00ea77]" />
                   </div>
-                  <h3 className="text-3xl mb-3 font-bold text-white">Message Sent!</h3>
+                  <h3 className="text-3xl mb-3 font-extralight text-white">Message Sent!</h3>
                   <p className="text-white/50 text-lg">We'll get back to you shortly.</p>
                 </motion.div>
               ) : (
@@ -197,7 +197,7 @@ export function Contact() {
                     suppressHydrationWarning
                     type="submit"
                     disabled={sending}
-                    className="w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors text-base tracking-widest uppercase font-bold disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 drop-shadow-[0_0_15px_rgba(0,234,119,0.2)] hover:drop-shadow-[0_0_20px_rgba(0,234,119,0.4)] mt-4"
+                    className="w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors text-base tracking-widest uppercase font-medium disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 drop-shadow-[0_0_15px_rgba(0,234,119,0.2)] hover:drop-shadow-[0_0_20px_rgba(0,234,119,0.4)] mt-4"
                     whileHover={{ scale: sending ? 1 : 1.02 }}
                     whileTap={{ scale: sending ? 1 : 0.98 }}
                   >

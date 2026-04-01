@@ -62,9 +62,10 @@ export function CustomCursor() {
           translateY: '-50%',
           width: hovered ? 48 : 36,
           height: hovered ? 48 : 36,
-          border: '1.5px solid rgba(255,255,255,0.55)',
-          backgroundColor: hovered ? 'rgba(255,255,255,0.07)' : 'transparent',
+          border: '1.5px solid rgba(255,255,255,1)',
+          backgroundColor: hovered ? 'rgba(255,255,255,0.1)' : 'transparent',
           scale: clicked ? 0.85 : 1,
+          mixBlendMode: 'difference',
           transition: 'width 0.25s ease, height 0.25s ease, background-color 0.25s ease, scale 0.1s ease',
         }}
       />
@@ -81,6 +82,7 @@ export function CustomCursor() {
           height: hovered ? 5 : 6,
           backgroundColor: '#FFFFFF',
           opacity: hovered ? 0.5 : 1,
+          mixBlendMode: 'difference',
           transition: 'width 0.2s ease, height 0.2s ease, opacity 0.2s ease',
         }}
       />

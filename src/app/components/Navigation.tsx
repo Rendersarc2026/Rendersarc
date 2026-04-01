@@ -30,12 +30,16 @@ export function Navigation() {
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (entry.isIntersecting) {
+              // Only activate if the section is occupying a significant part of the top half
+              if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
                 setActiveSection(id === 'hero' ? 'home' : id);
               }
             });
           },
-          { threshold: 0.5 }
+          { 
+            threshold: [0.1, 0.5],
+            rootMargin: '-20% 0px -20% 0px' 
+          }
         );
         observer.observe(el);
         observers.set(id, observer);
@@ -82,7 +86,7 @@ export function Navigation() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <button onClick={() => scrollToSection('hero')} className="flex items-center transition-opacity hover:opacity-80 shrink-0">
-            <span className="text-xl font-bold tracking-[0.2em] text-white">
+            <span className="text-xl font-extralight tracking-[0.2em] text-white">
               RENDERS ARC
             </span>
           </button>
@@ -97,7 +101,7 @@ export function Navigation() {
                   key={item}
                   onClick={() => scrollToSection(item === 'Home' ? 'hero' : itemKey)}
                   style={{ color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.5)' }}
-                  className="text-sm tracking-widest uppercase transition-colors relative py-2 font-semibold"
+                  className="text-sm tracking-widest uppercase transition-colors relative py-2 font-light"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.05 }}
@@ -122,7 +126,7 @@ export function Navigation() {
             <button
               onClick={() => scrollToSection('contact')}
               style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
-              className="group relative overflow-hidden px-6 py-2.5 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:border-white font-semibold"
+              className="group relative overflow-hidden px-6 py-2.5 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:border-white font-light"
             >
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
               <span className="relative z-10 transition-colors duration-300 group-hover:text-black">Get in touch</span>
@@ -153,7 +157,7 @@ export function Navigation() {
                   key={item}
                   onClick={() => scrollToSection(item === 'Home' ? 'hero' : item.toLowerCase())}
                   style={{ color: 'rgba(255,255,255,0.6)' }}
-                  className="block w-full text-left text-sm tracking-widest uppercase py-1 font-semibold"
+                  className="block w-full text-left text-sm tracking-widest uppercase py-1 font-light"
                 >
                   {item}
                 </button>
@@ -161,7 +165,7 @@ export function Navigation() {
               <button
                 onClick={() => scrollToSection('contact')}
                 style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
-                className="w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-semibold"
+                className="w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-light"
               >
                 Get in touch
               </button>

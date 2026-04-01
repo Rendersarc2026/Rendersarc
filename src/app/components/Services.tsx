@@ -47,11 +47,11 @@ export function Services() {
           <div>
             <div className="flex items-center gap-4 mb-6">
               <div className="h-px w-10 bg-[#00ea77]" />
-              <span className="text-[#00ea77] text-xs tracking-widest uppercase font-semibold">
+              <span className="text-[#00ea77] text-xs tracking-widest uppercase font-bold drop-shadow-[0_0_8px_rgba(0,234,119,0.3)]">
                 What we do
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-5xl leading-tight font-bold text-black">
+            <h2 className="text-4xl md:text-5xl lg:text-5xl leading-tight font-extralight text-black">
               Choose your
               <br />
               <span className="text-black/50">
@@ -61,7 +61,7 @@ export function Services() {
           </div>
 
           <button
-            className="group self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm tracking-widest uppercase font-semibold transition-all border border-black/10 hover:border-[#00ea77] text-black bg-white hover:bg-gray-50"
+            className="group self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm tracking-widest uppercase font-light transition-all border border-black/10 hover:border-[#00ea77] text-black bg-white hover:bg-gray-50"
           >
             <span className="relative z-10 transition-colors duration-300">View all projects</span>
           </button>
@@ -88,7 +88,7 @@ export function Services() {
                 </div>
 
                 <div>
-                  <h3 className="text-3xl mb-3 font-semibold text-white group-hover:text-[#00ea77] transition-colors duration-300">
+                  <h3 className="text-3xl mb-3 font-light text-white group-hover:text-[#00ea77] transition-colors duration-300">
                     {service.title}
                   </h3>
                   <p className="text-base leading-relaxed text-white/50 group-hover:text-white/80 transition-colors duration-300 pt-2">
@@ -101,7 +101,7 @@ export function Services() {
                 {service.tags.map((tag, tagIndex) => (
                   <span
                     key={tagIndex}
-                    className="px-4 py-2 rounded-full text-xs font-medium tracking-wide bg-white/5 text-white/60 border border-white/5 group-hover:border-[#00ea77]/30 group-hover:text-white transition-colors duration-300"
+                    className="px-4 py-2 rounded-full text-xs font-light tracking-wide bg-white/5 text-white/60 border border-white/5 group-hover:border-[#00ea77]/30 group-hover:text-white transition-colors duration-300"
                   >
                     {tag}
                   </span>

@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Geist } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
+const montserrat = Montserrat({ 
+  subsets: ['latin'], 
+  variable: '--font-sans',
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+});
 
 export const metadata: Metadata = {
   title: 'Renders Arc',
@@ -19,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", montserrat.variable)}>
       <body suppressHydrationWarning>{children}</body>
     </html>
   );

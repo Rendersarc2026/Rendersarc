@@ -51,7 +51,7 @@ export function Footer() {
             transition={{ duration: 0.6 }}
           >
             <div className="mb-8">
-              <span className="text-xl font-bold tracking-[0.2em] text-white">
+              <span className="text-xl font-extralight tracking-[0.2em] text-white">
                 RENDERS ARC
               </span>
             </div>
@@ -137,8 +137,7 @@ export function Footer() {
               <li>rendersarcmail@gmail.com</li>
               <li>+91 81293 21539</li>
               <li className="pt-4">
-                ERNKULAM, PANAMPILLY NAGAR
-              </li>
+                G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Ernakulam, Kerala 682036              </li>
               <li className="pt-4">
                 <div className="flex space-x-3">
                   {socialLinks.map((social, index) => {

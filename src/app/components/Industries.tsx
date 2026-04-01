@@ -10,7 +10,7 @@ import {
   Rocket,
   Building
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import ScrollStack, { ScrollStackItem } from './ui/ScrollStack';
 
 const industries = [
   {
@@ -73,92 +73,74 @@ const industries = [
 
 export function Industries() {
   return (
-    <section id="industries" className="py-32 px-6 bg-black relative overflow-hidden">
-      {/* Background ambient light */}
-      <div className="absolute top-1/3 right-[5%] w-[500px] h-[500px] bg-[#00ea77]/3 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-[5%] w-[400px] h-[400px] bg-[#00ea77]/3 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-20 text-center md:text-left"
-        >
-          <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
-            <div className="h-px w-10 bg-[#00ea77]" />
-            <span className="text-[#00ea77] text-xs tracking-widest uppercase font-semibold drop-shadow-[0_0_8px_rgba(0,234,119,0.5)]">
+    <section id="industries" className="bg-black relative pt-[10vh] pb-[5vh] md:pb-[10vh]">
+      {/* Normal Title Flow */}
+      <div className="w-full z-10 pointer-events-none mb-[4vh] md:mb-[15vh]">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-px w-6 md:w-10 bg-[#00ea77]" />
+            <span className="text-[#00ea77] text-xs md:text-sm tracking-widest uppercase font-bold drop-shadow-[0_0_8px_rgba(0,234,119,0.5)]">
               Industries We Transform
             </span>
+            <div className="h-px w-6 md:w-10 bg-[#00ea77]" />
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-5xl leading-tight font-bold text-white max-w-3xl">
-            Empowering growth across{' '}
-            <span className="text-[#00ea77] drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">
-              every sector
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-extralight text-white leading-tight drop-shadow-xl">
+            Empowering growth <br className="hidden md:block" />
+            <span className="text-white/60">
+              across <span className="text-[#00ea77] font-light drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">every sector</span>
             </span>
           </h2>
-        </motion.div>
-
-        <div className="relative w-full overflow-hidden pb-10">
-          <style>{`
-            @keyframes scroll {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(calc(-50% - 12px)); }
-            }
-            .animate-scroll {
-              animation: scroll 40s linear infinite;
-            }
-            .animate-scroll:hover {
-              animation-play-state: paused;
-            }
-          `}</style>
-
-          {/* Left/Right Fade Elements for smooth fade-in/fade-out */}
-          <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-20 pointer-events-none" />
-          <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-20 pointer-events-none" />
-
-          <div className="flex animate-scroll gap-6 w-max items-stretch">
-            {[...industries, ...industries].map((ind, index) => (
-              <div
-                key={index}
-                className="w-[350px] md:w-[420px] min-h-[400px] flex-shrink-0 group flex flex-col p-8 rounded-2xl cursor-pointer gap-6 transition-all relative overflow-hidden bg-[#0a0a0a] border border-white/5 hover:border-[#00ea77]/40"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#00ea77]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Top Accent Line */}
-                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/0 to-[#00ea77]/0 group-hover:from-[#00ea77]/0 group-hover:via-[#00ea77]/50 group-hover:to-[#00ea77]/0 transition-all duration-700" />
-
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#111111] border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:border-[#00ea77]/30 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                      {ind.icon && <ind.icon size={24} className="text-[#00ea77]" />}
-                    </div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-[#00ea77] transition-colors duration-300">
-                      {ind.title}
-                    </h3>
-                  </div>
-
-                  <div className="mb-4">
-                    <p className="text-base font-semibold text-white/90 leading-snug group-hover:text-white transition-colors duration-300">
-                      {ind.subtitle}
-                    </p>
-                  </div>
-
-                  <div className="space-y-3 mt-auto">
-                    <p className="text-sm text-white/50 leading-relaxed font-medium">
-                      {ind.desc1}
-                    </p>
-                    <p className="text-sm text-white/40 leading-relaxed group-hover:text-white/60 transition-colors duration-300">
-                      {ind.desc2}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
+
+      <ScrollStack
+        className="w-full bg-black relative z-0 px-4 md:px-0"
+        itemDistance={50}
+        itemStackDistance={0}
+        itemScale={0.06}
+        incomingScale={1}
+        baseScale={1}
+        scaleEndPosition="10%"
+        stackPosition="15%"
+        useWindowScroll={true}
+      >
+        {industries.map((ind, i) => (
+          <ScrollStackItem
+            key={i}
+            itemClassName="group md:min-h-[480px] w-full max-w-5xl mx-auto !bg-[#0a0a0a] border border-white/5 hover:border-[#00ea77]/40 transition-colors duration-500 overflow-hidden !p-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-[#00ea77]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/50 to-[#00ea77]/0 opacity-0 group-hover:opacity-100 transition-all duration-700" />
+
+            <div className="relative z-10 flex flex-col gap-4 md:gap-8 w-full p-6 md:p-16">
+              <div className="flex items-center gap-4 md:gap-5">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-[#111111] border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:border-[#00ea77]/30 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex-shrink-0">
+                  {ind.icon && <ind.icon className="w-5 h-5 md:w-7 md:h-7 text-[#00ea77]" />}
+                </div>
+                <h3 className="text-xl md:text-4xl font-bold text-white group-hover:text-[#00ea77] transition-colors duration-300">
+                  {ind.title}
+                </h3>
+              </div>
+
+              <div className="mb-2">
+                <p className="text-lg md:text-2xl font-medium text-white/90 leading-snug group-hover:text-white transition-colors duration-300">
+                  {ind.subtitle}
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-base md:text-lg text-white/60 leading-relaxed font-medium">
+                  {ind.desc1}
+                </p>
+                <p className="text-base md:text-lg text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300">
+                  {ind.desc2}
+                </p>
+              </div>
+            </div>
+          </ScrollStackItem>
+        ))}
+      </ScrollStack>
     </section>
   );
 }

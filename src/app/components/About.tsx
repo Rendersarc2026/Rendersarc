@@ -22,17 +22,17 @@ const values = [
 
 export function About() {
   return (
-    <section id="about" className="py-32 px-6 bg-[#fafafa] relative overflow-hidden">
+    <section id="about" className="py-20 md:py-32 px-6 bg-[#fafafa] relative overflow-hidden">
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-4 mb-16"
+          className="flex items-center gap-4 mb-10 md:mb-16"
         >
           <div className="h-px w-10 bg-[#00ea77]" />
-          <span className="text-[#00ea77] text-xs tracking-widest uppercase font-semibold">
+          <span className="text-[#00ea77] text-xs tracking-widest uppercase font-bold drop-shadow-[0_0_8px_rgba(0,234,119,0.3)]">
             About Renders Arc
           </span>
         </motion.div>
@@ -45,7 +45,7 @@ export function About() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8 font-bold text-black tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8 font-extralight text-black tracking-tight">
               A creative studio
               <br />
               driven by{' '}
@@ -53,10 +53,10 @@ export function About() {
                 results
               </span>
             </h2>
-            <p className="leading-relaxed mb-6 text-base md:text-lg text-gray-600 font-medium">
+            <p className="leading-relaxed mb-6 text-base md:text-lg text-gray-600 font-light">
               Renders Arc is not just another design agency — it's a creative partner dedicated to helping businesses amplify their growth through exceptional design solutions.
             </p>
-            <p className="leading-relaxed text-base md:text-lg text-gray-600 font-medium">
+            <p className="leading-relaxed text-base md:text-lg text-gray-600 font-light">
               Founded on the belief that design is a business tool, we combine aesthetics with strategy to deliver work that makes a lasting impact.
             </p>
             <div
@@ -89,7 +89,7 @@ export function About() {
                   {v.number}
                 </motion.span>
                 <div className="relative z-10">
-                  <h4 className="mb-2 text-xl font-semibold text-white group-hover:text-[#00ea77] transition-colors duration-300">
+                  <h4 className="mb-2 text-xl font-light text-white group-hover:text-[#00ea77] transition-colors duration-300">
                     {v.title}
                   </h4>
                   <p className="text-sm leading-relaxed text-white/50 group-hover:text-white/80 transition-colors duration-300">
