@@ -11,6 +11,7 @@ import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { Industries } from './components/Industries';
+import { Clients } from './components/Clients';
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <Industries />
         <About />
         <Services />
+        <Clients />
         <Contact />
       </main>
       <Footer />

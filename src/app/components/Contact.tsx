@@ -28,8 +28,14 @@ export function Contact() {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    // Subject and Message are now optional, no length validation required
-
+    // Subject and Message validation
+    if (!formData.subject || formData.subject.trim().length === 0) {
+      newErrors.subject = 'Subject is required';
+    }
+    
+    if (!formData.message || formData.message.trim().length === 0) {
+      newErrors.message = 'Message is required';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

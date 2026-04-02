@@ -173,26 +173,27 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       }
 
       const newTransform = {
-        translateY: Math.round(translateY * 100) / 100,
-        scale: Math.round(currentScale * depthScale * 1000) / 1000,
-        rotation: Math.round(rotation * 100) / 100,
-        blur: Math.round(blur * 100) / 100,
-        pinProgress: Math.round(calculateProgress(scrollTop, pinStart - 300, pinStart) * 100) / 100
+        translateY,
+        scale: currentScale * depthScale,
+        rotation,
+        blur,
+        pinProgress: calculateProgress(scrollTop, pinStart - 300, pinStart)
       };
 
       const lastTransform = lastTransformsRef.current.get(i);
       const hasChanged =
         !lastTransform ||
-        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
-        Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
-        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.01 ||
+        Math.abs(lastTransform.scale - newTransform.scale) > 0.0001 ||
+        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.01 ||
+        Math.abs(lastTransform.blur - newTransform.blur) > 0.01;
 
       if (hasChanged) {
         const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
         const filter = newTransform.blur > 0 ? `blur(${newTransform.blur}px)` : '';
 
         card.style.transform = transform;
+        card.style.webkitTransform = transform;
         card.style.filter = filter;
 
         lastTransformsRef.current.set(i, newTransform);
@@ -238,7 +239,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
   const setupLenis = useCallback(() => {
     if (useWindowScroll) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
+      // Intentionally omitting native scroll listener to avoid conflicting with useLenis RAF loop
+      // which causes vibrating scroll on mobile devices
       return null;
     } else {
       const scroller = scrollerRef.current;
@@ -307,9 +309,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       if (lenisRef.current) {
         lenisRef.current.destroy();
       }
-      if (useWindowScroll) {
-        window.removeEventListener('scroll', handleScroll);
-      }
+      // Note: native scroll listener was removed to avoid conflicting with useLenis
       stackCompletedRef.current = false;
       cardsRef.current = [];
       transformsCache.clear();
