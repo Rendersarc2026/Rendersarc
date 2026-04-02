@@ -3,14 +3,14 @@
 import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
-import Logo from '@/assets/Logo.png';
+import Logo from '@/assets/Logo-White.png';
 import GradientText from '@/components/GradientText';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Linkedin, label: 'LinkedIn', href: '#' },
+    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/' },
     { icon: Twitter, label: 'Twitter', href: '#' },
     { icon: Instagram, label: 'Instagram', href: '#' },
     { icon: Facebook, label: 'Facebook', href: '#' },
@@ -51,9 +51,13 @@ export function Footer() {
             transition={{ duration: 0.6 }}
           >
             <div className="mb-8">
-              <span className="text-xl font-extralight tracking-[0.2em] text-white">
-                RENDERS ARC
-              </span>
+              <Image
+                src={Logo}
+                alt="Renders Arc Logo"
+                width={150}
+                height={40}
+                className="h-10 w-auto object-contain"
+              />
             </div>
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Designing digital futures with innovation and precision.

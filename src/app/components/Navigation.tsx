@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Logo from '@/assets/Logo.png';
+import Logo from '@/assets/Logo-White.png';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -19,36 +19,36 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ScrollSpy with IntersectionObserver
+  // Highly robust ScrollSpy with a single IntersectionObserver
   useEffect(() => {
-    const sections = ['hero', 'about', 'services', 'industries', 'contact'];
-    const observers = new Map();
+    const sections = ['hero', 'industries', 'about', 'services', 'contact'];
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const activeId = id === 'hero' ? 'home' : id;
+            if (activeId) {
+              setActiveSection(activeId);
+            }
+          }
+        });
+      },
+      {
+        // Focus detection on a narrow band near the top of the viewport
+        // This ensures only one section wins as the "active" one
+        rootMargin: '-100px 0px -80% 0px',
+        threshold: 0
+      }
+    );
 
     sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              // Only activate if the section is occupying a significant part of the top half
-              if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
-                setActiveSection(id === 'hero' ? 'home' : id);
-              }
-            });
-          },
-          { 
-            threshold: [0.1, 0.5],
-            rootMargin: '-20% 0px -20% 0px' 
-          }
-        );
-        observer.observe(el);
-        observers.set(id, observer);
-      }
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
     });
 
-    return () => {
-      observers.forEach((obs) => obs.disconnect());
-    };
+    return () => observer.disconnect();
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -86,14 +86,20 @@ export function Navigation() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <button onClick={() => scrollToSection('hero')} className="flex items-center transition-opacity hover:opacity-80 shrink-0">
-            <span className="text-xl font-extralight tracking-[0.2em] text-white">
-              RENDERS ARC
-            </span>
+            <Image 
+              src={Logo} 
+              alt="Renders Arc Logo" 
+              width={180} 
+              height={40} 
+              className="h-8 w-auto object-contain"
+              priority
+            />
           </button>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-            {['Home', 'About', 'Services', 'Industries', 'Contact'].map((item, index) => {
+            <motion.div className="flex items-center space-x-8 lg:space-x-10" layout>
+            {['Home', 'Industries', 'About', 'Services', 'Contact'].map((item, index) => {
               const itemKey = item.toLowerCase();
               const isActive = activeSection === itemKey;
               return (
@@ -119,6 +125,7 @@ export function Navigation() {
                 </motion.button>
               );
             })}
+            </motion.div>
           </div>
 
           {/* CTA */}
@@ -152,7 +159,7 @@ export function Navigation() {
             style={{ backgroundColor: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)' }}
           >
             <div className="px-6 py-6 space-y-5">
-              {['Home', 'About', 'Services', 'Industries', 'Contact'].map((item) => (
+              {['Home', 'Industries', 'About', 'Services', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item === 'Home' ? 'hero' : item.toLowerCase())}

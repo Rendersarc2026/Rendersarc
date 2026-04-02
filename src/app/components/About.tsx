@@ -22,7 +22,7 @@ const values = [
 
 export function About() {
   return (
-    <section id="about" className="py-20 md:py-32 px-6 bg-[#fafafa] relative overflow-hidden">
+    <section id="about" className="py-20 md:py-32 px-6 bg-black relative overflow-hidden">
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -45,7 +45,7 @@ export function About() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8 font-extralight text-black tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8 font-extralight text-white tracking-tight">
               A creative studio
               <br />
               driven by{' '}
@@ -53,14 +53,14 @@ export function About() {
                 results
               </span>
             </h2>
-            <p className="leading-relaxed mb-6 text-base md:text-lg text-gray-600 font-light">
+            <p className="leading-relaxed mb-6 text-base md:text-lg text-white/50 font-light">
               Renders Arc is not just another design agency — it's a creative partner dedicated to helping businesses amplify their growth through exceptional design solutions.
             </p>
-            <p className="leading-relaxed text-base md:text-lg text-gray-600 font-light">
+            <p className="leading-relaxed text-base md:text-lg text-white/50 font-light">
               Founded on the belief that design is a business tool, we combine aesthetics with strategy to deliver work that makes a lasting impact.
             </p>
             <div
-              className="mt-12 h-px bg-gradient-to-r from-gray-200 to-transparent"
+              className="mt-12 h-px bg-gradient-to-r from-white/10 to-transparent"
             />
           </motion.div>
 
@@ -79,7 +79,7 @@ export function About() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-[#0A0A0A] border border-black/5 hover:border-[#00ea77]/30 shadow-xl"
+                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-white/[0.03] border border-white/5 hover:border-[#00ea77]/30 shadow-xl"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/5 to-[#00ea77]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 

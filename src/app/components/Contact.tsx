@@ -2,16 +2,45 @@
 
 import { Mail, Phone, MapPin, Send, Check, Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
+import { toast } from 'sonner';
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // Name validation
+    if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Subject and Message are now optional, no length validation required
+
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm())
+      return;
+
     setSending(true);
     setError('');
 
@@ -28,11 +57,12 @@ export function Contact() {
         throw new Error(data.error || 'Failed to send message');
       }
 
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      }, 3000);
+      toast.success('Message sent successfully! We will get back to you shortly.', {
+        duration: 5000,
+      });
+
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setErrors({});
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
@@ -41,7 +71,17 @@ export function Contact() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
   };
 
   const contactInfo = [
@@ -124,97 +164,98 @@ export function Contact() {
               {/* Inner subtle glow for the card */}
               <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[#00ea77]/20 to-transparent" />
 
-              {submitted ? (
-                <motion.div
-                  className="flex flex-col items-center justify-center min-h-[420px] text-center"
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: 'spring', duration: 0.5 }}
-                >
-                  <div
-                    className="w-20 h-20 rounded-full flex items-center justify-center mb-6 bg-[#00ea77]/10 border border-[#00ea77]/30"
+              <form suppressHydrationWarning noValidate onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 rounded-xl text-sm bg-red-500/10 border border-red-500/30 text-red-500 font-medium"
                   >
-                    <Check size={36} className="text-[#00ea77]" />
-                  </div>
-                  <h3 className="text-3xl mb-3 font-extralight text-white">Message Sent!</h3>
-                  <p className="text-white/50 text-lg">We'll get back to you shortly.</p>
-                </motion.div>
-              ) : (
-                <form suppressHydrationWarning onSubmit={handleSubmit} className="space-y-6">
-                  {error && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="p-4 rounded-xl text-sm bg-red-500/10 border border-red-500/30 text-red-500 font-medium"
-                    >
-                      {error}
-                    </motion.div>
-                  )}
-                  <div className="grid grid-cols-1 gap-6">
-                    {[
-                      { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
-                      { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
-                      { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
-                    ].map((field) => (
-                      <div key={field.id} className="group/input">
-                        <label
-                          htmlFor={field.id}
-                          className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors"
-                        >
-                          {field.label}
-                        </label>
-                        <input
-                          suppressHydrationWarning
-                          type={field.type}
-                          id={field.id}
-                          name={field.id}
-                          value={formData[field.id as keyof typeof formData]}
-                          onChange={handleChange}
-                          required
-                          placeholder={field.placeholder}
-                          className="w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.03] border border-white/10 text-white placeholder:text-white/40 focus:border-[#00ea77]/50 focus:bg-white/[0.05]"
-                        />
-                      </div>
-                    ))}
-                    <div className="group/input">
-                      <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors">
-                        Message
+                    {error}
+                  </motion.div>
+                )}
+                <div className="grid grid-cols-1 gap-6">
+                  {[
+                    { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
+                    { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
+                    { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
+                  ].map((field) => (
+                    <div key={field.id} className="group/input">
+                      <label
+                        htmlFor={field.id}
+                        className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors"
+                      >
+                        {field.label}
                       </label>
-                      <textarea
+                      <input
                         suppressHydrationWarning
-                        id="message"
-                        name="message"
-                        value={formData.message}
+                        type={field.type}
+                        id={field.id}
+                        name={field.id}
+                        value={formData[field.id as keyof typeof formData]}
                         onChange={handleChange}
-                        required
-                        rows={5}
-                        placeholder="Tell us about your project..."
-                        className="w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.03] border border-white/10 text-white placeholder:text-white/40 focus:border-[#00ea77]/50 focus:bg-white/[0.05]"
+                        placeholder={field.placeholder}
+                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.03] border ${errors[field.id] ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#00ea77]/50'} text-white placeholder:text-white/40 focus:bg-white/[0.05]`}
                       />
+                      {errors[field.id] && (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          className="mt-2 text-xs text-red-500 font-medium ml-1 flex items-center gap-1.5"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-red-500" />
+                          {errors[field.id]}
+                        </motion.p>
+                      )}
                     </div>
-                  </div>
-                  <motion.button
-                    suppressHydrationWarning
-                    type="submit"
-                    disabled={sending}
-                    className="w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors text-base tracking-widest uppercase font-medium disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 drop-shadow-[0_0_15px_rgba(0,234,119,0.2)] hover:drop-shadow-[0_0_20px_rgba(0,234,119,0.4)] mt-4"
-                    whileHover={{ scale: sending ? 1 : 1.02 }}
-                    whileTap={{ scale: sending ? 1 : 0.98 }}
-                  >
-                    {sending ? (
-                      <>
-                        Sending...
-                        <Loader2 size={18} className="animate-spin text-black" />
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <Send size={18} />
-                      </>
+                  ))}
+                  <div className="group/input">
+                    <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors">
+                      Message
+                    </label>
+                    <textarea
+                      suppressHydrationWarning
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={5}
+                      placeholder="Tell us about your project..."
+                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.03] border ${errors.message ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#00ea77]/50'} text-white placeholder:text-white/40 focus:bg-white/[0.05]`}
+                    />
+                    {errors.message && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="mt-2 text-xs text-red-500 font-medium ml-1 flex items-center gap-1.5"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-red-500" />
+                        {errors.message}
+                      </motion.p>
                     )}
-                  </motion.button>
-                </form>
-              )}
+                  </div>
+                </div>
+                <motion.button
+                  suppressHydrationWarning
+                  type="submit"
+                  disabled={sending}
+                  className="w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors text-base tracking-widest uppercase font-medium disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 drop-shadow-[0_0_15px_rgba(0,234,119,0.2)] hover:drop-shadow-[0_0_20px_rgba(0,234,119,0.4)] mt-4"
+                  whileHover={{ scale: sending ? 1 : 1.02 }}
+                  whileTap={{ scale: sending ? 1 : 0.98 }}
+                >
+                  {sending ? (
+                    <>
+                      Sending...
+                      <Loader2 size={18} className="animate-spin text-black" />
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send size={18} />
+                    </>
+                  )}
+                </motion.button>
+              </form>
             </div>
           </motion.div>
         </div>

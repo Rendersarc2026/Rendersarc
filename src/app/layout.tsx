@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
 
 const montserrat = Montserrat({ 
   subsets: ['latin'], 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   title: 'Renders Arc',
   description: 'We craft purposeful digital experiences — from strategy and branding to web design and marketing — built to elevate your business.',
   icons: {
-    icon: '/Logo.png',
+    icon: '/favicon.png',
   },
 };
 
@@ -24,7 +25,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", montserrat.variable)}>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <Toaster position="top-center" theme="dark" richColors />
+      </body>
     </html>
   );
 }

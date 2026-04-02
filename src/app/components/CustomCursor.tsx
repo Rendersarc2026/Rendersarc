@@ -14,9 +14,26 @@ export function CustomCursor() {
 
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
+    const checkViewport = () => {
+      // Hide on screens smaller than 768px (standard mobile/tablet)
+      // or if it's a touch-primary device
+      const isTouch = window.matchMedia('(pointer: coarse)').matches;
+      const isMobile = window.innerWidth <= 768;
+      setIsVisible(!isTouch && !isMobile);
+    };
+
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const move = (e: MouseEvent) => {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
@@ -48,7 +65,9 @@ export function CustomCursor() {
       window.removeEventListener('mouseup', up);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [dotX, dotY]);
+  }, [dotX, dotY, isVisible]);
+
+  if (!isVisible) return null;
 
   return (
     <>

@@ -59,12 +59,6 @@ export function Services() {
               </span>
             </h2>
           </div>
-
-          <button
-            className="group self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm tracking-widest uppercase font-light transition-all border border-black/10 hover:border-[#00ea77] text-black bg-white hover:bg-gray-50"
-          >
-            <span className="relative z-10 transition-colors duration-300">View all projects</span>
-          </button>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -75,7 +69,16 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group flex flex-col justify-between p-8 md:p-10 rounded-[2rem] cursor-pointer gap-8 transition-all relative overflow-hidden bg-[#0a0a0a] border border-white/5 shadow-xl hover:shadow-[#00ea77]/10"
+              onClick={() => {
+                const element = document.getElementById('contact');
+                if (element) {
+                  const offset = 80;
+                  const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                  const offsetPosition = elementPosition - offset;
+                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+              }}
+              className="group flex flex-col justify-between p-8 md:p-10 rounded-[2rem] cursor-pointer gap-8 transition-all relative overflow-hidden bg-[#fafafa] border border-black/5"
             >
               {/* Hover Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#00ea77]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -88,10 +91,10 @@ export function Services() {
                 </div>
 
                 <div>
-                  <h3 className="text-3xl mb-3 font-light text-white group-hover:text-[#00ea77] transition-colors duration-300">
+                  <h3 className="text-3xl mb-3 font-medium text-black group-hover:text-[#00ea77] transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p className="text-base leading-relaxed text-white/50 group-hover:text-white/80 transition-colors duration-300 pt-2">
+                  <p className="text-base leading-relaxed text-black/50 group-hover:text-black/80 transition-colors duration-300 pt-2">
                     {service.description}
                   </p>
                 </div>
@@ -101,7 +104,7 @@ export function Services() {
                 {service.tags.map((tag, tagIndex) => (
                   <span
                     key={tagIndex}
-                    className="px-4 py-2 rounded-full text-xs font-light tracking-wide bg-white/5 text-white/60 border border-white/5 group-hover:border-[#00ea77]/30 group-hover:text-white transition-colors duration-300"
+                    className="px-4 py-2 rounded-full text-xs font-light tracking-wide bg-black/5 text-black/60 border border-black/5 group-hover:border-[#00ea77]/30 group-hover:text-black transition-colors duration-300"
                   >
                     {tag}
                   </span>
