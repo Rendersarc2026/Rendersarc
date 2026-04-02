@@ -118,7 +118,7 @@ export function Industries() {
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-gray-50 border border-black/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:border-black/10 shadow-sm flex-shrink-0">
                   {ind.icon && <ind.icon className="w-5 h-5 md:w-7 md:h-7 text-[#00ea77]" />}
                 </div>
-                <h3 className="text-xl md:text-4xl font-medium text-black/50 transition-colors duration-300">
+                <h3 className="text-xl md:text-4xl font-light text-black/80 transition-colors duration-300">
                   {ind.title}
                 </h3>
               </div>
