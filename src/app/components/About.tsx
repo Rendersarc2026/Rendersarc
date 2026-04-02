@@ -70,7 +70,7 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="space-y-6 relative"
+            className="grid grid-cols-1 auto-rows-fr gap-6 relative"
           >
             {values.map((v, i) => (
               <motion.div
@@ -79,7 +79,7 @@ export function About() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-white/[0.03] border border-white/5 hover:border-[#00ea77]/30 shadow-xl"
+                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-white/[0.03] border border-white/5 hover:border-[#00ea77]/30 shadow-xl h-full"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/5 to-[#00ea77]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 

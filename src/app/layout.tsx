@@ -3,6 +3,7 @@ import './globals.css';
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 const montserrat = Montserrat({ 
   subsets: ['latin'], 
@@ -26,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", montserrat.variable)}>
       <body suppressHydrationWarning>
-        {children}
-        <Toaster position="top-center" theme="dark" richColors />
+        <SmoothScroll>
+          {children}
+          <Toaster position="top-center" theme="dark" richColors />
+        </SmoothScroll>
       </body>
     </html>
   );

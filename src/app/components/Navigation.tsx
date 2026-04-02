@@ -97,8 +97,8 @@ export function Navigation() {
           </button>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-            <motion.div className="flex items-center space-x-8 lg:space-x-10" layout>
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-10">
+            <motion.div className="flex items-center space-x-6 xl:space-x-10" layout>
             {['Home', 'Industries', 'About', 'Services', 'Contact'].map((item, index) => {
               const itemKey = item.toLowerCase();
               const isActive = activeSection === itemKey;
@@ -129,7 +129,7 @@ export function Navigation() {
           </div>
 
           {/* CTA */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden lg:flex items-center">
             <button
               onClick={() => scrollToSection('contact')}
               style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
@@ -141,7 +141,7 @@ export function Navigation() {
           </div>
 
           {/* Mobile toggle */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button onClick={() => setIsOpen(!isOpen)} style={{ color: '#FFFFFF' }} className="transition-opacity hover:opacity-60">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'motion/react';
-import ColorBends from '@/components/ColorBends';
+import dynamic from 'next/dynamic';
+const ColorBends = dynamic(() => import('@/components/ColorBends'), { ssr: false });
 import DecryptedText from '@/components/DecryptedText';
 
 export function Hero() {
