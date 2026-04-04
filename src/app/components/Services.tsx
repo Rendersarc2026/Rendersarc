@@ -48,14 +48,14 @@ export function Services() {
             <div className="flex items-center gap-4 mb-6">
               <div className="h-px w-10 bg-[#00ea77]" />
               <span className="text-[#00ea77] text-xs tracking-widest uppercase font-bold drop-shadow-[0_0_8px_rgba(0,234,119,0.3)]">
-                What we do
+                What We Do
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-5xl leading-tight font-extralight text-black">
-              Choose your
+            <h2 className="text-4xl md:text-5xl lg:text-5xl leading-tight font-light text-black">
+              Choose Your
               <br />
               <span className="text-black/50">
-                service avenue
+                Service Avenue
               </span>
             </h2>
           </div>

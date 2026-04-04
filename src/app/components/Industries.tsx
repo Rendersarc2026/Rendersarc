@@ -84,10 +84,10 @@ export function Industries() {
             </span>
             <div className="h-px w-6 md:w-10 bg-[#00ea77]" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-extralight text-black leading-tight drop-shadow-xl">
-            Empowering growth <br className="hidden md:block" />
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-light text-black leading-tight drop-shadow-xl">
+            Empowering Growth <br className="hidden md:block" />
             <span className="text-black/60">
-              across <span className="text-[#00ea77] font-light drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">every sector</span>
+              Across <span className="text-[#00ea77] font-light drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">Every Sector</span>
             </span>
           </h2>
         </div>

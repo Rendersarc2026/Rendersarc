@@ -115,10 +115,10 @@ export function Contact() {
               Contact
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-extralight text-white">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-light text-white">
             Let's {' '}
             <span className="text-[#00ea77] drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">
-              connect
+              Connect
             </span>
           </h2>
         </motion.div>

@@ -48,7 +48,7 @@ export function Hero() {
 
             <span className="text-white/30 whitespace-nowrap">
               <DecryptedText
-                text="Living in the"
+                text="Living In The"
                 animateOn="view"
                 revealDirection="start"
                 speed={150}
