@@ -150,7 +150,8 @@ export default function DecryptedText({
   useEffect(() => {
     if (!isAnimating) return;
 
-    let interval: ReturnType<typeof setInterval>;
+    let rafId: number;
+    let lastTime = performance.now();
     let currentIteration = 0;
 
     const getNextIndex = (revealedSet: Set<number>): number => {
@@ -178,83 +179,88 @@ export default function DecryptedText({
       }
     };
 
-    interval = setInterval(() => {
-      setRevealedIndices(prevRevealed => {
-        if (sequential) {
-          // Forward
-          if (direction === 'forward') {
-            if (prevRevealed.size < text.length) {
-              const nextIndex = getNextIndex(prevRevealed);
-              const newRevealed = new Set(prevRevealed);
-              newRevealed.add(nextIndex);
-              setDisplayText(shuffleText(text, newRevealed));
-              return newRevealed;
-            } else {
-              clearInterval(interval);
-              setIsAnimating(false);
-              setIsDecrypted(true);
-              return prevRevealed;
+    const animate = (currentTime: number) => {
+      if (currentTime - lastTime >= speed) {
+        lastTime = currentTime;
+
+        setRevealedIndices(prevRevealed => {
+          if (sequential) {
+            // Forward
+            if (direction === 'forward') {
+              if (prevRevealed.size < text.length) {
+                const nextIndex = getNextIndex(prevRevealed);
+                const newRevealed = new Set(prevRevealed);
+                newRevealed.add(nextIndex);
+                setDisplayText(shuffleText(text, newRevealed));
+                return newRevealed;
+              } else {
+                setIsAnimating(false);
+                setIsDecrypted(true);
+                return prevRevealed;
+              }
             }
-          }
-          // Reverse
-          if (direction === 'reverse') {
-            if (pointerRef.current < orderRef.current.length) {
-              const idxToRemove = orderRef.current[pointerRef.current++];
-              const newRevealed = new Set(prevRevealed);
-              newRevealed.delete(idxToRemove);
-              setDisplayText(shuffleText(text, newRevealed));
-              if (newRevealed.size === 0) {
-                clearInterval(interval);
+            // Reverse
+            if (direction === 'reverse') {
+              if (pointerRef.current < orderRef.current.length) {
+                const idxToRemove = orderRef.current[pointerRef.current++];
+                const newRevealed = new Set(prevRevealed);
+                newRevealed.delete(idxToRemove);
+                setDisplayText(shuffleText(text, newRevealed));
+                if (newRevealed.size === 0) {
+                  setIsAnimating(false);
+                  setIsDecrypted(false);
+                }
+                return newRevealed;
+              } else {
                 setIsAnimating(false);
                 setIsDecrypted(false);
+                return prevRevealed;
               }
-              return newRevealed;
-            } else {
-              clearInterval(interval);
-              setIsAnimating(false);
-              setIsDecrypted(false);
+            }
+          } else {
+            // Non-Sequential
+            if (direction === 'forward') {
+              setDisplayText(shuffleText(text, prevRevealed));
+              currentIteration++;
+              if (currentIteration >= maxIterations) {
+                setIsAnimating(false);
+                setDisplayText(text);
+                setIsDecrypted(true);
+              }
               return prevRevealed;
             }
-          }
-        } else {
-          // Non-Sequential
-          if (direction === 'forward') {
-            setDisplayText(shuffleText(text, prevRevealed));
-            currentIteration++;
-            if (currentIteration >= maxIterations) {
-              clearInterval(interval);
-              setIsAnimating(false);
-              setDisplayText(text);
-              setIsDecrypted(true);
-            }
-            return prevRevealed;
-          }
 
-          // Non-Sequential Reverse
-          if (direction === 'reverse') {
-            let currentSet = prevRevealed;
-            if (currentSet.size === 0) {
-              currentSet = fillAllIndices();
+            // Non-Sequential Reverse
+            if (direction === 'reverse') {
+              let currentSet = prevRevealed;
+              if (currentSet.size === 0) {
+                currentSet = fillAllIndices();
+              }
+              const removeCount = Math.max(1, Math.ceil(text.length / Math.max(1, maxIterations)));
+              const nextSet = removeRandomIndices(currentSet, removeCount);
+              setDisplayText(shuffleText(text, nextSet));
+              currentIteration++;
+              if (nextSet.size === 0 || currentIteration >= maxIterations) {
+                setIsAnimating(false);
+                setIsDecrypted(false);
+                // ensure final scrambled state
+                setDisplayText(shuffleText(text, new Set()));
+                return new Set();
+              }
+              return nextSet;
             }
-            const removeCount = Math.max(1, Math.ceil(text.length / Math.max(1, maxIterations)));
-            const nextSet = removeRandomIndices(currentSet, removeCount);
-            setDisplayText(shuffleText(text, nextSet));
-            currentIteration++;
-            if (nextSet.size === 0 || currentIteration >= maxIterations) {
-              clearInterval(interval);
-              setIsAnimating(false);
-              setIsDecrypted(false);
-              // ensure final scrambled state
-              setDisplayText(shuffleText(text, new Set()));
-              return new Set();
-            }
-            return nextSet;
           }
-        }
-        return prevRevealed;
-      });
-    }, speed);
-    return () => clearInterval(interval);
+          return prevRevealed;
+        });
+      }
+
+      if (isAnimating) {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
   }, [
     isAnimating,
     text,

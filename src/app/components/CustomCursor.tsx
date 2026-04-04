@@ -35,32 +35,32 @@ export function CustomCursor() {
     if (!isVisible) return;
 
     const move = (e: MouseEvent) => {
+      // 1. Update dot position (using RAF)
       cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         dotX.set(e.clientX);
         dotY.set(e.clientY);
       });
+
+      // 2. Check for hover targets (optimized)
+      const target = e.target as HTMLElement;
+      if (target) {
+        const isHoverable = !!(
+          target.closest('a, button, [role="button"], input, textarea, select, label, [data-cursor-hover]')
+        );
+        setHovered(isHoverable);
+      }
     };
 
     const down = () => setClicked(true);
     const up = () => setClicked(false);
 
-    const checkHover = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const isHoverable = !!(
-        target.closest('a, button, [role="button"], input, textarea, select, label, [data-cursor-hover]')
-      );
-      setHovered(isHoverable);
-    };
-
     window.addEventListener('mousemove', move, { passive: true });
-    window.addEventListener('mousemove', checkHover, { passive: true });
     window.addEventListener('mousedown', down);
     window.addEventListener('mouseup', up);
 
     return () => {
       window.removeEventListener('mousemove', move);
-      window.removeEventListener('mousemove', checkHover);
       window.removeEventListener('mousedown', down);
       window.removeEventListener('mouseup', up);
       cancelAnimationFrame(rafRef.current);
