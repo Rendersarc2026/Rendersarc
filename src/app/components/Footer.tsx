@@ -1,6 +1,6 @@
 'use client';
 
-import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
+import { Linkedin, Instagram } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Logo from '@/assets/Logo-White.png';
@@ -11,9 +11,7 @@ export function Footer() {
 
   const socialLinks = [
     { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/' },
-    { icon: Twitter, label: 'Twitter', href: '#' },
-    { icon: Instagram, label: 'Instagram', href: '#' },
-    { icon: Facebook, label: 'Facebook', href: '#' },
+    { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/rendersarc/' },
   ];
 
   return (
@@ -150,6 +148,8 @@ export function Footer() {
                       <motion.a
                         key={index}
                         href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         aria-label={social.label}
                         className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
                         style={{ border: '1px solid rgba(255,255,255,0.15)', backgroundColor: 'transparent' }}
