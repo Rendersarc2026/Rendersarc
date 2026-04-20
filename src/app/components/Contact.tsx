@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
 
 export function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -35,6 +35,11 @@ export function Contact() {
     
     if (!formData.message || formData.message.trim().length === 0) {
       newErrors.message = 'Message is required';
+    }
+
+    // Phone validation (optional but should be valid if provided)
+    if (formData.phone && formData.phone.trim().length < 10) {
+      newErrors.phone = 'Please enter a valid phone number';
     }
 
     setErrors(newErrors);
@@ -67,7 +72,7 @@ export function Contact() {
         duration: 5000,
       });
 
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       setErrors({});
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
@@ -180,10 +185,11 @@ export function Contact() {
                     {error}
                   </motion.div>
                 )}
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {[
                     { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
                     { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
+                    { id: 'phone', label: 'Phone', type: 'tel', placeholder: 'Your mobile number' },
                     { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
                   ].map((field) => (
                     <div key={field.id} className="group/input">
@@ -201,21 +207,20 @@ export function Contact() {
                         value={formData[field.id as keyof typeof formData]}
                         onChange={handleChange}
                         placeholder={field.placeholder}
-                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.03] border ${errors[field.id] ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#00ea77]/50'} text-white placeholder:text-white/40 focus:bg-white/[0.05]`}
+                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.02] border ${errors[field.id] ? 'border-red-500/40 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
                       />
                       {errors[field.id] && (
                         <motion.p
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
-                          className="mt-2 text-xs text-red-500 font-medium ml-1 flex items-center gap-1.5"
+                          className="mt-2 text-xs text-red-500/80 font-medium ml-1 flex items-center gap-1.5"
                         >
-                          <span className="w-1 h-1 rounded-full bg-red-500" />
                           {errors[field.id]}
                         </motion.p>
                       )}
                     </div>
                   ))}
-                  <div className="group/input">
+                  <div className="group/input md:col-span-2">
                     <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors">
                       Message
                     </label>
@@ -227,15 +232,14 @@ export function Contact() {
                       onChange={handleChange}
                       rows={5}
                       placeholder="Tell us about your project..."
-                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.03] border ${errors.message ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#00ea77]/50'} text-white placeholder:text-white/40 focus:bg-white/[0.05]`}
+                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.02] border ${errors.message ? 'border-red-500/40 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
                     />
                     {errors.message && (
                       <motion.p
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="mt-2 text-xs text-red-500 font-medium ml-1 flex items-center gap-1.5"
+                        className="mt-2 text-xs text-red-500/80 font-medium ml-1 flex items-center gap-1.5"
                       >
-                        <span className="w-1 h-1 rounded-full bg-red-500" />
                         {errors.message}
                       </motion.p>
                     )}
@@ -245,19 +249,19 @@ export function Contact() {
                   suppressHydrationWarning
                   type="submit"
                   disabled={sending}
-                  className="w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-colors text-base tracking-widest uppercase font-medium disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 drop-shadow-[0_0_15px_rgba(0,234,119,0.2)] hover:drop-shadow-[0_0_20px_rgba(0,234,119,0.4)] mt-4"
-                  whileHover={{ scale: sending ? 1 : 1.02 }}
-                  whileTap={{ scale: sending ? 1 : 0.98 }}
+                  className="w-full py-4.5 px-6 rounded-xl flex items-center justify-center gap-3 transition-all text-sm tracking-[0.2em] uppercase font-bold disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 shadow-[0_10px_30px_-10px_rgba(0,234,119,0.3)] hover:shadow-[0_15px_35px_-10px_rgba(0,234,119,0.5)] mt-4 active:scale-[0.98]"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   {sending ? (
                     <>
-                      Sending...
-                      <Loader2 size={18} className="animate-spin text-black" />
+                      <span className="animate-pulse">Sending Inquiry...</span>
+                      <Loader2 size={18} className="animate-spin" />
                     </>
                   ) : (
                     <>
                       Send Message
-                      <Send size={18} />
+                      <Send size={16} strokeWidth={2.5} />
                     </>
                   )}
                 </motion.button>

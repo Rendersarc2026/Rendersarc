@@ -1,12 +1,20 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.EMAIL_USER, // Your Gmail address
+    pass: process.env.EMAIL_APP_PASSWORD, // Your Gmail app password
+  },
+});
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, phone, subject, message } = body;
 
     // Validate core required fields
     if (!name || !email) {
@@ -16,36 +24,61 @@ export async function POST(request: Request) {
       );
     }
 
-    const { data, error } = await resend.emails.send({
-      from: 'RendersArc Contact <onboarding@resend.dev>',
-      to: ['prathinfrnz007@gmail.com'],
+    const mailOptions = {
+      from: `"${name}" <${process.env.EMAIL_USER}>`,
+      to: 'rendersarcmail@gmail.com',
       subject: `[Contact Form] ${subject || 'New Inquiry'}`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #333;">New Contact Form Submission</h2>
-          <hr style="border: 1px solid #eee;" />
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
-          <h3 style="color: #555;">Message:</h3>
-          <p style="background: #f9f9f9; padding: 16px; border-radius: 8px; line-height: 1.6;">
-            ${(message || 'No message provided').replace(/\n/g, '<br />')}
-          </p>
-          <hr style="border: 1px solid #eee;" />
-          <p style="color: #999; font-size: 12px;">
-            Sent from RendersArc website contact form
-          </p>
+        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #050505; color: #ffffff; padding: 40px 20px; max-width: 600px; margin: 0 auto; border: 1px solid #1a1a1a; border-radius: 16px;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #00ea77; margin: 0; font-size: 24px; letter-spacing: 2px; text-transform: uppercase;">Renders Arc</h1>
+            <p style="color: #666; font-size: 12px; margin-top: 5px;">New Inquiry Received</p>
+          </div>
+          
+          <div style="background-color: #0a0a0a; padding: 30px; border-radius: 12px; border: 1px solid #1a1a1a;">
+            <div style="margin-bottom: 25px;">
+              <p style="color: #00ea77; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5px 0; font-weight: bold;">Client Name</p>
+              <p style="font-size: 16px; margin: 0; color: #ffffff;">${name}</p>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+              <p style="color: #00ea77; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5px 0; font-weight: bold;">Email Address</p>
+              <p style="font-size: 14px; margin: 0; color: #ffffff;">${email}</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+              <p style="color: #00ea77; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5px 0; font-weight: bold;">Phone Number</p>
+              <p style="font-size: 14px; margin: 0; color: #ffffff;">${phone || 'Not provided'}</p>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+              <p style="color: #00ea77; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5px 0; font-weight: bold;">Subject</p>
+              <p style="font-size: 14px; margin: 0; color: #ffffff;">${subject || 'General Inquiry'}</p>
+            </div>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #1a1a1a;">
+              <p style="color: #00ea77; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px 0; font-weight: bold;">Message</p>
+              <div style="font-size: 15px; line-height: 1.6; color: #cccccc; white-space: pre-wrap; background: #050505; padding: 20px; border-radius: 8px; border: 1px solid #1a1a1a;">${message || 'No message provided'}</div>
+            </div>
+          </div>
+          
+          <div style="text-align: center; margin-top: 30px;">
+            <p style="color: #444; font-size: 11px;">
+              This email was sent from the official Renders Arc contact form.
+              <br />
+              &copy; ${new Date().getFullYear()} Renders Arc. All rights reserved.
+            </p>
+          </div>
         </div>
       `,
       replyTo: email,
-    });
+    };
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ success: true, id: data?.id });
-  } catch {
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Email sending error:', error);
     return NextResponse.json(
       { error: 'Failed to send email' },
       { status: 500 }
