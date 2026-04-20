@@ -13,22 +13,32 @@ const ratelimit = new Ratelimit({
 
 export async function POST(request: Request) {
   try {
-    // Rate Limiting
-    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
-    const { success, limit, reset, remaining } = await ratelimit.limit(ip);
+    // Rate Limiting (Only if credentials are provided)
+    const hasUpstash = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN;
+    
+    if (hasUpstash) {
+      try {
+        const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
+        const { success, limit, reset, remaining } = await ratelimit.limit(ip);
 
-    if (!success) {
-      return NextResponse.json(
-        { error: "Too many requests. Please try again in a minute." },
-        { 
-          status: 429,
-          headers: {
-            "X-RateLimit-Limit": limit.toString(),
-            "X-RateLimit-Remaining": remaining.toString(),
-            "X-RateLimit-Reset": reset.toString(),
-          },
+        if (!success) {
+          return NextResponse.json(
+            { error: "Too many requests. Please try again in a minute." },
+            { 
+              status: 429,
+              headers: {
+                "X-RateLimit-Limit": limit.toString(),
+                "X-RateLimit-Remaining": remaining.toString(),
+                "X-RateLimit-Reset": reset.toString(),
+              },
+            }
+          );
         }
-      );
+      } catch (err) {
+        console.error("Rate limit error (skipping check):", err);
+      }
+    } else {
+      console.warn("Rate limiting skipped: UPSTASH_REDIS_REST_URL or TOKEN missing.");
     }
 
     // Check for required environment variables
