@@ -1,8 +1,36 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+// Create a new ratelimiter, that allows 2 requests per 1 minute
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(2, "1 m"),
+  analytics: true,
+  prefix: "@upstash/ratelimit",
+});
 
 export async function POST(request: Request) {
   try {
+    // Rate Limiting
+    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
+    const { success, limit, reset, remaining } = await ratelimit.limit(ip);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again in a minute." },
+        { 
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": limit.toString(),
+            "X-RateLimit-Remaining": remaining.toString(),
+            "X-RateLimit-Reset": reset.toString(),
+          },
+        }
+      );
+    }
+
     // Check for required environment variables
     if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
       console.error('CRITICAL: Missing email credentials in environment variables.');
