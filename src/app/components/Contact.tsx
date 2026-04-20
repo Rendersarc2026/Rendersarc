@@ -37,9 +37,11 @@ export function Contact() {
       newErrors.message = 'Message is required';
     }
 
-    // Phone validation (optional but should be valid if provided)
-    if (formData.phone && formData.phone.trim().length < 10) {
-      newErrors.phone = 'Please enter a valid phone number';
+    // Phone validation (required)
+    if (!formData.phone || formData.phone.trim().length === 0) {
+      newErrors.phone = 'Phone number is required';
+    } else if (formData.phone.trim().length < 10) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number';
     }
 
     setErrors(newErrors);
