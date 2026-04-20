@@ -207,14 +207,15 @@ export function Contact() {
                         value={formData[field.id as keyof typeof formData]}
                         onChange={handleChange}
                         placeholder={field.placeholder}
-                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.02] border ${errors[field.id] ? 'border-red-500/40 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
+                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.02] border ${errors[field.id] ? 'border-red-500/60 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
                       />
                       {errors[field.id] && (
                         <motion.p
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
-                          className="mt-2 text-xs text-red-500/80 font-medium ml-1 flex items-center gap-1.5"
+                          className="mt-2 text-[11px] text-red-400 font-medium ml-1 flex items-center gap-1.5 uppercase tracking-wider"
                         >
+                          <span className="w-1 h-1 rounded-full bg-red-400" />
                           {errors[field.id]}
                         </motion.p>
                       )}
@@ -232,14 +233,15 @@ export function Contact() {
                       onChange={handleChange}
                       rows={5}
                       placeholder="Tell us about your project..."
-                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.02] border ${errors.message ? 'border-red-500/40 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
+                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.02] border ${errors.message ? 'border-red-500/60 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
                     />
                     {errors.message && (
                       <motion.p
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="mt-2 text-xs text-red-500/80 font-medium ml-1 flex items-center gap-1.5"
+                        className="mt-2 text-[11px] text-red-400 font-medium ml-1 flex items-center gap-1.5 uppercase tracking-wider"
                       >
+                        <span className="w-1 h-1 rounded-full bg-red-400" />
                         {errors.message}
                       </motion.p>
                     )}
