@@ -16,8 +16,7 @@ export const metadata: Metadata = {
   description: 'We craft purposeful digital experiences — from strategy and branding to web design and marketing — built to elevate your business.',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.png', type: 'image/png' }
+      { url: '/logo-icon-white.png', type: 'image/png' }
     ]
   }
 };
