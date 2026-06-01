@@ -75,17 +75,17 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     return parseFloat(value as string);
   }, []);
 
-  const getScrollData = useCallback(() => {
+  const getScrollData = useCallback((lenisInstance?: any) => {
     if (useWindowScroll) {
       return {
-        scrollTop: window.scrollY,
+        scrollTop: lenisInstance ? lenisInstance.scroll : window.scrollY,
         containerHeight: window.innerHeight,
         scrollContainer: document.documentElement
       };
     } else {
       const scroller = scrollerRef.current;
       return {
-        scrollTop: scroller ? scroller.scrollTop : 0,
+        scrollTop: lenisInstance ? lenisInstance.scroll : (scroller ? scroller.scrollTop : 0),
         containerHeight: scroller ? scroller.clientHeight : 0,
         scrollContainer: scroller
       };
@@ -105,12 +105,12 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     []
   );
 
-  const updateCardTransforms = useCallback(() => {
+  const updateCardTransforms = useCallback((lenisInstance?: any) => {
     if (!cardsRef.current.length || isUpdatingRef.current) return;
 
     isUpdatingRef.current = true;
 
-    const { scrollTop, containerHeight, scrollContainer } = getScrollData();
+    const { scrollTop, containerHeight, scrollContainer } = getScrollData(lenisInstance);
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
 
@@ -234,13 +234,13 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     getElementOffset
   ]);
 
-  const handleScroll = useCallback(() => {
-    updateCardTransforms();
+  const handleScroll = useCallback((lenisInstance?: any) => {
+    updateCardTransforms(lenisInstance);
   }, [updateCardTransforms]);
 
-  useLenis(useCallback(() => {
+  useLenis(useCallback((lenis: any) => {
     if (useWindowScroll) {
-      handleScroll();
+      handleScroll(lenis);
     }
   }, [handleScroll, useWindowScroll]));
 
