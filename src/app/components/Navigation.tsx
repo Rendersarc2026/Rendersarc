@@ -5,11 +5,14 @@ import Logo from '@/assets/Logo-White.png';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { usePathname, useRouter } from 'next/navigation';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const pathname = usePathname();
+  const router = useRouter();
+  const [activeSection, setActiveSection] = useState(pathname === '/' ? 'home' : '');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +24,8 @@ export function Navigation() {
 
   // Highly robust ScrollSpy with a single IntersectionObserver
   useEffect(() => {
+    if (pathname !== '/') return;
+
     const sections = ['hero', 'industries', 'about', 'services', 'contact'];
     
     const observer = new IntersectionObserver(
@@ -53,6 +58,11 @@ export function Navigation() {
 
   const scrollToSection = (id: string) => {
     setIsOpen(false);
+
+    if (pathname !== '/') {
+      router.push(`/#${id}`);
+      return;
+    }
 
     // Slight delay to allow layout to settle after state change
     setTimeout(() => {
