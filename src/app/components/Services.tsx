@@ -12,24 +12,24 @@ const services = [
   },
   {
     number: '02',
-    title: 'Web Design',
+    title: 'Web Development',
     description:
-      'Custom, responsive websites designed to convert visitors into clients and reflect your brand perfectly.',
-    tags: ['Custom Website', 'Responsive', 'Web Solutions', 'CMS'],
+      'Custom, responsive websites and web applications designed for optimal performance and user experience.',
+    tags: ['Custom Website', 'Responsive', 'Frontend', 'Backend'],
   },
   {
     number: '03',
-    title: 'Digital Marketing',
+    title: 'App Development',
     description:
-      'Data-driven campaigns across channels — SEO, PPC, social, and email — to grow your audience.',
-    tags: ['SEO', 'Pay-Per-Click', 'Email Marketing', 'Social Media'],
+      'High-performance native and cross-platform mobile applications tailored to your business needs.',
+    tags: ['iOS', 'Android', 'Cross-Platform', 'Mobile Solutions'],
   },
   {
     number: '04',
     title: 'UI/UX Design',
     description:
       'Interfaces crafted for clarity and delight — from wireframes to polished, user-tested final designs.',
-    tags: ['User Interface', 'Wireframing', 'Mobile App', 'Prototyping'],
+    tags: ['User Interface', 'User Experience', 'Wireframing', 'Prototyping'],
   },
 ];
 
