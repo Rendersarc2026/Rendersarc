@@ -3,9 +3,6 @@
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 
-
-import { CustomCursor } from './components/CustomCursor';
-
 import dynamic from 'next/dynamic';
 
 const Services = dynamic(() => import('./components/Services').then((mod) => mod.Services));
@@ -17,8 +14,7 @@ const Clients = dynamic(() => import('./components/Clients').then((mod) => mod.C
 
 export default function Home() {
   return (
-    <div className="size-full bg-black relative overflow-x-clip cursor-none">
-      <CustomCursor />
+    <div className="size-full bg-black relative overflow-x-clip">
       <Navigation />
       <main className="relative">
         <Hero />

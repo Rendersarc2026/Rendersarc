@@ -60,6 +60,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const cardsRef = useRef<HTMLElement[]>([]);
   const lastTransformsRef = useRef(new Map<number, any>());
   const isUpdatingRef = useRef(false);
+  const layoutCacheRef = useRef<{ endTop: number; tops: number[] }>({ endTop: 0, tops: [] });
 
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
     if (scrollTop < start) return 0;
@@ -113,23 +114,23 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
 
-    const endElement = useWindowScroll
-      ? (document.querySelector('.scroll-stack-end') as HTMLElement | null)
-      : (scrollerRef.current?.querySelector('.scroll-stack-end') as HTMLElement | null);
+    // USE CACHED LAYOUT PROPERTIES (Updated on mount & resize)
+    const { endTop: endElementTop, tops: cardTops } = layoutCacheRef.current;
+    
+    // Fallback if cache is empty
+    if (cardTops.length === 0 && cardsRef.current.length > 0) return;
 
-    const endElementTop = endElement ? getElementOffset(endElement) : 0;
+    // Calculate all new transforms
+    const newTransforms = cardsRef.current.map((card, i) => {
+      if (!card) return null;
 
-    cardsRef.current.forEach((card, i) => {
-      if (!card) return;
-
-      const cardTop = getElementOffset(card);
+      const cardTop = cardTops[i];
       const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
       const triggerEnd = cardTop - scaleEndPositionPx;
       const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
       const pinEnd = endElementTop - containerHeight / 2;
 
       const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
-      // Grow from incomingScale to baseScale as it reaches its pin spot
       const currentScale = incomingScale + scaleProgress * (baseScale - incomingScale);
       const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
 
@@ -137,7 +138,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       if (blurAmount) {
         let topCardIndex = 0;
         for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = getElementOffset(cardsRef.current[j]);
+          const jCardTop = cardTops[j];
           const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
           if (scrollTop >= jTriggerStart) {
             topCardIndex = j;
@@ -150,15 +151,12 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         }
       }
 
-      // Dynamic receding scale for cards in the back
       let depthScale = 1;
       for (let j = i + 1; j < cardsRef.current.length; j++) {
-        const jCardTop = getElementOffset(cardsRef.current[j]);
+        const jCardTop = cardTops[j];
         const jPinStart = jCardTop - stackPositionPx - itemStackDistance * j;
-        // Shrink card i as card j pins (transition over 500px)
         const jProgress = calculateProgress(scrollTop, jPinStart - 250, jPinStart + 250);
         if (jProgress > 0) {
-          // Each card on top reduces scale of those below by itemScale amount
           depthScale *= (1 - (jProgress * itemScale));
         }
       }
@@ -172,13 +170,22 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
       }
 
-      const newTransform = {
+      return {
         translateY,
         scale: currentScale * depthScale,
         rotation,
         blur,
-        pinProgress: calculateProgress(scrollTop, pinStart - 300, pinStart)
+        pinProgress: calculateProgress(scrollTop, pinStart - 300, pinStart),
+        isPinned,
+        pinStart,
+        pinEnd
       };
+    });
+
+    // Apply all transforms
+    cardsRef.current.forEach((card, i) => {
+      const newTransform = newTransforms[i];
+      if (!card || !newTransform) return;
 
       const lastTransform = lastTransformsRef.current.get(i);
       const hasChanged =
@@ -200,7 +207,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       }
 
       if (i === cardsRef.current.length - 1) {
-        const isInView = scrollTop >= pinStart && scrollTop <= pinEnd;
+        const isInView = scrollTop >= newTransform.pinStart && scrollTop <= newTransform.pinEnd;
         if (isInView && !stackCompletedRef.current) {
           stackCompletedRef.current = true;
           onStackComplete?.();
@@ -300,9 +307,34 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
     setupLenis();
 
-    updateCardTransforms();
+    const measureLayouts = () => {
+      // Temporarily clear transforms to get true offsets
+      cards.forEach(card => {
+        card.style.transform = 'none';
+        card.style.webkitTransform = 'none';
+      });
+
+      const endElement = useWindowScroll
+        ? (document.querySelector('.scroll-stack-end') as HTMLElement | null)
+        : (scrollerRef.current?.querySelector('.scroll-stack-end') as HTMLElement | null);
+
+      layoutCacheRef.current = {
+        endTop: endElement ? getElementOffset(endElement) : 0,
+        tops: cards.map(card => getElementOffset(card))
+      };
+
+      // Force a synchronous update
+      lastTransformsRef.current.clear();
+      updateCardTransforms();
+    };
+
+    measureLayouts();
+
+    // Re-measure on resize
+    window.addEventListener('resize', measureLayouts);
 
     return () => {
+      window.removeEventListener('resize', measureLayouts);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }

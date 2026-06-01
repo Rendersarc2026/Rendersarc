@@ -15,8 +15,11 @@ export const metadata: Metadata = {
   title: 'Renders Arc',
   description: 'We craft purposeful digital experiences — from strategy and branding to web design and marketing — built to elevate your business.',
   icons: {
-    icon: '/favicon.png',
-  },
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png' }
+    ]
+  }
 };
 
 export default function RootLayout({

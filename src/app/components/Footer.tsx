@@ -3,6 +3,7 @@
 import { Linkedin, Instagram } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Logo from '@/assets/Logo-White.png';
 import GradientText from '@/components/GradientText';
 
@@ -39,7 +40,7 @@ export function Footer() {
       </div> */}
 
       <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
+        <div className="grid md:grid-cols-3 gap-12 mb-16">
           {/* Brand */}
           <motion.div
             className="col-span-1"
@@ -93,33 +94,6 @@ export function Footer() {
                   >
                     {link}
                   </button>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Resources */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
-              Resources
-            </h4>
-            <ul className="space-y-3">
-              {['Blog', 'Case Studies', 'Support', 'Privacy'].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="text-sm transition-colors"
-                    style={{ color: 'rgba(255,255,255,0.5)' }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.5)'; }}
-                  >
-                    {link}
-                  </a>
                 </li>
               ))}
             </ul>
@@ -194,17 +168,20 @@ export function Footer() {
               © {currentYear} Renders Arc. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 text-sm">
-              {['Terms', 'Privacy', 'Cookies'].map((link) => (
-                <a
-                  key={link}
-                  href="#"
+              {[
+                { name: 'Terms', href: '/terms' },
+                { name: 'Privacy', href: '/privacy' }
+              ].map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
                   className="transition-colors"
                   style={{ color: 'rgba(255,255,255,0.4)' }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.4)'; }}
                 >
-                  {link}
-                </a>
+                  {link.name}
+                </Link>
               ))}
             </div>
           </div>
