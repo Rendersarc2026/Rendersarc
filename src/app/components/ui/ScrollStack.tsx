@@ -161,14 +161,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         }
       }
 
-      let translateY = 0;
+      const translateY = 0;
       const isPinned = scrollTop >= pinStart && scrollTop <= pinEnd;
-
-      if (isPinned) {
-        translateY = scrollTop - cardTop + stackPositionPx + itemStackDistance * i;
-      } else if (scrollTop > pinEnd) {
-        translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
-      }
 
       return {
         translateY,
@@ -307,8 +301,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     setupLenis();
 
     const measureLayouts = () => {
-      // Temporarily clear transforms to get true offsets
+      // Temporarily clear position/transforms to get true offsets
       cards.forEach(card => {
+        card.style.position = 'relative';
         card.style.transform = 'none';
         card.style.webkitTransform = 'none';
       });
@@ -321,6 +316,15 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         endTop: endElement ? getElementOffset(endElement) : 0,
         tops: cards.map(card => getElementOffset(card))
       };
+
+      const containerHeight = useWindowScroll ? window.innerHeight : (scrollerRef.current?.clientHeight ?? 0);
+      const stackPositionPx = parsePercentage(stackPosition, containerHeight);
+
+      cards.forEach((card, i) => {
+        card.style.position = 'sticky';
+        const stickyTop = stackPositionPx + itemStackDistance * i;
+        card.style.top = `${stickyTop}px`;
+      });
 
       // Force a synchronous update
       lastTransformsRef.current.clear();
