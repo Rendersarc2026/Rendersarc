@@ -186,3 +186,20 @@
     line-height: 1.5;
   }
 }
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility mobile-scroll-container {
+  padding-left: 10vw;
+  padding-right: 10vw;
+
+  @media (min-width: 768px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

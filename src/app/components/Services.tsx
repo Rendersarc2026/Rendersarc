@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 
 const services = [
@@ -34,6 +35,24 @@ const services = [
 ];
 
 export function Services() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const scrollLeft = container.scrollLeft;
+    const card = container.children[0] as HTMLElement;
+    if (!card) return;
+
+    const cardWidth = card.offsetWidth + 32; // card width + gap (8 is 32px)
+    const newIndex = Math.round(scrollLeft / cardWidth);
+    if (newIndex >= 0 && newIndex < services.length) {
+      setActiveIndex(newIndex);
+    }
+  };
+
   return (
     <section id="services" className="py-32 px-6 bg-white relative">
       <div className="max-w-6xl mx-auto relative z-10">
@@ -61,7 +80,11 @@ export function Services() {
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div 
+          ref={containerRef}
+          onScroll={handleScroll}
+          className="w-screen relative left-1/2 -translate-x-1/2 flex flex-row flex-nowrap overflow-x-auto snap-x snap-mandatory gap-8 pb-6 mobile-scroll-container scroll-smooth scrollbar-none md:w-full md:static md:left-0 md:translate-x-0 md:grid md:grid-cols-2 md:overflow-x-visible md:snap-none md:pb-0 md:px-0 md:gap-6"
+        >
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -78,7 +101,7 @@ export function Services() {
                   window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
               }}
-              className="group flex flex-col justify-between p-8 md:p-10 rounded-[2rem] cursor-pointer gap-8 transition-all relative overflow-hidden bg-[#fafafa] border border-black/5"
+              className="group flex flex-col justify-between p-8 md:p-10 rounded-[2rem] cursor-pointer gap-8 transition-all relative overflow-hidden bg-[#fafafa] border border-black/5 w-[80vw] sm:w-[60vw] md:w-full shrink-0 snap-center"
             >
               {/* Hover Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#00ea77]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -111,6 +134,32 @@ export function Services() {
                 ))}
               </div>
             </motion.div>
+          ))}
+        </div>
+
+        {/* Mobile Scroll Indicator Dots */}
+        <div className="flex justify-center gap-2 mt-6 md:hidden">
+          {services.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+              const container = containerRef.current;
+              if (container) {
+                const card = container.children[index] as HTMLElement;
+                if (card) {
+                  const cardWidth = card.offsetWidth + 32;
+                  container.scrollTo({
+                    left: index * cardWidth,
+                    behavior: 'smooth'
+                  });
+                }
+              }
+            }}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeIndex === index ? 'w-6 bg-[#00ea77]' : 'w-2 bg-black/10'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
           ))}
         </div>
       </div>

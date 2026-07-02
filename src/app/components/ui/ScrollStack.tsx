@@ -258,8 +258,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         gestureOrientation: 'vertical',
         wheelMultiplier: 1,
         lerp: 0.1,
-        syncTouch: true,
-        syncTouchLerp: 0.075
+        syncTouch: false
       });
 
       lenis.on('scroll', handleScroll);
