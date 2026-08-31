@@ -27,7 +27,7 @@ export function Clients() {
     <section className="py-24 bg-white overflow-hidden relative border-y border-black/5">
       <div className="container mx-auto px-4 mb-12">
         <h2 className="text-3xl md:text-4xl font-extralight text-center text-black">
-          Trusted <span className="font-bold">By</span>
+          Trusted By
         </h2>
       </div>
 
