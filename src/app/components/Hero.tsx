@@ -1,88 +1,53 @@
 'use client';
 
 import { motion } from 'motion/react';
-import dynamic from 'next/dynamic';
-const ColorBends = dynamic(() => import('@/components/ColorBends'), { ssr: false });
-import DecryptedText from '@/components/DecryptedText';
+import { MoveRight } from 'lucide-react';
 
 export function Hero() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
+    if (element) {
+      const offsetPosition = element.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
   };
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-16 pb-32 md:pt-24 md:pb-12 px-6 overflow-hidden bg-black"
+      className="relative min-h-screen flex flex-col justify-between bg-white px-6 lg:px-12 pt-32 md:pt-40 pb-10 md:pb-14"
     >
-      {/* Background glow */}
-      <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#00ea77]/10 rounded-full blur-[120px] pointer-events-none" />
-
-      {/* Optional particle background */}
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <ColorBends
-          colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
-          rotation={0}
-          speed={0.2}
-          scale={1}
-          frequency={1}
-          warpStrength={1}
-          mouseInfluence={1}
-          parallax={0.5}
-          noise={0.1}
-          transparent
-          autoRotate={0}
-        />
+      {/* Headline */}
+      <div className="flex-1 flex items-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="text-black font-[500] tracking-[-0.03em] leading-[1.12] text-[clamp(2rem,5.3vw,5rem)]"
+        >
+          We design around the five people
+          <br className="hidden md:block" />{' '}
+          who&apos;ll actually use it.
+          <MoveRight
+            className="inline-block align-middle ml-[0.25em] mb-[0.12em] w-[0.72em] h-[0.72em]"
+            strokeWidth={2.75}
+            aria-hidden
+          />
+        </motion.h1>
       </div>
 
-      <div className="relative z-10 max-w-[95rem] mx-auto text-center w-full mt-4 md:mt-10">
-        <div className="mb-8 space-y-1 md:space-y-2 lg:space-y-4 font-sans tracking-tight">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="text-5xl md:text-8xl lg:text-[100px] leading-[1.1] font-extralight flex flex-wrap items-center justify-center gap-x-4 md:gap-x-10 gap-y-2"
-          >
-
-
-            <span className="text-white/30 whitespace-nowrap">
-              <DecryptedText
-                text="Living In The"
-                animateOn="view"
-                revealDirection="start"
-                speed={150}
-                characters="01{}[];:,.()<>!=+-*/%&|^~#$@_"
-              />
-            </span>
-
-            <span className="text-white flex items-center gap-3 md:gap-6">
-              <DecryptedText
-                text="Future"
-                animateOn="view"
-                revealDirection="start"
-                speed={150}
-                characters="01{}[];:,.()<>!=+-*/%&|^~#$@_"
-              />
-            </span>
-          </motion.h1>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-            className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] font-extralight text-white/50 pt-2"
-          >
-            <DecryptedText
-              text="Building What's Missing"
-              animateOn="view"
-              revealDirection="start"
-              speed={150}
-              characters="01{}[];:,.()<>!=+-*/%&|^~#$@_"
-            />
-          </motion.h2>
-        </div>
-      </div>
-    </section >
+      {/* CTA */}
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
+        onClick={() => scrollToSection('contact')}
+        className="group self-start flex items-center gap-1.5 text-black text-xs md:text-sm tracking-[0.08em] uppercase font-medium"
+      >
+        Start a project
+        <span className="transition-transform duration-300 group-hover:translate-x-1">&gt;</span>
+        <span className="sr-only">Scroll to contact section</span>
+      </motion.button>
+    </section>
   );
 }
-

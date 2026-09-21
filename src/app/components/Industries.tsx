@@ -79,7 +79,7 @@ export function Industries() {
         <div className="max-w-6xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="h-px w-6 md:w-10 bg-[#00ea77]" />
-            <span className="text-[#00ea77] text-sm md:text-base tracking-widest uppercase font-bold drop-shadow-[0_0_8px_rgba(0,234,119,0.5)]">
+            <span className="text-[#00995a] text-sm md:text-base tracking-widest uppercase font-bold">
               Industries We Transform
             </span>
             <div className="h-px w-6 md:w-10 bg-[#00ea77]" />
@@ -87,7 +87,7 @@ export function Industries() {
           <h2 className="text-3xl md:text-4xl lg:text-6xl font-light text-black leading-tight drop-shadow-xl">
             Empowering Growth <br className="hidden md:block" />
             <span className="text-black/60">
-              Across <span className="text-[#00ea77] font-light drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">Every Sector</span>
+              Across <span className="text-[#00995a] font-light">Every Sector</span>
             </span>
           </h2>
         </div>
@@ -116,7 +116,7 @@ export function Industries() {
             <div className="relative z-10 flex flex-col gap-4 md:gap-8 w-full p-6 md:p-16">
               <div className="flex items-center gap-4 md:gap-5">
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-gray-50 border border-black/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:border-black/10 shadow-sm flex-shrink-0">
-                  {ind.icon && <ind.icon className="w-5 h-5 md:w-7 md:h-7 text-[#00ea77]" />}
+                  {ind.icon && <ind.icon className="w-5 h-5 md:w-7 md:h-7 text-[#00995a]" />}
                 </div>
                 <h3 className="text-xl md:text-4xl font-light text-black/80 transition-colors duration-300">
                   {ind.title}

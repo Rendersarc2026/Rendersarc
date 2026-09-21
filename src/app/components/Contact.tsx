@@ -104,7 +104,7 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-20 md:py-32 px-6 bg-[#000000] relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
       {/* Background ambient light */}
       <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-[#00ea77]/5 rounded-full blur-[100px] pointer-events-none" />
 
@@ -118,13 +118,13 @@ export function Contact() {
         >
           <div className="flex items-center gap-4 mb-6">
             <div className="h-px w-10 bg-[#00ea77]" />
-            <span className="text-[#00ea77] text-xs tracking-widest uppercase font-bold drop-shadow-[0_0_8px_rgba(0,234,119,0.5)]">
+            <span className="text-[#00995a] text-xs tracking-widest uppercase font-bold">
               Contact
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-light text-white">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-light text-black">
             Let's {' '}
-            <span className="text-[#00ea77] drop-shadow-[0_0_15px_rgba(0,234,119,0.4)]">
+            <span className="text-[#00995a]">
               Connect
             </span>
           </h2>
@@ -138,7 +138,7 @@ export function Contact() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
-            <p className="leading-relaxed mb-12 text-base md:text-lg font-light text-white/50">
+            <p className="leading-relaxed mb-12 text-base md:text-lg font-light text-black/55">
               Ready to bring your vision to life? We'd love to hear about your project. Our team
               is ready to answer any questions and guide you from concept to completion.
             </p>
@@ -148,15 +148,15 @@ export function Contact() {
                 return (
                   <div key={index} className="flex items-start gap-5 group">
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#0a0a0a] border border-white/10 group-hover:border-[#00ea77]/50 transition-colors duration-300"
+                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#fafafa] border border-black/10 group-hover:border-[#00ea77]/50 transition-colors duration-300"
                     >
-                      <Icon size={20} className="text-white/60 group-hover:text-[#00ea77] transition-colors duration-300" />
+                      <Icon size={20} className="text-black/60 group-hover:text-[#00995a] transition-colors duration-300" />
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-widest mb-1 text-white/40">
+                      <p className="text-xs uppercase tracking-widest mb-1 text-black/50">
                         {item.title}
                       </p>
-                      <p className="text-base text-white font-light group-hover:text-[#00ea77]/80 transition-colors duration-300">{item.content}</p>
+                      <p className="text-base text-black font-light group-hover:text-[#00995a]/80 transition-colors duration-300">{item.content}</p>
                     </div>
                   </div>
                 );
@@ -172,7 +172,7 @@ export function Contact() {
             transition={{ duration: 0.7 }}
           >
             <div
-              className="rounded-3xl p-8 md:p-10 bg-[#0a0a0a] border border-white/5 relative overflow-hidden"
+              className="rounded-3xl p-8 md:p-10 bg-[#fafafa] border border-black/5 relative overflow-hidden"
             >
               {/* Inner subtle glow for the card */}
               <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[#00ea77]/20 to-transparent" />
@@ -197,7 +197,7 @@ export function Contact() {
                     <div key={field.id} className="group/input">
                       <label
                         htmlFor={field.id}
-                        className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors"
+                        className="block text-xs uppercase tracking-widest mb-2 font-medium text-black/50 group-focus-within/input:text-[#00995a] transition-colors"
                       >
                         {field.label}
                       </label>
@@ -209,7 +209,7 @@ export function Contact() {
                         value={formData[field.id as keyof typeof formData]}
                         onChange={handleChange}
                         placeholder={field.placeholder}
-                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-white/[0.02] border ${errors[field.id] ? 'border-red-500/60 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
+                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-black/[0.025] border ${errors[field.id] ? 'border-red-500/60 focus:border-red-500' : 'border-black/[0.12] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-black placeholder:text-black/35 focus:bg-black/[0.04]`}
                       />
                       {errors[field.id] && (
                         <motion.p
@@ -224,7 +224,7 @@ export function Contact() {
                     </div>
                   ))}
                   <div className="group/input md:col-span-2">
-                    <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2 font-medium text-white/40 group-focus-within/input:text-[#00ea77] transition-colors">
+                    <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2 font-medium text-black/50 group-focus-within/input:text-[#00995a] transition-colors">
                       Message
                     </label>
                     <textarea
@@ -235,7 +235,7 @@ export function Contact() {
                       onChange={handleChange}
                       rows={5}
                       placeholder="Tell us about your project..."
-                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-white/[0.02] border ${errors.message ? 'border-red-500/60 focus:border-red-500' : 'border-white/[0.08] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-white placeholder:text-white/20 focus:bg-white/[0.04]`}
+                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-black/[0.025] border ${errors.message ? 'border-red-500/60 focus:border-red-500' : 'border-black/[0.12] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-black placeholder:text-black/35 focus:bg-black/[0.04]`}
                     />
                     {errors.message && (
                       <motion.p

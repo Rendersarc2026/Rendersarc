@@ -16,9 +16,9 @@ export function Footer() {
   ];
 
   return (
-    <footer style={{ backgroundColor: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+    <footer style={{ backgroundColor: '#f7f7f7', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
       {/* Massive brand name */}
-      {/* <div className="overflow-hidden" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      {/* <div className="overflow-hidden" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -55,13 +55,13 @@ export function Footer() {
                 alt="Renders Arc Logo"
                 width={150}
                 height={40}
-                className="h-10 w-auto object-contain"
+                className="h-10 w-auto object-contain invert"
               />
             </div>
-            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            <p className="text-sm leading-relaxed" style={{ color: 'rgba(0,0,0,0.45)' }}>
               Designing digital futures with innovation and precision.
             </p>
-            <div className="mt-6 h-px w-10" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} />
+            <div className="mt-6 h-px w-10" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }} />
           </motion.div>
 
           <motion.div
@@ -70,29 +70,30 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(0,0,0,0.4)' }}>
               Company
             </h4>
             <ul className="space-y-3">
-              {['About', 'Services', 'Work', 'Careers'].map((link) => (
-                <li key={link}>
+              {[
+                { id: 'services', label: 'What we do' },
+                { id: 'clients', label: 'Clients' },
+                { id: 'testimonials', label: 'Stories' },
+              ].map((link) => (
+                <li key={link.id}>
                   <button
                     suppressHydrationWarning
                     onClick={() => {
-                      if (link === 'About' || link === 'Services') {
-                        const id = link.toLowerCase();
-                        const element = document.getElementById(id);
-                        if (element) {
-                          element.scrollIntoView({ behavior: 'smooth' });
-                        }
+                      const element = document.getElementById(link.id);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
                       }
                     }}
                     className="text-sm transition-colors text-left"
-                    style={{ color: 'rgba(255,255,255,0.5)' }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#FFFFFF'; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = 'rgba(255,255,255,0.5)'; }}
+                    style={{ color: 'rgba(0,0,0,0.5)' }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#000000'; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = 'rgba(0,0,0,0.5)'; }}
                   >
-                    {link}
+                    {link.label}
                   </button>
                 </li>
               ))}
@@ -106,10 +107,10 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(0,0,0,0.4)' }}>
               Contact
             </h4>
-            <ul className="space-y-3 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <ul className="space-y-3 text-sm" style={{ color: 'rgba(0,0,0,0.5)' }}>
               <li>rendersarcmail@gmail.com</li>
               <li>+91 81293 21539</li>
               <li className="pt-4">
@@ -126,25 +127,25 @@ export function Footer() {
                         rel="noopener noreferrer"
                         aria-label={social.label}
                         className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
-                        style={{ border: '1px solid rgba(255,255,255,0.15)', backgroundColor: 'transparent' }}
+                        style={{ border: '1px solid rgba(0,0,0,0.15)', backgroundColor: 'transparent' }}
                         whileHover={{ scale: 1.1, y: -2 }}
                         transition={{ duration: 0.2 }}
                         onMouseEnter={(e) => {
                           const el = e.currentTarget as HTMLAnchorElement;
-                          el.style.backgroundColor = '#FFFFFF';
-                          el.style.borderColor = '#FFFFFF';
+                          el.style.backgroundColor = '#000000';
+                          el.style.borderColor = '#000000';
                           const svg = el.querySelector('svg');
-                          if (svg) (svg as SVGElement).style.color = '#000000';
+                          if (svg) (svg as SVGElement).style.color = '#FFFFFF';
                         }}
                         onMouseLeave={(e) => {
                           const el = e.currentTarget as HTMLAnchorElement;
                           el.style.backgroundColor = 'transparent';
-                          el.style.borderColor = 'rgba(255,255,255,0.15)';
+                          el.style.borderColor = 'rgba(0,0,0,0.15)';
                           const svg = el.querySelector('svg');
-                          if (svg) (svg as SVGElement).style.color = 'rgba(255,255,255,0.6)';
+                          if (svg) (svg as SVGElement).style.color = 'rgba(0,0,0,0.6)';
                         }}
                       >
-                        <Icon size={15} style={{ color: 'rgba(255,255,255,0.6)' }} />
+                        <Icon size={15} style={{ color: 'rgba(0,0,0,0.6)' }} />
                       </motion.a>
                     );
                   })}
@@ -157,14 +158,14 @@ export function Footer() {
         {/* Bottom bar */}
         <motion.div
           className="pt-8"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
+          style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            <p className="text-sm" style={{ color: 'rgba(0,0,0,0.4)' }}>
               © {currentYear} Renders Arc. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 text-sm">
@@ -176,9 +177,9 @@ export function Footer() {
                   key={link.name}
                   href={link.href}
                   className="transition-colors"
-                  style={{ color: 'rgba(255,255,255,0.4)' }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#FFFFFF'; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.4)'; }}
+                  style={{ color: 'rgba(0,0,0,0.4)' }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#000000'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(0,0,0,0.4)'; }}
                 >
                   {link.name}
                 </Link>

@@ -31,7 +31,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <SmoothScroll>
           {children}
-          <Toaster position="top-center" theme="dark" richColors />
+          <Toaster position="top-center" theme="light" richColors />
         </SmoothScroll>
       </body>
     </html>

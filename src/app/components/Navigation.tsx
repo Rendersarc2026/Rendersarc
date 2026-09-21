@@ -1,18 +1,26 @@
 'use client';
 
-import Image from 'next/image';
-import Logo from '@/assets/Logo-White.png';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { usePathname, useRouter } from 'next/navigation';
+
+/** `id` is the section element scrolled to; 'contact' is the footer for now. */
+const NAV_ITEMS: { id: string | null; label: string }[] = [
+  { id: 'services', label: 'Work' },
+  { id: 'projects', label: 'Projects' },
+  { id: null, label: 'Process' },
+  { id: 'clients', label: 'Clients' },
+  { id: null, label: 'FAQ' },
+  { id: 'contact', label: 'Contact' },
+];
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const [activeSection, setActiveSection] = useState(pathname === '/' ? 'home' : '');
+  const [activeSection, setActiveSection] = useState(pathname === '/' ? 'hero' : '');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,14 +34,14 @@ export function Navigation() {
   useEffect(() => {
     if (pathname !== '/') return;
 
-    const sections = ['hero', 'industries', 'about', 'services', 'contact'];
+    const sections = ['hero', 'services', 'projects', 'clients', 'testimonials', 'contact'];
     
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const id = entry.target.id;
-            const activeId = id === 'hero' ? 'home' : id;
+            const activeId = id;
             if (activeId) {
               setActiveSection(activeId);
             }
@@ -86,48 +94,45 @@ export function Navigation() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       style={{
-        backgroundColor: (scrolled || isOpen) ? '#000000' : 'transparent',
-        borderBottom: (scrolled || isOpen) ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+        backgroundColor: (scrolled || isOpen) ? 'rgba(255,255,255,0.85)' : '#f7f7f7',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
         backdropFilter: (scrolled || isOpen) ? 'blur(12px)' : 'none',
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="w-full px-6 lg:px-12">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <button onClick={() => scrollToSection('hero')} className="flex items-center transition-opacity hover:opacity-80 shrink-0">
-            <Image 
-              src={Logo} 
-              alt="Renders Arc Logo" 
-              width={180} 
-              height={40} 
-              className="h-8 w-auto object-contain"
-              priority
-            />
+          <button
+            onClick={() => scrollToSection('hero')}
+            aria-label="Renders Arc — back to top"
+            className="shrink-0 text-black uppercase font-bold text-[15px] md:text-[18px] tracking-[0.12em] transition-opacity hover:opacity-70"
+          >
+            Renders Arc
           </button>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-10">
-            <motion.div className="flex items-center space-x-6 xl:space-x-10" layout>
-            {['Home', 'Industries', 'About', 'Services', 'Contact'].map((item, index) => {
-              const itemKey = item.toLowerCase();
-              const isActive = activeSection === itemKey;
+          <div className="hidden lg:flex items-center">
+            <motion.div className="flex items-center space-x-4 xl:space-x-6" layout>
+            {NAV_ITEMS.map((item, index) => {
+              const isActive = item.id !== null && activeSection === item.id;
               return (
                 <motion.button
-                  key={item}
-                  onClick={() => scrollToSection(item === 'Home' ? 'hero' : itemKey)}
-                  style={{ color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.5)' }}
-                  className="text-sm tracking-widest uppercase transition-colors relative py-2 font-light"
+                  key={item.label}
+                  onClick={() => item.id && scrollToSection(item.id)}
+                  aria-disabled={item.id === null || undefined}
+                  style={{ color: isActive ? '#000000' : 'rgba(0,0,0,0.8)' }}
+                  className="text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors relative py-2 font-medium"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.05 }}
-                  whileHover={{ color: '#FFFFFF' }}
+                  whileHover={{ color: '#000000' }}
                 >
-                  {item}
+                  {item.label}
                   {isActive && (
                     <motion.div
                       layoutId="active-nav-underline"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-white origin-center"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-black origin-center"
                       initial={false}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
@@ -138,21 +143,9 @@ export function Navigation() {
             </motion.div>
           </div>
 
-          {/* CTA */}
-          <div className="hidden lg:flex items-center">
-            <button
-              onClick={() => scrollToSection('contact')}
-              style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
-              className="group relative overflow-hidden px-6 py-2.5 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:border-white font-light"
-            >
-              <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
-              <span className="relative z-10 transition-colors duration-300 group-hover:text-black">Get in touch</span>
-            </button>
-          </div>
-
           {/* Mobile toggle */}
           <div className="lg:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} style={{ color: '#FFFFFF' }} className="transition-opacity hover:opacity-60">
+            <button onClick={() => setIsOpen(!isOpen)} style={{ color: '#000000' }} className="transition-opacity hover:opacity-60">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -166,22 +159,23 @@ export function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            style={{ backgroundColor: '#000000', borderTop: '1px solid rgba(255,255,255,0.08)' }}
+            style={{ backgroundColor: '#ffffff', borderTop: '1px solid rgba(0,0,0,0.06)' }}
           >
             <div className="px-6 py-6 space-y-5">
-              {['Home', 'Industries', 'About', 'Services', 'Contact'].map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <button
-                  key={item}
-                  onClick={() => scrollToSection(item === 'Home' ? 'hero' : item.toLowerCase())}
-                  style={{ color: 'rgba(255,255,255,0.6)' }}
+                  key={item.label}
+                  onClick={() => item.id && scrollToSection(item.id)}
+                  aria-disabled={item.id === null || undefined}
+                  style={{ color: 'rgba(0,0,0,0.6)' }}
                   className="block w-full text-left text-sm tracking-widest uppercase py-1 font-light"
                 >
-                  {item}
+                  {item.label}
                 </button>
               ))}
               <button
                 onClick={() => scrollToSection('contact')}
-                style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#FFFFFF' }}
+                style={{ border: '1px solid rgba(0,0,0,0.2)', color: '#000000' }}
                 className="w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-light"
               >
                 Get in touch
