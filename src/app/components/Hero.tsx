@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { MoveRight } from 'lucide-react';
 
 export function Hero() {
   return (
@@ -20,11 +19,17 @@ export function Hero() {
           We design around the five people
           <br className="hidden md:block" />{' '}
           who&apos;ll actually use it.
-          <MoveRight
-            className="inline-block align-middle ml-[0.25em] mb-[0.12em] w-[0.72em] h-[0.72em]"
-            strokeWidth={2.75}
+          {/* Drawn rather than an icon-font glyph: lucide's arrow rounds its
+              caps and joins, and this headline wants mitred, solid edges. */}
+          <svg
+            viewBox="0 0 24 16"
+            fill="currentColor"
+            shapeRendering="geometricPrecision"
             aria-hidden
-          />
+            className="inline-block align-middle ml-[0.28em] mb-[0.08em] w-[0.78em] h-[0.52em]"
+          >
+            <path d="M0 6.1h14.4V1.4L24 8l-9.6 6.6V9.9H0z" />
+          </svg>
         </motion.h1>
       </div>
 

@@ -24,6 +24,8 @@ export function WhatWeBuild() {
   // eases towards its target instead of snapping to it on every scroll event.
   const focusRef = useRef(new WeakMap<HTMLElement, number>());
   const [selected, setSelected] = useState<Project | null>(null);
+  // Which card the rail is parked on, mirrored into state only for the dots.
+  const [activeIndex, setActiveIndex] = useState(Math.floor(projects.length / 2));
 
   /** Focus a card *should* have right now: 1 dead centre, 0 a full pitch away. */
   const targetFocus = useCallback((card: HTMLElement, center: number) => {
@@ -44,6 +46,24 @@ export function WhatWeBuild() {
     card.style.zIndex = String(Math.round(focus * 10));
   }, []);
 
+  /** Index of whichever card sits nearest the middle of the rail right now. */
+  const nearestIndex = useCallback(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return 0;
+    const midpoint = scroller.scrollLeft + scroller.clientWidth / 2;
+    let best = 0;
+    let bestDistance = Infinity;
+    Array.from(scroller.children).forEach((child, i) => {
+      const card = child as HTMLElement;
+      const distance = Math.abs(card.offsetLeft + card.offsetWidth / 2 - midpoint);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        best = i;
+      }
+    });
+    return best;
+  }, []);
+
   /** One lerp step. Returns true while anything is still moving. */
   const step = useCallback(() => {
     const scroller = scrollerRef.current;
@@ -62,6 +82,8 @@ export function WhatWeBuild() {
       focusRef.current.set(card, next);
       paint(card, next);
     });
+
+    setActiveIndex(nearestIndex());
 
     return moving;
   }, [paint, targetFocus]);
@@ -87,13 +109,24 @@ export function WhatWeBuild() {
       focusRef.current.set(card, focus);
       paint(card, focus);
     });
-  }, [paint, targetFocus]);
+  }, [nearestIndex, paint, targetFocus]);
 
   /** Scrolls so `card` sits dead centre, without animating. */
   const center = useCallback((card: HTMLElement) => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
     scroller.scrollLeft = card.offsetLeft + card.offsetWidth / 2 - scroller.clientWidth / 2;
+  }, []);
+
+  /** Glides card `index` to the middle — what the dots do when clicked. */
+  const glideTo = useCallback((index: number) => {
+    const scroller = scrollerRef.current;
+    const card = scroller?.children[index] as HTMLElement | undefined;
+    if (!scroller || !card) return;
+    scroller.scrollTo({
+      left: card.offsetLeft + card.offsetWidth / 2 - scroller.clientWidth / 2,
+      behavior: 'smooth',
+    });
   }, []);
 
   useEffect(() => {
@@ -187,6 +220,31 @@ export function WhatWeBuild() {
                 </span>
               </button>
             ))}
+          </div>
+
+          {/* Position indicator: one dot per card, and a way to jump to any of
+              them without dragging the rail. */}
+          <div className="mt-6 pb-10 flex items-center justify-center gap-2.5">
+            {projects.map((project, i) => {
+              const isActive = i === activeIndex;
+              return (
+                <button
+                  key={project.slug}
+                  onClick={() => glideTo(i)}
+                  aria-label={`Show ${project.title}`}
+                  aria-current={isActive ? 'true' : undefined}
+                  className="p-1.5 -m-1.5 group focus:outline-none"
+                >
+                  <span
+                    className={`block h-1.5 rounded-full transition-all duration-300 ${
+                      isActive
+                        ? 'w-6 bg-black'
+                        : 'w-1.5 bg-black/20 group-hover:bg-black/40'
+                    }`}
+                  />
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
