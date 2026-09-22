@@ -30,7 +30,7 @@ const LOOP_LENGTH = COUNT * SETS;
 const MIDDLE_START = Math.floor(SETS / 2) * COUNT;
 
 const arrowClass =
-  'w-10 h-10 rounded-full border border-black/10 text-black/50 flex items-center justify-center transition-colors duration-300 hover:border-[#00ea77] hover:text-[#00995a] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2';
+  'w-10 h-10 rounded-full border border-black/10 text-black/50 flex items-center justify-center transition-colors duration-300 hover:border-black hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2';
 
 export function WhatWeBuild() {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -252,7 +252,7 @@ export function WhatWeBuild() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="text-center text-black font-[300] tracking-[-0.02em] leading-[1.1] text-[clamp(2rem,5vw,4rem)]"
+            className="text-center text-black font-[500] tracking-[-0.02em] leading-[1.1] text-[clamp(2rem,5vw,4rem)]"
           >
             What we build,
             <br />

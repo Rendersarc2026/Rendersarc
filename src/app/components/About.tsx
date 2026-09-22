@@ -31,8 +31,8 @@ export function About() {
           transition={{ duration: 0.6 }}
           className="flex items-center gap-4 mb-10 md:mb-16"
         >
-          <div className="h-px w-10 bg-[#00ea77]" />
-          <span className="text-[#00995a] text-xs tracking-widest uppercase font-bold">
+          <div className="h-px w-10 bg-black" />
+          <span className="text-black text-xs tracking-widest uppercase font-bold">
             About
           </span>
         </motion.div>
@@ -46,9 +46,9 @@ export function About() {
             transition={{ duration: 0.8 }}
             className="max-w-4xl"
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight mb-12 font-light text-black tracking-tight">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight mb-12 font-[500] text-black tracking-tight">
               Before Anything Exists, <br />
-              It Is <span className="text-[#00995a]">Imagined</span>.
+              It Is <span className="text-black">Imagined</span>.
             </h2>
 
             <div className="space-y-6 text-lg md:text-xl text-black/65 font-light leading-relaxed">
@@ -71,7 +71,7 @@ export function About() {
         </div>
 
         {/* Methodology & Values Divider */}
-        <div className="h-px w-full bg-gradient-to-r from-[#00ea77]/30 via-black/10 to-transparent mb-24" />
+        <div className="h-px w-full bg-gradient-to-r from-black/25 via-black/10 to-transparent mb-24" />
 
         {/* Methodology & Values Section */}
         <div className="grid lg:grid-cols-2 gap-20 items-start">
@@ -82,11 +82,11 @@ export function About() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <h3 className="text-3xl md:text-4xl lg:text-5xl leading-tight mb-8 font-light text-black tracking-tight">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl leading-tight mb-8 font-[500] text-black tracking-tight">
               A Methodology
               <br />
               Driven by{' '}
-              <span className="text-[#00995a]">
+              <span className="text-black">
                 Results
               </span>
             </h3>
@@ -97,7 +97,7 @@ export function About() {
               <p>
                 By combining deep research with artisanal craft, we create digital experiences that don't just look stunning but perform at the highest level.
               </p>
-              <p className="text-[#00995a]/80">
+              <p className="text-black/70">
                 Technology shouldn’t be forced into a business. It should feel like it was always meant to be there.
               </p>
               <p>
@@ -121,16 +121,16 @@ export function About() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-black/[0.03] border border-black/5 hover:border-[#00ea77]/30 shadow-xl h-full"
+                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-black/[0.03] border border-black/5 hover:border-black/20 shadow-xl h-full"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#00ea77]/0 via-[#00ea77]/5 to-[#00ea77]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/[0.04] to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <motion.span
-                  className="text-sm mt-1 flex-shrink-0 font-mono tracking-widest text-[#00995a]"
+                  className="text-sm mt-1 flex-shrink-0 font-mono tracking-widest text-black"
                 >
                   {v.number}
                 </motion.span>
                 <div className="relative z-10">
-                  <h4 className="mb-2 text-xl font-light text-black group-hover:text-[#00995a] transition-colors duration-300">
+                  <h4 className="mb-2 text-xl font-[500] text-black group-hover:text-black transition-colors duration-300">
                     {v.title}
                   </h4>
                   <p className="text-sm leading-relaxed text-black/55 group-hover:text-black/75 transition-colors duration-300">
@@ -144,7 +144,6 @@ export function About() {
       </div>
 
       {/* Background Decorative Element */}
-      <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-[#00ea77]/[0.03] blur-[150px] rounded-full -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
     </section>
   );
 }

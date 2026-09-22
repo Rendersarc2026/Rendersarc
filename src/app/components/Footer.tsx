@@ -57,7 +57,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-full border border-white/15 text-white/60 flex items-center justify-center transition-colors duration-300 hover:bg-[#00ea77] hover:border-[#00ea77] hover:text-black"
+                  className="w-9 h-9 rounded-full border border-white/15 text-white/60 flex items-center justify-center transition-colors duration-300 hover:bg-white hover:border-white hover:text-black"
                 >
                   <Icon size={15} />
                 </a>
@@ -73,7 +73,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/55 hover:text-[#00ea77] transition-colors"
+                    className="text-sm text-white/55 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -89,13 +89,13 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:rendersarcmail@gmail.com"
-                  className="hover:text-[#00ea77] transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   rendersarcmail@gmail.com
                 </a>
               </li>
               <li>
-                <a href="tel:+918129321539" className="hover:text-[#00ea77] transition-colors">
+                <a href="tel:+918129321539" className="hover:text-white transition-colors">
                   +91 81293 21539
                 </a>
               </li>

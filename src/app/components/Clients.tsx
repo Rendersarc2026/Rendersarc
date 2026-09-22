@@ -37,7 +37,7 @@ export function Clients() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="max-w-[1400px] mx-auto"
         >
-          <h2 className="text-black font-[600] uppercase tracking-[-0.01em] text-2xl md:text-[28px]">
+          <h2 className="text-black font-[500] uppercase tracking-[-0.01em] text-2xl md:text-[28px]">
             Trusted by
           </h2>
           <p className="mt-3 text-sm md:text-base text-black/50">

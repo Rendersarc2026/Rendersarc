@@ -78,16 +78,16 @@ export function Industries() {
       <div className="w-full z-10 pointer-events-none mb-[4vh] md:mb-[15vh]">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-px w-6 md:w-10 bg-[#00ea77]" />
-            <span className="text-[#00995a] text-sm md:text-base tracking-widest uppercase font-bold">
+            <div className="h-px w-6 md:w-10 bg-black" />
+            <span className="text-black text-sm md:text-base tracking-widest uppercase font-bold">
               Industries We Transform
             </span>
-            <div className="h-px w-6 md:w-10 bg-[#00ea77]" />
+            <div className="h-px w-6 md:w-10 bg-black" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-light text-black leading-tight drop-shadow-xl">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-[500] text-black leading-tight drop-shadow-xl">
             Empowering Growth <br className="hidden md:block" />
             <span className="text-black/60">
-              Across <span className="text-[#00995a] font-light">Every Sector</span>
+              Across <span className="text-black font-[500]">Every Sector</span>
             </span>
           </h2>
         </div>
@@ -116,9 +116,9 @@ export function Industries() {
             <div className="relative z-10 flex flex-col gap-4 md:gap-8 w-full p-6 md:p-16">
               <div className="flex items-center gap-4 md:gap-5">
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-gray-50 border border-black/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:border-black/10 shadow-sm flex-shrink-0">
-                  {ind.icon && <ind.icon className="w-5 h-5 md:w-7 md:h-7 text-[#00995a]" />}
+                  {ind.icon && <ind.icon className="w-5 h-5 md:w-7 md:h-7 text-black" />}
                 </div>
-                <h3 className="text-xl md:text-4xl font-light text-black/80 transition-colors duration-300">
+                <h3 className="text-xl md:text-4xl font-[500] text-black/80 transition-colors duration-300">
                   {ind.title}
                 </h3>
               </div>

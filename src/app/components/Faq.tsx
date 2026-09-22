@@ -24,8 +24,8 @@ export function Faq() {
           className="lg:sticky lg:top-32 lg:self-start"
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="h-px w-10 bg-[#00ea77]" />
-            <span className="text-[#00995a] text-xs tracking-widest uppercase font-bold">FAQ</span>
+            <div className="h-px w-10 bg-black" />
+            <span className="text-black text-xs tracking-widest uppercase font-bold">FAQ</span>
           </div>
 
           <h1 className="text-black font-[500] tracking-[-0.02em] leading-[1.1] text-[clamp(2rem,3.6vw,3.25rem)]">
@@ -40,7 +40,7 @@ export function Faq() {
             If you have any other questions or need more information, feel free to{' '}
             <Link
               href="/contact"
-              className="text-black underline underline-offset-4 decoration-black/25 hover:text-[#00995a] hover:decoration-[#00ea77] transition-colors"
+              className="text-black underline underline-offset-4 decoration-black/25 hover:decoration-black transition-colors"
             >
               reach out to us
             </Link>

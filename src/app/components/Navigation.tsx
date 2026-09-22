@@ -29,28 +29,17 @@ export function Navigation() {
 
   useEffect(() => setIsOpen(false), [pathname]);
 
-  const scrollToSection = (id: string) => {
+  /** Logo behaviour: scroll home when already there, otherwise route home. No
+      hash either way, so the address bar stays clean. */
+  const goHome = () => {
     setIsOpen(false);
 
     if (pathname !== '/') {
-      router.push(`/#${id}`);
+      router.push('/');
       return;
     }
 
-    // Slight delay to allow layout to settle after state change
-    setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        const offset = 80; // height of the navbar
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }, 150); // Shorter delay for better responsiveness
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -69,7 +58,7 @@ export function Navigation() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <button
-            onClick={() => scrollToSection('hero')}
+            onClick={goHome}
             aria-label="Renders Arc — back to top"
             className="shrink-0 text-black uppercase font-bold text-[15px] md:text-[18px] tracking-[0.12em] transition-opacity hover:opacity-70"
           >

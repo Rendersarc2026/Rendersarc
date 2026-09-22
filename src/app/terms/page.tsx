@@ -3,10 +3,10 @@ import { Footer } from '../components/Footer';
 
 export default function TermsAndConditions() {
   return (
-    <div className="min-h-screen bg-white text-black selection:bg-[#00ea77]/30">
+    <div className="min-h-screen bg-white text-black selection:bg-black/10">
       <Navigation />
       <main className="max-w-4xl mx-auto px-6 py-32 md:py-48">
-        <h1 className="text-4xl md:text-6xl font-light mb-12">Terms & <span className="text-[#00995a]">Conditions</span></h1>
+        <h1 className="text-4xl md:text-6xl font-[500] mb-12">Terms & <span className="text-black">Conditions</span></h1>
         
         <div className="space-y-8 text-black/65 leading-relaxed font-light">
           <section>

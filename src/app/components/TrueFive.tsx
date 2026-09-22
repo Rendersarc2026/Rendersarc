@@ -174,7 +174,7 @@ export function TrueFive() {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-5xl lg:text-6xl leading-[1.08] font-light tracking-tight max-w-[18ch]">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl leading-[1.08] font-[500] tracking-tight max-w-[18ch]">
             We talk to five real users before we{' '}
             <span className="text-[#00995a]">design anything</span>.
           </h2>
@@ -185,7 +185,7 @@ export function TrueFive() {
               Before a design file opens, we sit down one-on-one with five people who match
               the actual end user, and what they say shapes the brief.
             </p>
-            <p className="text-2xl md:text-3xl font-light tracking-tight leading-[1.25] lg:pt-1">
+            <p className="text-2xl md:text-3xl font-[500] tracking-tight leading-[1.25] lg:pt-1">
               <span className="text-black/35">Not a survey. Not a focus group.</span>{' '}
               <span className="text-black">Five separate conversations.</span>
             </p>
@@ -197,7 +197,7 @@ export function TrueFive() {
       <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
         <div className="max-w-[1400px] mx-auto">
           <motion.div {...fadeUp}>
-            <h3 className="text-2xl md:text-4xl font-light tracking-tight leading-tight max-w-[20ch]">
+            <h3 className="text-2xl md:text-4xl font-[500] tracking-tight leading-tight max-w-[20ch]">
               Five is where we have heard enough to act.
             </h3>
             <p className="mt-6 text-base md:text-lg text-black/55 font-light leading-relaxed max-w-[52ch]">
@@ -259,7 +259,7 @@ export function TrueFive() {
             {/* Readout */}
             <div>
               <div aria-live="polite">
-                <div className="text-[clamp(4.5rem,13vw,10rem)] leading-[0.85] font-extralight tracking-tighter tabular-nums text-black">
+                <div className="text-[clamp(4.5rem,13vw,10rem)] leading-[0.85] font-[500] tracking-tighter tabular-nums text-black">
                   {pct}
                   <span className="text-[#00995a]">%</span>
                 </div>
@@ -304,7 +304,7 @@ export function TrueFive() {
               </div>
 
               <div className="mt-10 min-h-[9.5rem] max-w-[38ch]" aria-live="polite">
-                <h4 className="text-xl md:text-2xl font-light tracking-tight text-black">
+                <h4 className="text-xl md:text-2xl font-[500] tracking-tight text-black">
                   {READOUTS[step].title}
                 </h4>
                 <p className="mt-3 text-base md:text-lg text-black/60 font-light leading-relaxed">
@@ -333,7 +333,7 @@ export function TrueFive() {
       {/* ---------------- Why "True" ---------------- */}
       <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
-          <h3 className="text-2xl md:text-4xl font-light tracking-tight leading-tight">
+          <h3 className="text-2xl md:text-4xl font-[500] tracking-tight leading-tight">
             Why it is called <span className="text-[#00995a]">True</span>.
           </h3>
           <p className="mt-6 text-base md:text-lg text-black/55 font-light leading-relaxed max-w-[52ch]">
@@ -343,7 +343,7 @@ export function TrueFive() {
 
           <div className="mt-12 md:mt-16 grid md:grid-cols-2 border-t border-black">
             <div className="pt-8 md:pr-12 pb-8 md:pb-0">
-              <h4 className="text-xl md:text-2xl font-light tracking-tight text-black/35 line-through decoration-1">
+              <h4 className="text-xl md:text-2xl font-[500] tracking-tight text-black/35 line-through decoration-1">
                 Convenient five
               </h4>
               <ul className="mt-6">
@@ -361,7 +361,7 @@ export function TrueFive() {
             </div>
 
             <div className="pt-8 md:pl-12 border-t md:border-t-0 md:border-l border-black/10">
-              <h4 className="text-xl md:text-2xl font-light tracking-tight text-black">
+              <h4 className="text-xl md:text-2xl font-[500] tracking-tight text-black">
                 True five
               </h4>
               <ul className="mt-6">
@@ -381,7 +381,7 @@ export function TrueFive() {
             </div>
           </div>
 
-          <p className="mt-16 md:mt-24 text-2xl md:text-4xl lg:text-5xl font-light tracking-tight leading-[1.15] max-w-[20ch]">
+          <p className="mt-16 md:mt-24 text-2xl md:text-4xl lg:text-5xl font-[500] tracking-tight leading-[1.15] max-w-[20ch]">
             Are these five true to the user, or only true to{' '}
             <span className="text-black/35">who we could get on a call?</span>
           </p>
@@ -391,7 +391,7 @@ export function TrueFive() {
       {/* ---------------- What it replaces ---------------- */}
       <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
-          <h3 className="text-2xl md:text-4xl font-light tracking-tight leading-tight max-w-[22ch]">
+          <h3 className="text-2xl md:text-4xl font-[500] tracking-tight leading-tight max-w-[22ch]">
             Assumptions in a meeting, replaced by people.
           </h3>
           <p className="mt-6 text-base md:text-lg text-black/55 font-light leading-relaxed max-w-[52ch]">
@@ -408,7 +408,7 @@ export function TrueFive() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="py-5 border-b border-black/10 text-xl md:text-[2rem] leading-tight font-light tracking-tight text-black/30 line-through decoration-1"
+                  className="py-5 border-b border-black/10 text-xl md:text-[2rem] leading-tight font-[500] tracking-tight text-black/30 line-through decoration-1"
                 >
                   {item}
                 </li>
@@ -419,7 +419,7 @@ export function TrueFive() {
               <span className="block mb-4 text-xs uppercase tracking-widest text-[#00995a] font-bold">
                 At Renders Arc, it starts with
               </span>
-              <p className="text-xl md:text-[2rem] leading-tight font-light tracking-tight text-black">
+              <p className="text-xl md:text-[2rem] leading-tight font-[500] tracking-tight text-black">
                 Five conversations with the people who will actually open the thing.
               </p>
             </div>
@@ -430,7 +430,7 @@ export function TrueFive() {
       {/* ---------------- Where it sits ---------------- */}
       <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
-          <h3 className="text-2xl md:text-4xl font-light tracking-tight leading-tight">
+          <h3 className="text-2xl md:text-4xl font-[500] tracking-tight leading-tight">
             Design starts after, not before.
           </h3>
           <p className="mt-6 text-base md:text-lg text-black/55 font-light leading-relaxed max-w-[52ch]">
@@ -455,7 +455,7 @@ export function TrueFive() {
                 />
                 <b
                   className={[
-                    'block text-lg md:text-xl font-light tracking-tight',
+                    'block text-lg md:text-xl font-[500] tracking-tight',
                     item.here ? 'text-[#00995a]' : 'text-black',
                   ].join(' ')}
                 >
@@ -473,7 +473,7 @@ export function TrueFive() {
               <p
                 key={q}
                 className={[
-                  'py-7 text-xl md:text-2xl lg:text-[1.75rem] leading-tight font-light tracking-tight text-black/80 border-b border-black/10',
+                  'py-7 text-xl md:text-2xl lg:text-[1.75rem] leading-tight font-[500] tracking-tight text-black/80 border-b border-black/10',
                   i % 2 === 1 ? 'md:pl-10 md:border-l md:border-black/10' : 'md:pr-10',
                 ].join(' ')}
               >
@@ -491,7 +491,7 @@ export function TrueFive() {
       <div className="px-6 lg:px-12 py-20 md:py-32 border-t border-black/10 relative">
         <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#00ea77]/[0.05] blur-[150px] rounded-full translate-y-1/3 -translate-x-1/3 pointer-events-none" />
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto relative">
-          <p className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] font-light tracking-tight max-w-[19ch]">
+          <p className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] font-[500] tracking-tight max-w-[19ch]">
             Five conversations get you to roughly{' '}
             <span className="text-[#00995a]">85%</span> of the problems a design will actually
             have, so that is where we stop guessing and start building.

@@ -22,7 +22,7 @@ export default function Home() {
         <WhatWeBuild />
         <Clients />
         <Testimonials />
-        <LetsTalk />
+        <LetsTalk cta />
       </main>
       <Footer />
     </div>

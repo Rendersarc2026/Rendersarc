@@ -12,7 +12,7 @@ export function WhatWeDo() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="text-black font-[600] uppercase tracking-[-0.02em] leading-none text-[clamp(2.5rem,6vw,5rem)]"
+          className="text-black font-[500] uppercase tracking-[-0.02em] leading-none text-[clamp(2.5rem,6vw,5rem)]"
         >
           What we do
         </motion.h2>

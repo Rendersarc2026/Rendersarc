@@ -52,7 +52,7 @@ export function Testimonials() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <h2 className="text-black font-[600] uppercase tracking-[-0.01em] text-2xl md:text-[28px]">
+          <h2 className="text-black font-[500] uppercase tracking-[-0.01em] text-2xl md:text-[28px]">
             Real stories
           </h2>
           <p className="mt-3 text-sm md:text-base text-black/70">
