@@ -6,9 +6,9 @@ export default function TermsAndConditions() {
     <div className="min-h-screen bg-white text-black selection:bg-black/10">
       <Navigation />
       <main className="max-w-4xl mx-auto px-6 py-32 md:py-48">
-        <h1 className="text-4xl md:text-6xl font-[500] mb-12">Terms & <span className="text-black">Conditions</span></h1>
+        <h1 className="text-4xl md:text-6xl font-[700] mb-12">Terms & <span className="text-black">Conditions</span></h1>
         
-        <div className="space-y-8 text-black/65 leading-relaxed font-light">
+        <div className="space-y-8 text-black/65 leading-relaxed font-[400]">
           <section>
             <h2 className="text-2xl text-black mb-4">1. Acceptance of Terms</h2>
             <p>By accessing and using our services, you accept and agree to be bound by the terms and provision of this agreement. In addition, when using these particular services, you shall be subject to any posted guidelines or rules applicable to such services.</p>

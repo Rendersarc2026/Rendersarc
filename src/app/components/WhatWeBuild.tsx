@@ -252,7 +252,7 @@ export function WhatWeBuild() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="text-center text-black font-[500] tracking-[-0.02em] leading-[1.1] text-[clamp(2rem,5vw,4rem)]"
+            className="text-center text-black font-[700] tracking-[-0.02em] leading-[1.1] text-[clamp(2rem,5vw,4rem)]"
           >
             What we build,
             <br />
@@ -273,7 +273,7 @@ export function WhatWeBuild() {
                 key={`${project.slug}-${i}`}
                 onClick={() => setSelected(project)}
                 style={{ width: CARD_WIDTH }}
-                className="group relative shrink-0 h-[260px] bg-black overflow-hidden snap-center origin-center will-change-transform flex items-end justify-center pb-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+                className="group relative shrink-0 h-[260px] rounded-2xl bg-black overflow-hidden snap-center origin-center will-change-transform flex items-end justify-center pb-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
               >
                 {project.image && (
                   <Image

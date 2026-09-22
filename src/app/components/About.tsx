@@ -46,12 +46,12 @@ export function About() {
             transition={{ duration: 0.8 }}
             className="max-w-4xl"
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight mb-12 font-[500] text-black tracking-tight">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight mb-12 font-[700] text-black tracking-tight">
               Before Anything Exists, <br />
               It Is <span className="text-black">Imagined</span>.
             </h2>
 
-            <div className="space-y-6 text-lg md:text-xl text-black/65 font-light leading-relaxed">
+            <div className="space-y-6 text-lg md:text-xl text-black/65 font-[400] leading-relaxed">
               <p>
                 Every system, every structure, and every piece of technology we interact with was once just a thought.
                 It was a possibility waiting for someone to believe in it enough to bring it to life.
@@ -82,7 +82,7 @@ export function About() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <h3 className="text-3xl md:text-4xl lg:text-5xl leading-tight mb-8 font-[500] text-black tracking-tight">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl leading-tight mb-8 font-[700] text-black tracking-tight">
               A Methodology
               <br />
               Driven by{' '}
@@ -90,7 +90,7 @@ export function About() {
                 Results
               </span>
             </h3>
-            <div className="space-y-6 text-base md:text-lg text-black/55 font-light leading-relaxed">
+            <div className="space-y-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed">
               <p>
                 We believe that exceptional design is the result of a deliberate and strategic process. Our approach is designed to bridge the gap between creative vision and business objectives.
               </p>
@@ -130,7 +130,7 @@ export function About() {
                   {v.number}
                 </motion.span>
                 <div className="relative z-10">
-                  <h4 className="mb-2 text-xl font-[500] text-black group-hover:text-black transition-colors duration-300">
+                  <h4 className="mb-2 text-xl font-[700] text-black group-hover:text-black transition-colors duration-300">
                     {v.title}
                   </h4>
                   <p className="text-sm leading-relaxed text-black/55 group-hover:text-black/75 transition-colors duration-300">

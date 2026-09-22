@@ -223,4 +223,24 @@ export const faqs: Faq[] = [
     answer:
       'Each project includes set review points with room for feedback at every phase. The number of revision rounds is defined in your proposal up front, so the scope stays clear from start to finish.',
   },
+  {
+    question: 'What do you offer besides web design?',
+    answer:
+      'Brand and identity, digital products, and campaign work — the same team that designs the site can build the system around it. If a project needs something we do not do in-house, we tell you early rather than stretching to cover it.',
+  },
+  {
+    question: 'How does a project begin?',
+    answer:
+      'With a short conversation to agree the scope, then True 5: five one-on-one conversations with people who match your actual end user. What they say becomes the brief, and the first design file opens after that, not before.',
+  },
+  {
+    question: 'Will my site work well on phones?',
+    answer:
+      'Yes. Every build is designed for small screens as seriously as large ones, then checked across devices and browsers before launch, so layout, tap targets and load speed hold up in a hand as well as on a desk.',
+  },
+  {
+    question: 'Will my site be found on Google?',
+    answer:
+      'Each Renders Arc website is built with clean structure and search-friendly technical foundations so it can be found and indexed. For ongoing ranking growth, we can point you toward focused search support via our network of SEO experts.',
+  },
 ];

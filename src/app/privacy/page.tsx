@@ -6,9 +6,9 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen bg-white text-black selection:bg-black/10">
       <Navigation />
       <main className="max-w-4xl mx-auto px-6 py-32 md:py-48">
-        <h1 className="text-4xl md:text-6xl font-[500] mb-12">Privacy <span className="text-black">Policy</span></h1>
+        <h1 className="text-4xl md:text-6xl font-[700] mb-12">Privacy <span className="text-black">Policy</span></h1>
         
-        <div className="space-y-8 text-black/65 leading-relaxed font-light">
+        <div className="space-y-8 text-black/65 leading-relaxed font-[400]">
           <section>
             <h2 className="text-2xl text-black mb-4">1. Information We Collect</h2>
             <p>We collect information you provide directly to us, such as when you request a quote, fill out a form, or communicate with us. This may include your name, email address, phone number, and any other information you choose to provide.</p>

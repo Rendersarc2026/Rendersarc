@@ -1,6 +1,6 @@
 'use client';
 
-import { Loader2 } from 'lucide-react';
+import { Loader2, MoveRight } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
@@ -21,11 +21,15 @@ const contactInfo = [
   },
 ];
 
-/** One line, no box: the field is the rule under it. */
+/** Filled field on the panel, with the focus ring doing the work. */
 const inputClass = (invalid: boolean) =>
-  `w-full bg-transparent border-b py-3 text-base text-black placeholder:text-black/25 outline-none transition-colors ${
-    invalid ? 'border-red-500' : 'border-black/15 focus:border-black'
+  `w-full rounded-xl bg-white border px-4 py-3.5 text-base text-black placeholder:text-black/30 outline-none transition-all duration-200 ${
+    invalid
+      ? 'border-red-400 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.12)]'
+      : 'border-black/10 hover:border-black/20 focus:border-black focus:shadow-[0_0_0_3px_rgba(0,0,0,0.06)]'
   }`;
+
+const labelClass = 'mb-2 block text-[11px] uppercase tracking-[0.2em] text-black/45';
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -161,18 +165,16 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+          className="rounded-3xl bg-[#f4f4f4] p-6 sm:p-8 md:p-12"
         >
           {error && (
             <p className="mb-8 text-sm text-red-500">{error}</p>
           )}
 
-          <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
+          <div className="grid md:grid-cols-2 gap-x-6 gap-y-6">
             {FIELDS.map((field) => (
               <div key={field.id}>
-                <label
-                  htmlFor={field.id}
-                  className="block text-[11px] uppercase tracking-[0.2em] text-black/40"
-                >
+                <label htmlFor={field.id} className={labelClass}>
                   {field.label}
                 </label>
                 <input
@@ -193,10 +195,7 @@ export function Contact() {
             ))}
 
             <div className="md:col-span-2">
-              <label
-                htmlFor="message"
-                className="block text-[11px] uppercase tracking-[0.2em] text-black/40"
-              >
+              <label htmlFor="message" className={labelClass}>
                 Message
               </label>
               <textarea
@@ -205,7 +204,7 @@ export function Contact() {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                rows={4}
+                rows={5}
                 placeholder="Tell us about your project"
                 aria-invalid={errors.message ? true : undefined}
                 className={`${inputClass(Boolean(errors.message))} resize-none`}
@@ -220,15 +219,18 @@ export function Contact() {
             suppressHydrationWarning
             type="submit"
             disabled={sending}
-            className="mt-12 inline-flex items-center justify-center gap-3 px-10 py-4 bg-black text-white text-xs tracking-[0.2em] uppercase font-medium transition-opacity hover:opacity-80 disabled:opacity-50"
+            className="mt-10 inline-flex items-center justify-center gap-3 rounded-full bg-black px-10 py-4 text-[13px] font-[600] uppercase tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.28)] disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
           >
             {sending ? (
               <>
                 Sending
-                <Loader2 size={15} className="animate-spin" />
+                <Loader2 size={16} className="animate-spin" aria-hidden />
               </>
             ) : (
-              'Send message'
+              <>
+                Send message
+                <MoveRight size={16} strokeWidth={2} aria-hidden />
+              </>
             )}
           </button>
         </motion.form>

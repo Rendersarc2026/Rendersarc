@@ -12,7 +12,7 @@ export function WhatWeDo() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="text-black font-[500] uppercase tracking-[-0.02em] leading-none text-[clamp(2.5rem,6vw,5rem)]"
+          className="text-black font-[700] uppercase tracking-[-0.02em] leading-none text-[clamp(2.5rem,6vw,5rem)]"
         >
           What we do
         </motion.h2>
@@ -29,7 +29,7 @@ export function WhatWeDo() {
             className="flex flex-col"
           >
             <div className="pb-5 md:px-6">
-              <h3 className="text-xl md:text-2xl font-[500] text-black tracking-[-0.01em]">
+              <h3 className="text-xl md:text-2xl font-[700] text-black tracking-[-0.01em]">
                 {pillar.title}
               </h3>
               <p className="mt-2 text-sm leading-snug text-black/60 max-w-[36ch]">

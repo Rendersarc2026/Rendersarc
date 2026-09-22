@@ -28,7 +28,7 @@ export function Faq() {
             <span className="text-black text-xs tracking-widest uppercase font-bold">FAQ</span>
           </div>
 
-          <h1 className="text-black font-[500] tracking-[-0.02em] leading-[1.1] text-[clamp(2rem,3.6vw,3.25rem)]">
+          <h1 className="text-black font-[700] tracking-[-0.02em] leading-[1.1] text-[clamp(2rem,3.6vw,3.25rem)]">
             We&apos;re often asked
           </h1>
 
@@ -59,7 +59,7 @@ export function Faq() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: i * 0.04, ease: 'easeOut' }}
-                className="bg-[#f4f4f4] transition-colors duration-300 hover:bg-[#efefef]"
+                className="rounded-xl bg-[#f4f4f4] transition-colors duration-300 hover:bg-[#efefef]"
               >
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}

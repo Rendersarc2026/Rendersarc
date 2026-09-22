@@ -81,7 +81,7 @@ export function Navigation() {
                     href={item.href}
                     aria-current={isActive ? 'page' : undefined}
                     style={{ color: isActive ? '#000000' : 'rgba(0,0,0,0.8)' }}
-                    className="block text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors relative py-2 font-medium hover:text-black"
+                    className="block text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors relative py-2 font-[600] hover:text-black"
                   >
                     {item.label}
                     {isActive && (
@@ -124,7 +124,7 @@ export function Navigation() {
                   href={item.href}
                   aria-current={pathname === item.href ? 'page' : undefined}
                   style={{ color: pathname === item.href ? '#000000' : 'rgba(0,0,0,0.6)' }}
-                  className="block w-full text-left text-sm tracking-widest uppercase py-1 font-light"
+                  className="block w-full text-left text-sm tracking-widest uppercase py-1 font-[600]"
                 >
                   {item.label}
                 </Link>
@@ -132,7 +132,7 @@ export function Navigation() {
               <Link
                 href="/contact"
                 style={{ border: '1px solid rgba(0,0,0,0.2)', color: '#000000' }}
-                className="block w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-light text-center"
+                className="block w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-[500] text-center"
               >
                 Get in touch
               </Link>

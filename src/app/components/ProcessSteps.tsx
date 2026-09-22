@@ -19,7 +19,7 @@ export function ProcessSteps() {
             <p className="text-sm font-[500] tracking-[0.1em] text-black/30">{step.number}</p>
 
             <div>
-              <h2 className="text-black font-[500] tracking-[-0.01em] text-2xl md:text-[32px]">
+              <h2 className="text-black font-[700] tracking-[-0.01em] text-2xl md:text-[32px]">
                 {step.title}
               </h2>
               <p className="mt-4 text-sm md:text-base leading-relaxed text-black/60 max-w-[52ch]">

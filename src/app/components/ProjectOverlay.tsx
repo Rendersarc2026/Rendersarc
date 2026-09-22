@@ -123,7 +123,7 @@ export function ProjectOverlay({
         {/* One measure for the whole column: heading, copy, rule and chips share
             a left and right edge instead of each ending where its text runs out. */}
         <div className="px-6 lg:px-16 py-14 lg:pt-[18vh] lg:pb-16 flex flex-col w-full max-w-[34rem] lg:mx-auto">
-          <h2 className="text-black font-[500] uppercase tracking-[-0.01em] leading-[1.15] text-[clamp(1.5rem,2.6vw,2.25rem)]">
+          <h2 className="text-black font-[700] uppercase tracking-[-0.01em] leading-[1.15] text-[clamp(1.5rem,2.6vw,2.25rem)]">
             {active.title}
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-black/70">
@@ -131,7 +131,7 @@ export function ProjectOverlay({
           </p>
 
           <div className="mt-16 lg:mt-auto lg:pt-24">
-            <h3 className="text-black font-[500] text-xl md:text-2xl tracking-[-0.01em]">
+            <h3 className="text-black font-[700] text-xl md:text-2xl tracking-[-0.01em]">
               The approach
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-black/70">

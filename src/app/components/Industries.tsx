@@ -84,10 +84,10 @@ export function Industries() {
             </span>
             <div className="h-px w-6 md:w-10 bg-black" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-[500] text-black leading-tight drop-shadow-xl">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-[700] text-black leading-tight drop-shadow-xl">
             Empowering Growth <br className="hidden md:block" />
             <span className="text-black/60">
-              Across <span className="text-black font-[500]">Every Sector</span>
+              Across <span className="text-black font-[700]">Every Sector</span>
             </span>
           </h2>
         </div>
@@ -118,19 +118,19 @@ export function Industries() {
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-gray-50 border border-black/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:border-black/10 shadow-sm flex-shrink-0">
                   {ind.icon && <ind.icon className="w-5 h-5 md:w-7 md:h-7 text-black" />}
                 </div>
-                <h3 className="text-xl md:text-4xl font-[500] text-black/80 transition-colors duration-300">
+                <h3 className="text-xl md:text-4xl font-[700] text-black/80 transition-colors duration-300">
                   {ind.title}
                 </h3>
               </div>
 
               <div className="mb-2">
-                <p className="text-lg md:text-2xl font-medium text-black/90 leading-snug group-hover:text-black transition-colors duration-300">
+                <p className="text-lg md:text-2xl font-[500] text-black/90 leading-snug group-hover:text-black transition-colors duration-300">
                   {ind.subtitle}
                 </p>
               </div>
 
               <div className="space-y-3">
-                <p className="text-base md:text-lg text-black/60 leading-relaxed font-medium">
+                <p className="text-base md:text-lg text-black/60 leading-relaxed font-[400]">
                   {ind.desc1}
                 </p>
                 <p className="text-base md:text-lg text-black/50 leading-relaxed group-hover:text-black/70 transition-colors duration-300">

@@ -24,7 +24,7 @@ export function PageHeader({
         className="max-w-[1400px] mx-auto"
       >
         <p className="text-[11px] uppercase tracking-[0.2em] text-black/40">{eyebrow}</p>
-        <h1 className="mt-6 text-black font-[500] tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,7vw,6rem)]">
+        <h1 className="mt-6 text-black font-[700] tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,7vw,6rem)]">
           {title}
         </h1>
         {intro && (

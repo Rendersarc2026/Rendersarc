@@ -17,7 +17,7 @@ export function LetsTalk({ cta = false }: { cta?: boolean }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="text-black font-[500] tracking-[-0.035em] leading-[0.95] text-[clamp(3rem,9vw,9rem)]"
+          className="text-black font-[700] tracking-[-0.035em] leading-[0.95] text-[clamp(3rem,9vw,9rem)]"
         >
           Let&apos;s talk.
         </motion.h2>

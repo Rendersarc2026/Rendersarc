@@ -14,7 +14,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="text-black font-[500] tracking-[-0.03em] leading-[1.12] text-[clamp(2rem,5.3vw,5rem)]"
+          className="text-black font-[700] tracking-[-0.03em] leading-[1.12] text-[clamp(2rem,5.3vw,5rem)]"
         >
           We design around the five people
           <br className="hidden md:block" />{' '}
