@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Navigation } from '../components/Navigation';
 import { PageHeader } from '../components/PageHeader';
 import { ProcessSteps } from '../components/ProcessSteps';
+import { TrueFive } from '../components/TrueFive';
 import { Footer } from '../components/Footer';
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function ProcessPage() {
           intro="Five steps, each with something you can hold at the end of it. Placeholder copy throughout — swap it for the real process."
         />
         <ProcessSteps />
+        <TrueFive />
       </main>
       <Footer />
     </div>
