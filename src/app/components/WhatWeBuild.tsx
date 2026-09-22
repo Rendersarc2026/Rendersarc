@@ -10,6 +10,8 @@ const CARD_WIDTH = 240;
 const CARD_GAP = 44;
 /** How much the centred card outgrows the rest. */
 const MAX_SCALE_BOOST = 0.3;
+const EDGE_FADE =
+  'linear-gradient(to right, transparent 0, #000 3rem, #000 calc(100% - 3rem), transparent 100%)';
 
 export function WhatWeBuild() {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -42,31 +44,57 @@ export function WhatWeBuild() {
     });
   }, [applyFocus]);
 
-  // Open on a middle card so the rail reads as a coverflow, not a left-aligned list.
+  /** Scrolls so `card` sits dead centre, without animating. */
+  const center = useCallback((card: HTMLElement) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    scroller.scrollLeft = card.offsetLeft + card.offsetWidth / 2 - scroller.clientWidth / 2;
+  }, []);
+
   useEffect(() => {
     const scroller = scrollerRef.current;
-    if (scroller) {
+    if (!scroller) return;
+
+    // Opens on a middle card so the rail reads as a coverflow, not a left-aligned
+    // list. Deferred a frame: before layout every offsetLeft is still 0, which
+    // would leave the rail at 0 and every card at the same size.
+    const frame = requestAnimationFrame(() => {
       const middle = scroller.children[Math.floor(projects.length / 2)] as HTMLElement | undefined;
-      if (middle) {
-        scroller.scrollLeft =
-          middle.offsetLeft + middle.offsetWidth / 2 - scroller.clientWidth / 2;
-      }
-    }
-    applyFocus();
-    window.addEventListener('resize', scheduleFocus);
+      if (middle) center(middle);
+      applyFocus();
+    });
+
+    // The rail's own width drives the maths, so watch the element rather than the
+    // window — and keep whichever card was centred centred across the resize.
+    const observer = new ResizeObserver(() => {
+      const midpoint = scroller.scrollLeft + scroller.clientWidth / 2;
+      const nearest = Array.from(scroller.children).reduce<HTMLElement | null>((best, child) => {
+        const card = child as HTMLElement;
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        if (!best) return card;
+        const bestCenter = best.offsetLeft + best.offsetWidth / 2;
+        return Math.abs(cardCenter - midpoint) < Math.abs(bestCenter - midpoint) ? card : best;
+      }, null);
+      if (nearest) center(nearest);
+      applyFocus();
+    });
+    observer.observe(scroller);
+
     return () => {
-      window.removeEventListener('resize', scheduleFocus);
+      cancelAnimationFrame(frame);
+      observer.disconnect();
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
-  }, [applyFocus, scheduleFocus]);
+  }, [applyFocus, center]);
 
   return (
     <section id="projects" className="bg-white px-6 lg:px-12 pb-24 md:pb-32">
       <div className="relative">
-        {/* Backing panel — the focused card deliberately overhangs its bottom edge */}
+        {/* Backing panel. Its bottom edge sits below the resting cards so only the
+            focused one overhangs; see the rail's pb-14 below. */}
         <div
           aria-hidden
-          className="absolute inset-x-0 top-0 h-[calc(100%-4rem)] rounded-[2rem] bg-[#f4f4f4]"
+          className="absolute inset-x-0 top-0 bottom-10 rounded-[2rem] bg-[#f4f4f4]"
         />
 
         <div className="relative pt-16 md:pt-24">
@@ -85,8 +113,15 @@ export function WhatWeBuild() {
           <div
             ref={scrollerRef}
             onScroll={scheduleFocus}
-            style={{ paddingInline: `calc(50% - ${CARD_WIDTH / 2}px)`, gap: CARD_GAP }}
-            className="mt-12 md:mt-20 flex overflow-x-auto snap-x snap-mandatory scrollbar-none py-12"
+            style={{
+              paddingInline: `calc(50% - ${CARD_WIDTH / 2}px)`,
+              gap: CARD_GAP,
+              // Cards leaving the rail fade into the panel instead of being sliced
+              // off at its rounded corners.
+              maskImage: EDGE_FADE,
+              WebkitMaskImage: EDGE_FADE,
+            }}
+            className="mt-12 md:mt-20 flex overflow-x-auto snap-x snap-mandatory scrollbar-none pt-12 pb-14"
           >
             {projects.map((project) => (
               <button
