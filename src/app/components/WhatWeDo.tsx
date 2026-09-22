@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { LayoutGrid } from 'lucide-react';
 import { pillars } from '@/app/data/work';
 
 export function WhatWeDo() {
@@ -29,16 +28,13 @@ export function WhatWeDo() {
             transition={{ duration: 0.6, delay: i * 0.1, ease: 'easeOut' }}
             className="flex flex-col"
           >
-            <div className="flex items-start justify-between gap-6 pb-5 md:px-6">
-              <div>
-                <h3 className="text-xl md:text-2xl font-[500] text-black tracking-[-0.01em]">
-                  {pillar.title}
-                </h3>
-                <p className="mt-2 text-sm leading-snug text-black/60 max-w-[36ch]">
-                  {pillar.description}
-                </p>
-              </div>
-              <LayoutGrid className="w-4 h-4 shrink-0 mt-1.5 text-[#00995a]" aria-hidden />
+            <div className="pb-5 md:px-6">
+              <h3 className="text-xl md:text-2xl font-[500] text-black tracking-[-0.01em]">
+                {pillar.title}
+              </h3>
+              <p className="mt-2 text-sm leading-snug text-black/60 max-w-[36ch]">
+                {pillar.description}
+              </p>
             </div>
 
             {/* Imagery slot — swap the background for a project still once assets exist */}

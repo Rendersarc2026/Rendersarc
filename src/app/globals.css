@@ -203,3 +203,25 @@
     padding-right: 0;
   }
 }
+/* Logo marquee. The track holds two identical copies of the row, so shifting it
+   by exactly half its width lands back on an identical frame — a seamless loop. */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@utility marquee-track {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

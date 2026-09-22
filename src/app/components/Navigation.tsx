@@ -7,10 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 /** `id` is the section element scrolled to; 'contact' is the footer for now. */
 const NAV_ITEMS: { id: string | null; label: string }[] = [
-  { id: 'services', label: 'Work' },
-  { id: 'projects', label: 'Projects' },
   { id: null, label: 'Process' },
-  { id: 'clients', label: 'Clients' },
   { id: null, label: 'FAQ' },
   { id: 'contact', label: 'Contact' },
 ];
@@ -34,7 +31,7 @@ export function Navigation() {
   useEffect(() => {
     if (pathname !== '/') return;
 
-    const sections = ['hero', 'services', 'projects', 'clients', 'testimonials', 'contact'];
+    const sections = ['hero', 'testimonials', 'contact'];
     
     const observer = new IntersectionObserver(
       (entries) => {

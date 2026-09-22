@@ -4,14 +4,6 @@ import { motion } from 'motion/react';
 import { MoveRight } from 'lucide-react';
 
 export function Hero() {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offsetPosition = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-    }
-  };
-
   return (
     <section
       id="hero"
@@ -36,18 +28,6 @@ export function Hero() {
         </motion.h1>
       </div>
 
-      {/* CTA */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
-        onClick={() => scrollToSection('contact')}
-        className="group self-start flex items-center gap-1.5 text-black text-xs md:text-sm tracking-[0.08em] uppercase font-medium"
-      >
-        Start a project
-        <span className="transition-transform duration-300 group-hover:translate-x-1">&gt;</span>
-        <span className="sr-only">Scroll to contact section</span>
-      </motion.button>
     </section>
   );
 }

@@ -1,12 +1,12 @@
 // No 'use client' directive: this renders only inside WhatWeBuild, which is
 // already a client component. Marking it an entry point makes Next treat
 // `onClose` as a prop crossing the server boundary and demand a Server Action.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
 import { useLenis } from 'lenis/react';
-import { categories, projects, projectsByCategory, type Project } from '@/app/data/work';
+import { projects, type Project } from '@/app/data/work';
 
 export function ProjectOverlay({
   project,
@@ -16,6 +16,7 @@ export function ProjectOverlay({
   onClose: () => void;
 }) {
   const [active, setActive] = useState<Project>(project);
+  const tabsRef = useRef<HTMLElement>(null);
   const lenis = useLenis();
 
   useEffect(() => setActive(project), [project]);
@@ -39,10 +40,13 @@ export function ProjectOverlay({
     };
   }, [lenis, onClose]);
 
-  const selectCategory = (categoryId: string) => {
-    const next = projectsByCategory(categoryId)[0];
-    if (next) setActive(next);
-  };
+  // The rail is wider than the viewport once every project is listed, so keep
+  // whichever one is open in sight — including the card clicked to get here.
+  useEffect(() => {
+    tabsRef.current
+      ?.querySelector('[aria-current="true"]')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [active.slug]);
 
   const siblings = projects.filter(
     (p) => p.category === active.category && p.slug !== active.slug
@@ -59,16 +63,21 @@ export function ProjectOverlay({
       transition={{ duration: 0.25, ease: 'easeOut' }}
       className="fixed inset-0 z-[100] bg-white overflow-y-auto overscroll-contain"
     >
-      {/* Category tabs */}
+      {/* Project tabs — every card in the rail, so the whole set is reachable
+          without closing the overlay. */}
       <div className="sticky top-0 z-10 bg-white/90 backdrop-blur-md border-b border-black/5">
         <div className="flex items-center gap-6 px-6 lg:px-12 h-16">
-          <nav className="flex-1 flex items-center justify-start lg:justify-between gap-8 overflow-x-auto scrollbar-none">
-            {categories.map((category) => {
-              const isActive = category.id === active.category;
+          <nav
+            ref={tabsRef}
+            aria-label="Projects"
+            className="flex-1 flex items-center justify-start lg:justify-between gap-7 lg:gap-6 overflow-x-auto scrollbar-none"
+          >
+            {projects.map((item) => {
+              const isActive = item.slug === active.slug;
               return (
                 <button
-                  key={category.id}
-                  onClick={() => selectCategory(category.id)}
+                  key={item.slug}
+                  onClick={() => setActive(item)}
                   aria-current={isActive ? 'true' : undefined}
                   className={`whitespace-nowrap text-sm font-[500] pb-1 border-b-2 transition-colors ${
                     isActive
@@ -76,7 +85,7 @@ export function ProjectOverlay({
                       : 'text-black/50 border-transparent hover:text-black'
                   }`}
                 >
-                  {category.label}
+                  {item.title}
                 </button>
               );
             })}
@@ -111,11 +120,13 @@ export function ProjectOverlay({
           )}
         </div>
 
-        <div className="px-6 lg:px-16 py-14 lg:pt-[18vh] lg:pb-16 flex flex-col">
-          <h2 className="text-black font-[600] uppercase tracking-[-0.01em] leading-[1.15] text-[clamp(1.5rem,2.6vw,2.25rem)] max-w-[16ch]">
+        {/* One measure for the whole column: heading, copy, rule and chips share
+            a left and right edge instead of each ending where its text runs out. */}
+        <div className="px-6 lg:px-16 py-14 lg:pt-[18vh] lg:pb-16 flex flex-col w-full max-w-[34rem] lg:mx-auto">
+          <h2 className="text-black font-[600] uppercase tracking-[-0.01em] leading-[1.15] text-[clamp(1.5rem,2.6vw,2.25rem)]">
             {active.title}
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-black/70 max-w-[48ch]">
+          <p className="mt-4 text-sm leading-relaxed text-black/70">
             {active.summary}
           </p>
 
@@ -123,7 +134,7 @@ export function ProjectOverlay({
             <h3 className="text-black font-[500] text-xl md:text-2xl tracking-[-0.01em]">
               The approach
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-black/70 max-w-[48ch]">
+            <p className="mt-3 text-sm leading-relaxed text-black/70">
               {active.approach}
             </p>
           </div>

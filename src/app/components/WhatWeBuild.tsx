@@ -10,39 +10,84 @@ const CARD_WIDTH = 240;
 const CARD_GAP = 44;
 /** How much the centred card outgrows the rest. */
 const MAX_SCALE_BOOST = 0.3;
-const EDGE_FADE =
-  'linear-gradient(to right, transparent 0, #000 3rem, #000 calc(100% - 3rem), transparent 100%)';
+/** How far a resting card sinks below the focused one. */
+const MAX_DROP = 14;
+/** Per-frame approach rate of the lerp; lower is slower and softer. */
+const EASE_RATE = 0.16;
+/** Below this the lerp has visually arrived, so the loop can park itself. */
+const SETTLE_EPSILON = 0.0005;
 
 export function WhatWeBuild() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
+  // Focus amount actually painted for each card, kept between frames so the rail
+  // eases towards its target instead of snapping to it on every scroll event.
+  const focusRef = useRef(new WeakMap<HTMLElement, number>());
   const [selected, setSelected] = useState<Project | null>(null);
 
-  // Cards grow as they approach the middle of the rail.
-  const applyFocus = useCallback(() => {
+  /** Focus a card *should* have right now: 1 dead centre, 0 a full pitch away. */
+  const targetFocus = useCallback((card: HTMLElement, center: number) => {
+    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+    // Falls off over exactly one card pitch, so only the centred card grows
+    // and neighbours keep their gaps instead of merging into one black mass.
+    const distance = Math.min(Math.abs(center - cardCenter) / (CARD_WIDTH + CARD_GAP), 1);
+    const linear = 1 - distance;
+    // Smoothstep: flattens the curve at both ends so cards swell and settle
+    // instead of ramping at a constant rate the eye reads as mechanical.
+    return linear * linear * (3 - 2 * linear);
+  }, []);
+
+  const paint = useCallback((card: HTMLElement, focus: number) => {
+    const scale = 1 + MAX_SCALE_BOOST * focus;
+    const drop = MAX_DROP * (1 - focus);
+    card.style.transform = `translate3d(0, ${drop.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+    card.style.zIndex = String(Math.round(focus * 10));
+  }, []);
+
+  /** One lerp step. Returns true while anything is still moving. */
+  const step = useCallback(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return false;
+
+    const center = scroller.scrollLeft + scroller.clientWidth / 2;
+    let moving = false;
+
+    Array.from(scroller.children).forEach((child) => {
+      const card = child as HTMLElement;
+      const target = targetFocus(card, center);
+      const current = focusRef.current.get(card) ?? target;
+      const delta = target - current;
+      const next = Math.abs(delta) < SETTLE_EPSILON ? target : current + delta * EASE_RATE;
+      if (next !== current || Math.abs(delta) >= SETTLE_EPSILON) moving = true;
+      focusRef.current.set(card, next);
+      paint(card, next);
+    });
+
+    return moving;
+  }, [paint, targetFocus]);
+
+  /** Runs the lerp until it settles; safe to call on every scroll event. */
+  const run = useCallback(() => {
+    if (frameRef.current !== null) return;
+    const tick = () => {
+      const moving = step();
+      frameRef.current = moving ? requestAnimationFrame(tick) : null;
+    };
+    frameRef.current = requestAnimationFrame(tick);
+  }, [step]);
+
+  /** Snaps every card straight to its target, skipping the ease. */
+  const settle = useCallback(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
-
     const center = scroller.scrollLeft + scroller.clientWidth / 2;
     Array.from(scroller.children).forEach((child) => {
       const card = child as HTMLElement;
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      // Falls off over exactly one card pitch, so only the centred card grows
-      // and neighbours keep their gaps instead of merging into one black mass.
-      const distance = Math.min(Math.abs(center - cardCenter) / (CARD_WIDTH + CARD_GAP), 1);
-      const scale = 1 + MAX_SCALE_BOOST * (1 - distance);
-      card.style.transform = `scale(${scale.toFixed(3)})`;
-      card.style.zIndex = String(Math.round((1 - distance) * 10));
+      const focus = targetFocus(card, center);
+      focusRef.current.set(card, focus);
+      paint(card, focus);
     });
-  }, []);
-
-  const scheduleFocus = useCallback(() => {
-    if (frameRef.current !== null) return;
-    frameRef.current = requestAnimationFrame(() => {
-      frameRef.current = null;
-      applyFocus();
-    });
-  }, [applyFocus]);
+  }, [paint, targetFocus]);
 
   /** Scrolls so `card` sits dead centre, without animating. */
   const center = useCallback((card: HTMLElement) => {
@@ -61,7 +106,7 @@ export function WhatWeBuild() {
     const frame = requestAnimationFrame(() => {
       const middle = scroller.children[Math.floor(projects.length / 2)] as HTMLElement | undefined;
       if (middle) center(middle);
-      applyFocus();
+      settle();
     });
 
     // The rail's own width drives the maths, so watch the element rather than the
@@ -76,7 +121,8 @@ export function WhatWeBuild() {
         return Math.abs(cardCenter - midpoint) < Math.abs(bestCenter - midpoint) ? card : best;
       }, null);
       if (nearest) center(nearest);
-      applyFocus();
+      // A resize is a jump, not a glide — ease from the new geometry, not the old.
+      settle();
     });
     observer.observe(scroller);
 
@@ -84,20 +130,21 @@ export function WhatWeBuild() {
       cancelAnimationFrame(frame);
       observer.disconnect();
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      frameRef.current = null;
     };
-  }, [applyFocus, center]);
+  }, [center, settle]);
 
   return (
     <section id="projects" className="bg-white px-6 lg:px-12 pb-24 md:pb-32">
       <div className="relative">
         {/* Backing panel. Its bottom edge sits below the resting cards so only the
-            focused one overhangs; see the rail's pb-14 below. */}
+            focused one overhangs; see the rail's pb-20 below. */}
         <div
           aria-hidden
-          className="absolute inset-x-0 top-0 bottom-10 rounded-[2rem] bg-[#f4f4f4]"
+          className="absolute inset-x-0 top-0 bottom-4 rounded-[2rem] bg-[#f4f4f4]"
         />
 
-        <div className="relative pt-16 md:pt-24">
+        <div className="relative pt-24 md:pt-32">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -112,16 +159,12 @@ export function WhatWeBuild() {
 
           <div
             ref={scrollerRef}
-            onScroll={scheduleFocus}
+            onScroll={run}
             style={{
               paddingInline: `calc(50% - ${CARD_WIDTH / 2}px)`,
               gap: CARD_GAP,
-              // Cards leaving the rail fade into the panel instead of being sliced
-              // off at its rounded corners.
-              maskImage: EDGE_FADE,
-              WebkitMaskImage: EDGE_FADE,
             }}
-            className="mt-12 md:mt-20 flex overflow-x-auto snap-x snap-mandatory scrollbar-none pt-12 pb-14"
+            className="mt-14 md:mt-24 flex overflow-x-auto snap-x snap-mandatory scrollbar-none pt-12 pb-20"
           >
             {projects.map((project) => (
               <button
