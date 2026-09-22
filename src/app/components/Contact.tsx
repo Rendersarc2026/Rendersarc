@@ -123,7 +123,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact-form" className="bg-white px-6 lg:px-12 pb-24 md:pb-32">
+    <section id="contact-form" className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pb-24 md:pb-32">
       <div className="max-w-[1400px] mx-auto grid lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] gap-16 lg:gap-24 pt-16 md:pt-24 border-t border-black/10">
         {/* Details */}
         <motion.div

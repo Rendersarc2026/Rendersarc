@@ -54,7 +54,7 @@ export function Navigation() {
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
-      <div className="w-full px-6 lg:px-12">
+      <div className="w-full px-6 md:px-10 lg:px-16 xl:px-24">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <button

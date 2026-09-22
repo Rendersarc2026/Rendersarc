@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-between bg-white px-6 lg:px-12 pt-32 md:pt-40 pb-10 md:pb-14"
+      className="relative min-h-screen flex flex-col justify-between bg-white px-6 md:px-10 lg:px-16 xl:px-24 pt-32 md:pt-40 pb-10 md:pb-14"
     >
       {/* Headline */}
       <div className="flex-1 flex items-center">

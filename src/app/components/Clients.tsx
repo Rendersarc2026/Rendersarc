@@ -29,7 +29,7 @@ const EDGE_FADE =
 export function Clients() {
   return (
     <section id="clients" className="bg-white py-24 md:py-32">
-      <div className="px-6 lg:px-12">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

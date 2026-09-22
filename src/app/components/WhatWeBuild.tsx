@@ -237,7 +237,7 @@ export function WhatWeBuild() {
   }, [center, settle]);
 
   return (
-    <section id="projects" className="bg-white px-6 lg:px-12 pb-24 md:pb-32">
+    <section id="projects" className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pb-24 md:pb-32">
       <div className="relative">
         {/* Backing panel. Its bottom edge sits below the resting cards so only the
             focused one overhangs; see the rail's pb-20 below. */}

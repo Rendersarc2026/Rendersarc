@@ -5,7 +5,7 @@ import { processSteps } from '@/app/data/work';
 
 export function ProcessSteps() {
   return (
-    <section id="process" className="bg-white px-6 lg:px-12 pb-24 md:pb-32">
+    <section id="process" className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pb-24 md:pb-32">
       <div className="max-w-[1400px] mx-auto">
         {processSteps.map((step, i) => (
           <motion.article

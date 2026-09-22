@@ -164,7 +164,7 @@ export function TrueFive() {
       className="bg-white text-black selection:bg-[#00ea77]/30 overflow-hidden"
     >
       {/* ---------------- Opening ---------------- */}
-      <div className="px-6 lg:px-12 pt-24 md:pt-32 pb-16 md:pb-24 border-t border-black/10 relative">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-24 md:pt-32 pb-16 md:pb-24 border-t border-black/10 relative">
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#00ea77]/[0.045] blur-[160px] rounded-full -translate-y-1/3 translate-x-1/3 pointer-events-none" />
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto relative">
           <div className="flex items-center gap-4 mb-10 md:mb-14">
@@ -194,7 +194,7 @@ export function TrueFive() {
       </div>
 
       {/* ---------------- Why five: the dot stage ---------------- */}
-      <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
         <div className="max-w-[1400px] mx-auto">
           <motion.div {...fadeUp}>
             <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[20ch]">
@@ -331,7 +331,7 @@ export function TrueFive() {
       </div>
 
       {/* ---------------- Why "True" ---------------- */}
-      <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
           <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
             Why it is called <span className="text-[#00995a]">True</span>.
@@ -389,7 +389,7 @@ export function TrueFive() {
       </div>
 
       {/* ---------------- What it replaces ---------------- */}
-      <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
           <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[22ch]">
             Assumptions in a meeting, replaced by people.
@@ -428,7 +428,7 @@ export function TrueFive() {
       </div>
 
       {/* ---------------- Where it sits ---------------- */}
-      <div className="px-6 lg:px-12 py-16 md:py-24 border-t border-black/10">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
           <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
             Design starts after, not before.
@@ -488,7 +488,7 @@ export function TrueFive() {
       </div>
 
       {/* ---------------- Close ---------------- */}
-      <div className="px-6 lg:px-12 py-20 md:py-32 border-t border-black/10 relative">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-20 md:py-32 border-t border-black/10 relative">
         <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#00ea77]/[0.05] blur-[150px] rounded-full translate-y-1/3 -translate-x-1/3 pointer-events-none" />
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto relative">
           <p className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] font-[700] tracking-tight max-w-[19ch]">

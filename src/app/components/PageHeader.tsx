@@ -16,7 +16,7 @@ export function PageHeader({
   intro?: string;
 }) {
   return (
-    <header className="bg-white px-6 lg:px-12 pt-40 md:pt-48 pb-16 md:pb-24">
+    <header className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pt-40 md:pt-48 pb-16 md:pb-24">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}

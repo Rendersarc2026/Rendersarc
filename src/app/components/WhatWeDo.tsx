@@ -6,7 +6,7 @@ import { pillars } from '@/app/data/work';
 export function WhatWeDo() {
   return (
     <section id="services" className="bg-white pt-24 md:pt-32 pb-16 md:pb-24">
-      <div className="px-6 lg:px-12">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

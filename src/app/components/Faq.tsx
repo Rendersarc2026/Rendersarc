@@ -13,7 +13,7 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="bg-white px-6 lg:px-12 pt-32 md:pt-40 pb-24 md:pb-32 min-h-screen flex items-center"
+      className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pt-32 md:pt-40 pb-24 md:pb-32 min-h-screen flex items-center"
     >
       <div className="w-full grid gap-12 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-24">
         {/* Standing head. Sticks while the answers scroll past it. */}

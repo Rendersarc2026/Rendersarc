@@ -66,7 +66,7 @@ export function ProjectOverlay({
       {/* Project tabs — every card in the rail, so the whole set is reachable
           without closing the overlay. */}
       <div className="sticky top-0 z-10 bg-white/90 backdrop-blur-md border-b border-black/5">
-        <div className="flex items-center gap-6 px-6 lg:px-12 h-16">
+        <div className="flex items-center gap-6 px-6 md:px-10 lg:px-16 xl:px-24 h-16">
           <nav
             ref={tabsRef}
             aria-label="Projects"
