@@ -5,189 +5,125 @@ import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/assets/Logo-White.png';
-import GradientText from '@/components/GradientText';
+
+const SOCIALS = [
+  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/' },
+  { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/rendersarc/' },
+];
+
+/** Real routes rather than scroll-by-id, so the links work from every page. */
+const EXPLORE = [
+  { href: '/#services', label: 'What we do' },
+  { href: '/process', label: 'Process' },
+  { href: '/faq', label: 'FAQ' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const LEGAL = [
+  { href: '/terms', label: 'Terms' },
+  { href: '/privacy', label: 'Privacy' },
+];
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const socialLinks = [
-    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/' },
-    { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/rendersarc/' },
-  ];
-
   return (
-    <footer style={{ backgroundColor: '#f7f7f7', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-      {/* Massive brand name */}
-      {/* <div className="overflow-hidden" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-7xl mx-auto px-6 py-16"
-        >
-          <div className="flex flex-col items-center justify-center">
-            <GradientText
-              colors={["#00ea77", "#5227FF", "#FF9FFC", "#B19EEF", "#FF40A3", "#FF8C40", "#FFE47E"]}
-              animationSpeed={8}
-              showBorder={false}
-              className="text-[2rem] md:text-[4rem] lg:text-[5rem] leading-none tracking-tight text-center font-bold mb-4 md:mb-8"
-            >
-              THE POWER TO MANIFEST
-            </GradientText>
-          </div>
-        </motion.div>
-      </div> */}
-
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-12 mb-16">
+    <footer className="bg-black text-white">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="max-w-6xl mx-auto px-6 py-14 md:py-16"
+      >
+        <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr] md:gap-12">
           {/* Brand */}
-          <motion.div
-            className="col-span-1"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="mb-8">
-              <Image
-                src={Logo}
-                alt="Renders Arc Logo"
-                width={150}
-                height={40}
-                className="h-10 w-auto object-contain invert"
-              />
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: 'rgba(0,0,0,0.45)' }}>
+          <div>
+            <Image
+              src={Logo}
+              alt="Renders Arc"
+              width={150}
+              height={40}
+              className="h-9 w-auto object-contain"
+            />
+            <p className="mt-5 text-sm leading-relaxed text-white/45 max-w-[30ch]">
               Designing digital futures with innovation and precision.
             </p>
-            <div className="mt-6 h-px w-10" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }} />
-          </motion.div>
+            <div className="mt-6 flex gap-3">
+              {SOCIALS.map(({ icon: Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-9 h-9 rounded-full border border-white/15 text-white/60 flex items-center justify-center transition-colors duration-300 hover:bg-[#00ea77] hover:border-[#00ea77] hover:text-black"
+                >
+                  <Icon size={15} />
+                </a>
+              ))}
+            </div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(0,0,0,0.4)' }}>
-              Company
-            </h4>
-            <ul className="space-y-3">
-              {[
-                { id: 'services', label: 'What we do' },
-                { id: 'clients', label: 'Clients' },
-                { id: 'testimonials', label: 'Stories' },
-              ].map((link) => (
-                <li key={link.id}>
-                  <button
-                    suppressHydrationWarning
-                    onClick={() => {
-                      const element = document.getElementById(link.id);
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }}
-                    className="text-sm transition-colors text-left"
-                    style={{ color: 'rgba(0,0,0,0.5)' }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#000000'; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = 'rgba(0,0,0,0.5)'; }}
+          {/* Explore */}
+          <div>
+            <h4 className="text-[11px] uppercase tracking-widest text-white/35">Explore</h4>
+            <ul className="mt-5 space-y-3">
+              {EXPLORE.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/55 hover:text-[#00ea77] transition-colors"
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h4 className="text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(0,0,0,0.4)' }}>
-              Contact
-            </h4>
-            <ul className="space-y-3 text-sm" style={{ color: 'rgba(0,0,0,0.5)' }}>
-              <li>rendersarcmail@gmail.com</li>
-              <li>+91 81293 21539</li>
-              <li className="pt-4">
-                G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Ernakulam, Kerala 682036              </li>
-              <li className="pt-4">
-                <div className="flex space-x-3">
-                  {socialLinks.map((social, index) => {
-                    const Icon = social.icon;
-                    return (
-                      <motion.a
-                        key={index}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={social.label}
-                        className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
-                        style={{ border: '1px solid rgba(0,0,0,0.15)', backgroundColor: 'transparent' }}
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        transition={{ duration: 0.2 }}
-                        onMouseEnter={(e) => {
-                          const el = e.currentTarget as HTMLAnchorElement;
-                          el.style.backgroundColor = '#000000';
-                          el.style.borderColor = '#000000';
-                          const svg = el.querySelector('svg');
-                          if (svg) (svg as SVGElement).style.color = '#FFFFFF';
-                        }}
-                        onMouseLeave={(e) => {
-                          const el = e.currentTarget as HTMLAnchorElement;
-                          el.style.backgroundColor = 'transparent';
-                          el.style.borderColor = 'rgba(0,0,0,0.15)';
-                          const svg = el.querySelector('svg');
-                          if (svg) (svg as SVGElement).style.color = 'rgba(0,0,0,0.6)';
-                        }}
-                      >
-                        <Icon size={15} style={{ color: 'rgba(0,0,0,0.6)' }} />
-                      </motion.a>
-                    );
-                  })}
-                </div>
+          <div>
+            <h4 className="text-[11px] uppercase tracking-widest text-white/35">Contact</h4>
+            <ul className="mt-5 space-y-3 text-sm text-white/55">
+              <li>
+                <a
+                  href="mailto:rendersarcmail@gmail.com"
+                  className="hover:text-[#00ea77] transition-colors"
+                >
+                  rendersarcmail@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+918129321539" className="hover:text-[#00ea77] transition-colors">
+                  +91 81293 21539
+                </a>
+              </li>
+              <li className="text-white/40 leading-relaxed max-w-[26ch]">
+                G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Kerala 682036
               </li>
             </ul>
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom bar */}
-        <motion.div
-          className="pt-8"
-          style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm" style={{ color: 'rgba(0,0,0,0.4)' }}>
-              © {currentYear} Renders Arc. All rights reserved.
-            </p>
-            <div className="flex items-center space-x-6 text-sm">
-              {[
-                { name: 'Terms', href: '/terms' },
-                { name: 'Privacy', href: '/privacy' }
-              ].map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="transition-colors"
-                  style={{ color: 'rgba(0,0,0,0.4)' }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#000000'; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(0,0,0,0.4)'; }}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
+        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-xs text-white/35">
+            © {currentYear} Renders Arc. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            {LEGAL.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs text-white/35 hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </footer>
   );
 }

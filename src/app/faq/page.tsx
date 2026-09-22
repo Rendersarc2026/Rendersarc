@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { Navigation } from '../components/Navigation';
-import { PageHeader } from '../components/PageHeader';
 import { Faq } from '../components/Faq';
 import { Footer } from '../components/Footer';
 
 export const metadata: Metadata = {
   title: 'FAQ — Renders Arc',
-  description: 'Timelines, pricing, support and what we need from you to start.',
+  description:
+    'Cost, timelines, ownership, content, updates and revisions — the questions we are asked most.',
 };
 
 export default function FaqPage() {
@@ -14,11 +14,6 @@ export default function FaqPage() {
     <div className="size-full bg-white relative overflow-x-clip">
       <Navigation />
       <main className="relative">
-        <PageHeader
-          eyebrow="FAQ"
-          title="Questions, answered"
-          intro="The things clients ask before we start. Placeholder answers for now."
-        />
         <Faq />
       </main>
       <Footer />

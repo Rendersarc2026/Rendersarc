@@ -194,33 +194,33 @@ export type Faq = {
 
 export const faqs: Faq[] = [
   {
-    question: 'How long does a typical project take?',
+    question: 'How much does a website cost?',
     answer:
-      'Placeholder answer. Most engagements run between six and twelve weeks depending on scope, with discovery and definition taking the first two.',
+      'Pricing depends on scope, page count, and what your project needs. Web design projects start at $5,000. After a short conversation about your goals, you get a clear quote with defined costs.',
   },
   {
-    question: 'How do you price work?',
+    question: 'How long does it take to build a site?',
     answer:
-      'Placeholder answer. Projects are quoted as a fixed scope with a fixed fee, agreed after discovery so neither side is guessing.',
+      "Timelines depend on scope and when you get us content and feedback throughout the project. Most full website projects run anywhere from 2 - 8 weeks or more from start to launch. You get a schedule with clear milestones at kickoff, and we'll set specific limits for each phase so nothing falls behind.",
   },
   {
-    question: 'Do you work with existing design systems?',
+    question: "Do I own my website once it's finished?",
     answer:
-      'Placeholder answer. Yes — we extend what exists where it holds up, and flag the parts that will cost you more to keep than to replace.',
+      'Yes. Once the project is complete and paid, the site and its files are yours. You keep full ownership of your domain, content, and design.',
   },
   {
-    question: 'What do you need from us to start?',
+    question: 'Who provides the content and images?',
     answer:
-      'Placeholder answer. Access to the people who own the outcome, whatever research already exists, and a clear definition of what success looks like.',
+      'Strong content shapes strong design, so the words and photos usually come from you. We give you clear structure and direction for each area so every section works toward the action you want visitors to take.',
   },
   {
-    question: 'Do you support the product after launch?',
+    question: 'Will I be able to update the site myself after launch?',
     answer:
-      'Placeholder answer. Yes, either as a retainer or as scheduled iteration cycles tied to the metrics agreed in discovery.',
+      'Yes. Your site is built so you can handle everyday edits yourself, no code required. You get a short walkthrough at launch, and we stay available for larger updates whenever you want them.',
   },
   {
-    question: 'Which industries do you work in?',
+    question: 'How many rounds of revisions are included?',
     answer:
-      'Placeholder answer. E-commerce, professional services, hospitality and software — the method travels further than the sector does.',
+      'Each project includes set review points with room for feedback at every phase. The number of revision rounds is defined in your proposal up front, so the scope stays clear from start to finish.',
   },
 ];
