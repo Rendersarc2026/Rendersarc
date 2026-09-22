@@ -1,14 +1,35 @@
 'use client';
 
-import { Mail, Phone, MapPin, Send, Check, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { toast } from 'sonner';
+
+const FIELDS = [
+  { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
+  { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
+  { id: 'phone', label: 'Phone', type: 'tel', placeholder: 'Your mobile number' },
+  { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
+] as const;
+
+const contactInfo = [
+  { title: 'Email', content: 'rendersarcmail@gmail.com', href: 'mailto:rendersarcmail@gmail.com' },
+  { title: 'Phone', content: '+91 81293 21539', href: 'tel:+918129321539' },
+  {
+    title: 'Location',
+    content: 'G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Ernakulam, Kerala 682036',
+  },
+];
+
+/** One line, no box: the field is the rule under it. */
+const inputClass = (invalid: boolean) =>
+  `w-full bg-transparent border-b py-3 text-base text-black placeholder:text-black/25 outline-none transition-colors ${
+    invalid ? 'border-red-500' : 'border-black/15 focus:border-black'
+  }`;
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,7 +53,7 @@ export function Contact() {
     if (!formData.subject || formData.subject.trim().length === 0) {
       newErrors.subject = 'Subject is required';
     }
-    
+
     if (!formData.message || formData.message.trim().length === 0) {
       newErrors.message = 'Message is required';
     }
@@ -97,182 +118,120 @@ export function Contact() {
     }
   };
 
-  const contactInfo = [
-    { icon: Mail, title: 'Email', content: 'rendersarcmail@gmail.com' },
-    { icon: Phone, title: 'Phone', content: '+91 81293 21539' },
-    { icon: MapPin, title: 'Location', content: 'G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Ernakulam, Kerala 682036' },
-  ];
-
   return (
-    <section id="contact" className="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
-      {/* Background ambient light */}
-      <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-[#00ea77]/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section id="contact-form" className="bg-white px-6 lg:px-12 pb-24 md:pb-32">
+      <div className="max-w-[1400px] mx-auto grid lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] gap-16 lg:gap-24 pt-16 md:pt-24 border-t border-black/10">
+        {/* Details */}
         <motion.div
-          className="mb-20"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <div className="flex items-center gap-4 mb-6">
-            <div className="h-px w-10 bg-[#00ea77]" />
-            <span className="text-[#00995a] text-xs tracking-widest uppercase font-bold">
-              Contact
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-light text-black">
-            Let's {' '}
-            <span className="text-[#00995a]">
-              Connect
-            </span>
-          </h2>
+          <p className="text-sm md:text-base leading-relaxed text-black/55 max-w-[38ch]">
+            Tell us about the project. We answer every enquiry ourselves, usually within a day.
+          </p>
+
+          <dl className="mt-12 space-y-8">
+            {contactInfo.map((item) => (
+              <div key={item.title}>
+                <dt className="text-[11px] uppercase tracking-[0.2em] text-black/40">
+                  {item.title}
+                </dt>
+                <dd className="mt-2 text-sm md:text-base text-black leading-relaxed">
+                  {item.href ? (
+                    <a href={item.href} className="hover:opacity-60 transition-opacity">
+                      {item.content}
+                    </a>
+                  ) : (
+                    item.content
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-16">
-          {/* Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="leading-relaxed mb-12 text-base md:text-lg font-light text-black/55">
-              Ready to bring your vision to life? We'd love to hear about your project. Our team
-              is ready to answer any questions and guide you from concept to completion.
-            </p>
-            <div className="space-y-8">
-              {contactInfo.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <div key={index} className="flex items-start gap-5 group">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#fafafa] border border-black/10 group-hover:border-[#00ea77]/50 transition-colors duration-300"
-                    >
-                      <Icon size={20} className="text-black/60 group-hover:text-[#00995a] transition-colors duration-300" />
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-widest mb-1 text-black/50">
-                        {item.title}
-                      </p>
-                      <p className="text-base text-black font-light group-hover:text-[#00995a]/80 transition-colors duration-300">{item.content}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </motion.div>
+        {/* Form */}
+        <motion.form
+          suppressHydrationWarning
+          noValidate
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+        >
+          {error && (
+            <p className="mb-8 text-sm text-red-500">{error}</p>
+          )}
 
-          {/* Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7 }}
-          >
-            <div
-              className="rounded-3xl p-8 md:p-10 bg-[#fafafa] border border-black/5 relative overflow-hidden"
-            >
-              {/* Inner subtle glow for the card */}
-              <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[#00ea77]/20 to-transparent" />
-
-              <form suppressHydrationWarning noValidate onSubmit={handleSubmit} className="space-y-6">
-                {error && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 rounded-xl text-sm bg-red-500/10 border border-red-500/30 text-red-500 font-medium"
-                  >
-                    {error}
-                  </motion.div>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {[
-                    { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
-                    { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
-                    { id: 'phone', label: 'Phone', type: 'tel', placeholder: 'Your mobile number' },
-                    { id: 'subject', label: 'Subject', type: 'text', placeholder: 'How can we help?' },
-                  ].map((field) => (
-                    <div key={field.id} className="group/input">
-                      <label
-                        htmlFor={field.id}
-                        className="block text-xs uppercase tracking-widest mb-2 font-medium text-black/50 group-focus-within/input:text-[#00995a] transition-colors"
-                      >
-                        {field.label}
-                      </label>
-                      <input
-                        suppressHydrationWarning
-                        type={field.type}
-                        id={field.id}
-                        name={field.id}
-                        value={formData[field.id as keyof typeof formData]}
-                        onChange={handleChange}
-                        placeholder={field.placeholder}
-                        className={`w-full px-5 py-4 rounded-xl outline-none transition-all text-base bg-black/[0.025] border ${errors[field.id] ? 'border-red-500/60 focus:border-red-500' : 'border-black/[0.12] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-black placeholder:text-black/35 focus:bg-black/[0.04]`}
-                      />
-                      {errors[field.id] && (
-                        <motion.p
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          className="mt-2 text-[11px] text-red-400 font-medium ml-1 flex items-center gap-1.5 uppercase tracking-wider"
-                        >
-                          <span className="w-1 h-1 rounded-full bg-red-400" />
-                          {errors[field.id]}
-                        </motion.p>
-                      )}
-                    </div>
-                  ))}
-                  <div className="group/input md:col-span-2">
-                    <label htmlFor="message" className="block text-xs uppercase tracking-widest mb-2 font-medium text-black/50 group-focus-within/input:text-[#00995a] transition-colors">
-                      Message
-                    </label>
-                    <textarea
-                      suppressHydrationWarning
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={5}
-                      placeholder="Tell us about your project..."
-                      className={`w-full px-5 py-4 rounded-xl outline-none transition-all resize-none text-base bg-black/[0.025] border ${errors.message ? 'border-red-500/60 focus:border-red-500' : 'border-black/[0.12] focus:border-[#00ea77] focus:ring-1 focus:ring-[#00ea77]/20'} text-black placeholder:text-black/35 focus:bg-black/[0.04]`}
-                    />
-                    {errors.message && (
-                      <motion.p
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        className="mt-2 text-[11px] text-red-400 font-medium ml-1 flex items-center gap-1.5 uppercase tracking-wider"
-                      >
-                        <span className="w-1 h-1 rounded-full bg-red-400" />
-                        {errors.message}
-                      </motion.p>
-                    )}
-                  </div>
-                </div>
-                <motion.button
-                  suppressHydrationWarning
-                  type="submit"
-                  disabled={sending}
-                  className="w-full py-4.5 px-6 rounded-xl flex items-center justify-center gap-3 transition-all text-sm tracking-[0.2em] uppercase font-bold disabled:opacity-70 bg-[#00ea77] text-black hover:bg-[#00ea77]/90 shadow-[0_10px_30px_-10px_rgba(0,234,119,0.3)] hover:shadow-[0_15px_35px_-10px_rgba(0,234,119,0.5)] mt-4 active:scale-[0.98]"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+          <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            {FIELDS.map((field) => (
+              <div key={field.id}>
+                <label
+                  htmlFor={field.id}
+                  className="block text-[11px] uppercase tracking-[0.2em] text-black/40"
                 >
-                  {sending ? (
-                    <>
-                      <span className="animate-pulse">Sending Inquiry...</span>
-                      <Loader2 size={18} className="animate-spin" />
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                      <Send size={16} strokeWidth={2.5} />
-                    </>
-                  )}
-                </motion.button>
-              </form>
+                  {field.label}
+                </label>
+                <input
+                  suppressHydrationWarning
+                  type={field.type}
+                  id={field.id}
+                  name={field.id}
+                  value={formData[field.id]}
+                  onChange={handleChange}
+                  placeholder={field.placeholder}
+                  aria-invalid={errors[field.id] ? true : undefined}
+                  className={inputClass(Boolean(errors[field.id]))}
+                />
+                {errors[field.id] && (
+                  <p className="mt-2 text-xs text-red-500">{errors[field.id]}</p>
+                )}
+              </div>
+            ))}
+
+            <div className="md:col-span-2">
+              <label
+                htmlFor="message"
+                className="block text-[11px] uppercase tracking-[0.2em] text-black/40"
+              >
+                Message
+              </label>
+              <textarea
+                suppressHydrationWarning
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={4}
+                placeholder="Tell us about your project"
+                aria-invalid={errors.message ? true : undefined}
+                className={`${inputClass(Boolean(errors.message))} resize-none`}
+              />
+              {errors.message && (
+                <p className="mt-2 text-xs text-red-500">{errors.message}</p>
+              )}
             </div>
-          </motion.div>
-        </div>
+          </div>
+
+          <button
+            suppressHydrationWarning
+            type="submit"
+            disabled={sending}
+            className="mt-12 inline-flex items-center justify-center gap-3 px-10 py-4 bg-black text-white text-xs tracking-[0.2em] uppercase font-medium transition-opacity hover:opacity-80 disabled:opacity-50"
+          >
+            {sending ? (
+              <>
+                Sending
+                <Loader2 size={15} className="animate-spin" />
+              </>
+            ) : (
+              'Send message'
+            )}
+          </button>
+        </motion.form>
       </div>
     </section>
   );

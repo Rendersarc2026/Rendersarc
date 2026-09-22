@@ -3,13 +3,14 @@
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
-/** `id` is the section element scrolled to; 'contact' is the footer for now. */
-const NAV_ITEMS: { id: string | null; label: string }[] = [
-  { id: null, label: 'Process' },
-  { id: null, label: 'FAQ' },
-  { id: 'contact', label: 'Contact' },
+/** Each item is its own route; the logo still scrolls home to the top. */
+const NAV_ITEMS: { href: string; label: string }[] = [
+  { href: '/process', label: 'Process' },
+  { href: '/faq', label: 'FAQ' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export function Navigation() {
@@ -17,7 +18,6 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const [activeSection, setActiveSection] = useState(pathname === '/' ? 'hero' : '');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,39 +27,7 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Highly robust ScrollSpy with a single IntersectionObserver
-  useEffect(() => {
-    if (pathname !== '/') return;
-
-    const sections = ['hero', 'testimonials', 'contact'];
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            const activeId = id;
-            if (activeId) {
-              setActiveSection(activeId);
-            }
-          }
-        });
-      },
-      {
-        // Focus detection on a narrow band near the top of the viewport
-        // This ensures only one section wins as the "active" one
-        rootMargin: '-100px 0px -80% 0px',
-        threshold: 0
-      }
-    );
-
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  useEffect(() => setIsOpen(false), [pathname]);
 
   const scrollToSection = (id: string) => {
     setIsOpen(false);
@@ -112,29 +80,31 @@ export function Navigation() {
           <div className="hidden lg:flex items-center">
             <motion.div className="flex items-center space-x-4 xl:space-x-6" layout>
             {NAV_ITEMS.map((item, index) => {
-              const isActive = item.id !== null && activeSection === item.id;
+              const isActive = pathname === item.href;
               return (
-                <motion.button
-                  key={item.label}
-                  onClick={() => item.id && scrollToSection(item.id)}
-                  aria-disabled={item.id === null || undefined}
-                  style={{ color: isActive ? '#000000' : 'rgba(0,0,0,0.8)' }}
-                  className="text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors relative py-2 font-medium"
+                <motion.div
+                  key={item.href}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.05 }}
-                  whileHover={{ color: '#000000' }}
                 >
-                  {item.label}
-                  {isActive && (
-                    <motion.div
-                      layoutId="active-nav-underline"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-black origin-center"
-                      initial={false}
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </motion.button>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive ? 'page' : undefined}
+                    style={{ color: isActive ? '#000000' : 'rgba(0,0,0,0.8)' }}
+                    className="block text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors relative py-2 font-medium hover:text-black"
+                  >
+                    {item.label}
+                    {isActive && (
+                      <motion.div
+                        layoutId="active-nav-underline"
+                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-black origin-center"
+                        initial={false}
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
               );
             })}
             </motion.div>
@@ -160,23 +130,23 @@ export function Navigation() {
           >
             <div className="px-6 py-6 space-y-5">
               {NAV_ITEMS.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => item.id && scrollToSection(item.id)}
-                  aria-disabled={item.id === null || undefined}
-                  style={{ color: 'rgba(0,0,0,0.6)' }}
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={pathname === item.href ? 'page' : undefined}
+                  style={{ color: pathname === item.href ? '#000000' : 'rgba(0,0,0,0.6)' }}
                   className="block w-full text-left text-sm tracking-widest uppercase py-1 font-light"
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
-              <button
-                onClick={() => scrollToSection('contact')}
+              <Link
+                href="/contact"
                 style={{ border: '1px solid rgba(0,0,0,0.2)', color: '#000000' }}
-                className="w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-light"
+                className="block w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-light text-center"
               >
                 Get in touch
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}
