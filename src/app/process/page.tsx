@@ -15,13 +15,13 @@ export default function ProcessPage() {
     <div className="size-full bg-white relative overflow-x-clip">
       <Navigation />
       <main className="relative">
+        <TrueFive />
         <PageHeader
           eyebrow="Process"
           title="How the work runs"
-          intro="Five steps, each with something you can hold at the end of it. Placeholder copy throughout — swap it for the real process."
+          intro="Five steps, each with something you can hold at the end of it."
         />
         <ProcessSteps />
-        <TrueFive />
       </main>
       <Footer />
     </div>
