@@ -164,8 +164,7 @@ export function TrueFive() {
       className="bg-white text-black selection:bg-[#00ea77]/30 overflow-hidden"
     >
       {/* ---------------- Opening ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-24 md:pt-32 pb-16 md:pb-24 border-t border-black/10 relative">
-        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#00ea77]/[0.045] blur-[160px] rounded-full -translate-y-1/3 translate-x-1/3 pointer-events-none" />
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-24 md:pt-32 pb-16 md:pb-24 relative">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto relative">
           <div className="flex items-center gap-4 mb-10 md:mb-14">
             <div className="h-px w-10 bg-[#00ea77]" />
@@ -380,11 +379,6 @@ export function TrueFive() {
               </ul>
             </div>
           </div>
-
-          <p className="mt-16 md:mt-24 text-2xl md:text-4xl lg:text-5xl font-[700] tracking-tight leading-[1.15] max-w-[20ch]">
-            Are these five true to the user, or only true to{' '}
-            <span className="text-black/35">who we could get on a call?</span>
-          </p>
         </motion.div>
       </div>
 
