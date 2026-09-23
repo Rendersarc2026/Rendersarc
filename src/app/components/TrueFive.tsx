@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  AnimatePresence,
   animate,
+  MotionConfig,
   motion,
   useInView,
   useMotionValue,
@@ -82,14 +84,84 @@ function buildRanks() {
   return ranks;
 }
 
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
+/** A block whose motion children (`rise`, or a heading of `Words`) enter one after another. */
+const reveal = {
+  initial: 'hidden',
+  whileInView: 'show',
   viewport: { once: true, margin: '-80px' },
-  transition: { duration: 0.7, ease: 'easeOut' },
+  variants: { hidden: {}, show: { transition: { staggerChildren: 0.12 } } },
 } as const;
 
+const rise = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_OUT } },
+} as const;
+
+const list = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } } as const;
+
+const words = { hidden: {}, show: { transition: { staggerChildren: 0.04 } } } as const;
+const wordRise = {
+  hidden: { y: '110%' },
+  show: { y: '0%', transition: { duration: 0.8, ease: EASE_OUT } },
+} as const;
+
+type Part = { text: string; className?: string };
+
+/**
+ * Splits a heading into words that each rise out of their own mask. Parts carry
+ * their own colour; punctuation that touches a word stays in that word's mask so
+ * it can never wrap onto a line by itself.
+ */
+function Words({ parts }: { parts: Part[] }) {
+  const items: (Part[] | ' ')[] = [];
+  let open = false;
+  for (const { text, className } of parts) {
+    for (const token of text.split(/(\s+)/)) {
+      if (!token) continue;
+      if (/^\s+$/.test(token)) {
+        items.push(' ');
+        open = false;
+        continue;
+      }
+      const last = items[items.length - 1];
+      if (open && Array.isArray(last)) last.push({ text: token, className });
+      else items.push([{ text: token, className }]);
+      open = true;
+    }
+  }
+  return (
+    <>
+      {items.map((item, i) =>
+        item === ' ' ? (
+          ' '
+        ) : (
+          <span key={i} className="inline-block overflow-hidden align-top pb-[0.12em] -mb-[0.12em]">
+            <motion.span className="inline-block" variants={wordRise}>
+              {item.map((part, j) => (
+                <span key={j} className={part.className}>
+                  {part.text}
+                </span>
+              ))}
+            </motion.span>
+          </span>
+        ),
+      )}
+    </>
+  );
+}
+
+/** Reduced-motion visitors get the text fades without the movement. */
 export function TrueFive() {
+  return (
+    <MotionConfig reducedMotion="user">
+      <TrueFiveBody />
+    </MotionConfig>
+  );
+}
+
+function TrueFiveBody() {
   const reduce = useReducedMotion();
   const ranks = useMemo(buildRanks, []);
 
@@ -159,46 +231,71 @@ export function TrueFive() {
     >
       {/* ---------------- Opening ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-8 md:pt-12 pb-16 md:pb-24 relative">
-        <motion.div {...fadeUp} className="max-w-[1400px] mx-auto relative">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl leading-[1.08] font-[700] tracking-tight max-w-[18ch]">
-            We talk to five real users before we{' '}
-            <span className="text-[#00995a]">design anything</span>.
-          </h2>
+        <motion.div {...reveal} className="max-w-[1400px] mx-auto relative">
+          <motion.h2
+            variants={words}
+            className="text-3xl md:text-5xl lg:text-6xl leading-[1.08] font-[700] tracking-tight max-w-[18ch]"
+          >
+            <Words
+              parts={[
+                { text: 'We talk to five real users before we ' },
+                { text: 'design anything', className: 'text-[#00995a]' },
+                { text: '.' },
+              ]}
+            />
+          </motion.h2>
 
-          <div className="mt-10 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] gap-10 lg:gap-20 items-start">
-            <p className="text-lg md:text-xl text-black/65 font-[400] leading-relaxed max-w-[46ch]">
+          <motion.div
+            variants={list}
+            className="mt-10 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] gap-10 lg:gap-20 items-start"
+          >
+            <motion.p variants={rise} className="text-lg md:text-xl text-black/65 font-[400] leading-relaxed max-w-[46ch]">
               True 5 is how every Renders Arc website, app and piece of software begins.
               Before a design file opens, we sit down one-on-one with five people who match
               the actual end user, and what they say shapes the brief.
-            </p>
-            <p className="text-2xl md:text-3xl font-[700] tracking-tight leading-[1.25] lg:pt-1">
-              <span className="text-black/35">Not a survey. Not a focus group.</span>{' '}
-              <span className="text-black">Five separate conversations.</span>
-            </p>
-          </div>
+            </motion.p>
+            <motion.p
+              variants={words}
+              className="text-2xl md:text-3xl font-[700] tracking-tight leading-[1.25] lg:pt-1"
+            >
+              <Words
+                parts={[
+                  { text: 'Not a survey. Not a focus group. ', className: 'text-black/35' },
+                  { text: 'Five separate conversations.', className: 'text-black' },
+                ]}
+              />
+            </motion.p>
+          </motion.div>
         </motion.div>
       </div>
 
       {/* ---------------- Why five: the dot stage ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 bg-black text-white">
         <div className="max-w-[1400px] mx-auto">
-          <motion.div {...fadeUp}>
-            <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[20ch]">
-              Five is where we have heard enough to act.
-            </h3>
-            <p className="mt-6 text-base md:text-lg text-white/60 font-[400] leading-relaxed max-w-[52ch]">
+          <motion.div {...reveal}>
+            <motion.h3
+              variants={words}
+              className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[20ch]"
+            >
+              <Words parts={[{ text: 'Five is where we have heard enough to act.' }]} />
+            </motion.h3>
+            <motion.p
+              variants={rise}
+              className="mt-6 text-base md:text-lg text-white/60 font-[400] leading-relaxed max-w-[52ch]"
+            >
               Every design carries a hidden set of real problems. Each conversation uncovers
               some of them. Step through the five and watch what the first person finds, then
               what the fifth adds.
-            </p>
+            </motion.p>
           </motion.div>
 
-          <div
+          <motion.div
+            {...reveal}
             ref={stageRef}
             className="mt-14 md:mt-20 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-14 lg:gap-24 items-start"
           >
             {/* Dots */}
-            <div className="w-full max-w-[460px]">
+            <motion.div variants={rise} className="w-full max-w-[460px]">
               <div
                 className="grid grid-cols-10 gap-[5px] sm:gap-2"
                 role="img"
@@ -240,10 +337,10 @@ export function TrueFive() {
                   Found in this conversation
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Readout */}
-            <div>
+            <motion.div variants={rise}>
               <div aria-live="polite">
                 <div className="text-[clamp(4.5rem,13vw,10rem)] leading-[0.85] font-[700] tracking-tighter tabular-nums text-white">
                   <motion.span>{pctText}</motion.span>
@@ -289,18 +386,32 @@ export function TrueFive() {
                 </button>
               </div>
 
+              {/* Cross-fades between readouts as the conversations step on. */}
               <div className="mt-10 min-h-[9.5rem] max-w-[38ch]" aria-live="polite">
-                <h4 className="text-xl md:text-2xl font-[700] tracking-tight text-white">
-                  {READOUTS[step].title}
-                </h4>
-                <p className="mt-3 text-base md:text-lg text-white/65 font-[400] leading-relaxed">
-                  {READOUTS[step].body}
-                </p>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={step}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3, ease: EASE_OUT }}
+                  >
+                    <h4 className="text-xl md:text-2xl font-[700] tracking-tight text-white">
+                      {READOUTS[step].title}
+                    </h4>
+                    <p className="mt-3 text-base md:text-lg text-white/65 font-[400] leading-relaxed">
+                      {READOUTS[step].body}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <p className="mt-12 md:mt-16 text-[30px] text-white/80 font-semibold max-w-[80ch] leading-relaxed">
+          <motion.p
+            {...reveal}
+            variants={rise}
+            className="mt-12 md:mt-16 text-[30px] text-white/80 font-semibold max-w-[80ch] leading-relaxed">
             Figures are approximate and follow Nielsen Norman Group’s usability research on how
             many test users a design needs.{' '}
             <a
@@ -312,116 +423,140 @@ export function TrueFive() {
               Read the research
             </a>
             .
-          </p>
+          </motion.p>
         </div>
       </div>
 
       {/* ---------------- Why "True" ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
-        <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
-          <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
-            Why it is called <span className="text-[#00995a]">True</span>.
-          </h3>
-          <p className="mt-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed max-w-[52ch]">
+        <motion.div {...reveal} className="max-w-[1400px] mx-auto">
+          <motion.h3 variants={words} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
+            <Words
+              parts={[
+                { text: 'Why it is called ' },
+                { text: 'True', className: 'text-[#00995a]' },
+                { text: '.' },
+              ]}
+            />
+          </motion.h3>
+          <motion.p
+            variants={rise}
+            className="mt-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed max-w-[52ch]"
+          >
             Five people who are easy to reach are not the same as five people who will use the
             product. The name works as a filter on who we invite.
-          </p>
+          </motion.p>
 
-          <div className="mt-12 md:mt-16 grid md:grid-cols-2 border-t border-black">
+          <motion.div variants={rise} className="mt-12 md:mt-16 grid md:grid-cols-2 border-t border-black">
             <div className="pt-8 md:pr-12 pb-8 md:pb-0">
               <h4 className="text-xl md:text-2xl font-[700] tracking-tight text-black/35 line-through decoration-1">
                 Convenient five
               </h4>
-              <ul className="mt-6">
+              <motion.ul variants={list} className="mt-6">
                 {['A founder’s friends', 'Whoever is in the office', 'Whoever is easiest to reach'].map(
                   (item) => (
-                    <li
+                    <motion.li
+                      variants={rise}
                       key={item}
                       className="py-4 border-b border-black/10 text-base md:text-lg font-[400] text-black/40"
                     >
                       {item}
-                    </li>
+                    </motion.li>
                   ),
                 )}
-              </ul>
+              </motion.ul>
             </div>
 
             <div className="pt-8 md:pl-12 border-t md:border-t-0 md:border-l border-black/10">
               <h4 className="text-xl md:text-2xl font-[700] tracking-tight text-black">
                 True five
               </h4>
-              <ul className="mt-6">
+              <motion.ul variants={list} className="mt-6">
                 {[
                   'People who match the actual end user',
                   'People who would genuinely open the thing',
                   'Five separate, one-on-one conversations',
                 ].map((item) => (
-                  <li
+                  <motion.li
+                    variants={rise}
                     key={item}
                     className="py-4 border-b border-black/10 text-base md:text-lg font-[400] text-black/75"
                   >
                     {item}
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
 
       {/* ---------------- What it replaces ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
-        <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
-          <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[22ch]">
-            Assumptions in a meeting, replaced by people.
-          </h3>
-          <p className="mt-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed max-w-[52ch]">
+        <motion.div {...reveal} className="max-w-[1400px] mx-auto">
+          <motion.h3 variants={words} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[22ch]">
+            <Words parts={[{ text: 'Assumptions in a meeting, replaced by people.' }]} />
+          </motion.h3>
+          <motion.p
+            variants={rise}
+            className="mt-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed max-w-[52ch]"
+          >
             Most studios let the design take shape from whatever is loudest in the room.
-          </p>
+          </motion.p>
 
-          <div className="mt-12 md:mt-16 grid md:grid-cols-2 gap-10 md:gap-24 items-start">
-            <ul className="border-t border-black/10">
+          <motion.div
+            variants={list}
+            className="mt-12 md:mt-16 grid md:grid-cols-2 gap-10 md:gap-24 items-start"
+          >
+            <motion.ul variants={list} className="border-t border-black/10">
               {[
                 'The client’s opinion',
                 'The founder’s gut',
                 'A competitor’s screenshot',
                 'Whoever is loudest in the room',
               ].map((item) => (
-                <li
+                <motion.li
+                  variants={rise}
                   key={item}
                   className="py-5 border-b border-black/10 text-xl md:text-[2rem] leading-tight font-[700] tracking-tight text-black/30 line-through decoration-1"
                 >
                   {item}
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
 
-            <div className="md:pt-5">
+            <motion.div variants={rise} className="md:pt-5">
               <span className="block mb-4 text-xs uppercase tracking-widest text-[#00995a] font-bold">
                 At Renders Arc, it starts with
               </span>
               <p className="text-xl md:text-[2rem] leading-tight font-[700] tracking-tight text-black">
                 Five conversations with the people who will actually open the thing.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
 
       {/* ---------------- Where it sits ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
-        <motion.div {...fadeUp} className="max-w-[1400px] mx-auto">
-          <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
-            Design starts after, not before.
-          </h3>
-          <p className="mt-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed max-w-[52ch]">
+        <motion.div {...reveal} className="max-w-[1400px] mx-auto">
+          <motion.h3 variants={words} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
+            <Words parts={[{ text: 'Design starts after, not before.' }]} />
+          </motion.h3>
+          <motion.p
+            variants={rise}
+            className="mt-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed max-w-[52ch]"
+          >
             True 5 happens at the very start of a project, once the scope is agreed and before
             any design file opens.
-          </p>
+          </motion.p>
 
-          <ol className="mt-14 md:mt-20 grid md:grid-cols-4 md:border-t border-black max-md:border-l max-md:ml-1.5">
+          <motion.ol
+            variants={list}
+            className="mt-14 md:mt-20 grid md:grid-cols-4 md:border-t border-black max-md:border-l max-md:ml-1.5">
             {TIMELINE.map((item) => (
-              <li
+              <motion.li
+                variants={rise}
                 key={item.title}
                 className="relative max-md:pl-8 max-md:pb-8 md:pt-8 md:pr-8 last:pb-0"
               >
@@ -445,13 +580,17 @@ export function TrueFive() {
                 <small className="block mt-1.5 text-sm text-black/45 font-[400] leading-relaxed">
                   {item.note}
                 </small>
-              </li>
+              </motion.li>
             ))}
-          </ol>
+          </motion.ol>
 
-          <div className="mt-16 md:mt-24 grid md:grid-cols-2 border-t border-black/10">
+          <motion.div
+            variants={list}
+            className="mt-16 md:mt-24 grid md:grid-cols-2 border-t border-black/10"
+          >
             {QUESTIONS.map((q, i) => (
-              <p
+              <motion.p
+                variants={rise}
                 key={q}
                 className={[
                   'py-7 text-xl md:text-2xl lg:text-[1.75rem] leading-tight font-[700] tracking-tight text-black/80 border-b border-black/10',
@@ -459,30 +598,41 @@ export function TrueFive() {
                 ].join(' ')}
               >
                 {q}
-              </p>
+              </motion.p>
             ))}
-          </div>
-          <p className="mt-6 text-sm text-black/40 font-[400]">
+          </motion.div>
+          <motion.p variants={rise} className="mt-6 text-sm text-black/40 font-[400]">
             The questions we bring to every conversation.
-          </p>
+          </motion.p>
         </motion.div>
       </div>
 
       {/* ---------------- Close ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-20 md:py-32 border-t border-black/10 relative">
         <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#00ea77]/[0.05] blur-[150px] rounded-full translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-        <motion.div {...fadeUp} className="max-w-[1400px] mx-auto relative">
-          <p className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] font-[700] tracking-tight max-w-[19ch]">
-            Five conversations get you to roughly{' '}
-            <span className="text-[#00995a]">85%</span> of the problems a design will actually
-            have, so that is where we stop guessing and start building.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center mt-12 px-8 py-4 bg-[#fafafa] border border-black/10 hover:border-[#00ea77] rounded-full text-black hover:text-[#00995a] transition-all duration-300 font-medium tracking-wide hover:shadow-[0_0_30px_rgba(0,234,119,0.2)]"
+        <motion.div {...reveal} className="max-w-[1400px] mx-auto relative">
+          <motion.p
+            variants={words}
+            className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] font-[700] tracking-tight max-w-[19ch]"
           >
-            Start a project with True 5
-          </Link>
+            <Words
+              parts={[
+                { text: 'Five conversations get you to roughly ' },
+                { text: '85%', className: 'text-[#00995a]' },
+                {
+                  text: ' of the problems a design will actually have, so that is where we stop guessing and start building.',
+                },
+              ]}
+            />
+          </motion.p>
+          <motion.div variants={rise}>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center mt-12 px-8 py-4 bg-[#fafafa] border border-black/10 hover:border-[#00ea77] rounded-full text-black hover:text-[#00995a] transition-all duration-300 font-medium tracking-wide hover:shadow-[0_0_30px_rgba(0,234,119,0.2)]"
+            >
+              Start a project with True 5
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>
