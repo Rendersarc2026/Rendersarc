@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Navigation } from '../components/Navigation';
-import { PageHeader } from '../components/PageHeader';
+import { TrueFiveHero } from '../components/TrueFiveHero';
 import { TrueFive } from '../components/TrueFive';
 import { Footer } from '../components/Footer';
 
@@ -14,11 +14,7 @@ export default function ProcessPage() {
     <div className="size-full bg-white relative overflow-x-clip">
       <Navigation />
       <main className="relative">
-        <PageHeader
-          eyebrow="Process"
-          title="How the work runs"
-          intro="Five steps, each with something you can hold at the end of it."
-        />
+        <TrueFiveHero />
         <TrueFive />
       </main>
       <Footer />

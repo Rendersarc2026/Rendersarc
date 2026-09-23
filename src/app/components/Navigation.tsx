@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 /** Each item is its own route; the logo still scrolls home to the top. */
 const NAV_ITEMS: { href: string; label: string }[] = [
+  { href: '/about', label: 'About' },
   { href: '/process', label: 'Process' },
   { href: '/faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' },

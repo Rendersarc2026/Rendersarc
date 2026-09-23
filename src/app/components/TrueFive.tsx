@@ -2,7 +2,14 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { motion, useInView, useReducedMotion } from 'motion/react';
+import {
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from 'motion/react';
 
 /**
  * True 5 — the signature opener for every Renders Arc project.
@@ -87,10 +94,10 @@ export function TrueFive() {
   const ranks = useMemo(buildRanks, []);
 
   const [step, setStep] = useState(5);
-  const [pct, setPct] = useState(COUNTS[5]);
-  const pctRef = useRef(COUNTS[5]);
+  // Motion value, not state: the count ticks every frame without re-rendering the 100 dots.
+  const pct = useMotionValue(COUNTS[5]);
+  const pctText = useTransform(pct, (v) => Math.round(v));
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const rafRef = useRef<number | null>(null);
 
   const stageRef = useRef<HTMLDivElement>(null);
   const inView = useInView(stageRef, { once: true, amount: 0.4 });
@@ -130,25 +137,12 @@ export function TrueFive() {
   useEffect(() => {
     const target = COUNTS[step];
     if (reduce) {
-      pctRef.current = target;
-      setPct(target);
+      pct.set(target);
       return;
     }
-    const from = pctRef.current;
-    const t0 = performance.now();
-    const tick = (now: number) => {
-      const p = Math.min((now - t0) / 700, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      const value = Math.round(from + (target - from) * eased);
-      pctRef.current = value;
-      setPct(value);
-      if (p < 1) rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [step, reduce]);
+    const controls = animate(pct, target, { duration: 0.9, ease: [0.22, 1, 0.36, 1] });
+    return () => controls.stop();
+  }, [step, reduce, pct]);
 
   const select = (n: number) => {
     stop();
@@ -164,15 +158,8 @@ export function TrueFive() {
       className="bg-white text-black selection:bg-[#00ea77]/30 overflow-hidden"
     >
       {/* ---------------- Opening ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-24 md:pt-32 pb-16 md:pb-24 relative">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-8 md:pt-12 pb-16 md:pb-24 relative">
         <motion.div {...fadeUp} className="max-w-[1400px] mx-auto relative">
-          <div className="flex items-center gap-4 mb-10 md:mb-14">
-            <div className="h-px w-10 bg-[#00ea77]" />
-            <span className="text-[#00995a] text-xs tracking-widest uppercase font-bold">
-              True 5
-            </span>
-          </div>
-
           <h2 className="text-3xl md:text-5xl lg:text-6xl leading-[1.08] font-[700] tracking-tight max-w-[18ch]">
             We talk to five real users before we{' '}
             <span className="text-[#00995a]">design anything</span>.
@@ -193,13 +180,13 @@ export function TrueFive() {
       </div>
 
       {/* ---------------- Why five: the dot stage ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
+      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 bg-black text-white">
         <div className="max-w-[1400px] mx-auto">
           <motion.div {...fadeUp}>
             <h3 className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[20ch]">
               Five is where we have heard enough to act.
             </h3>
-            <p className="mt-6 text-base md:text-lg text-black/55 font-[400] leading-relaxed max-w-[52ch]">
+            <p className="mt-6 text-base md:text-lg text-white/60 font-[400] leading-relaxed max-w-[52ch]">
               Every design carries a hidden set of real problems. Each conversation uncovers
               some of them. Step through the five and watch what the first person finds, then
               what the fifth adds.
@@ -227,29 +214,29 @@ export function TrueFive() {
                         transitionDelay: !reduce && isNew ? `${(rank - prev) * 14}ms` : '0ms',
                       }}
                       className={[
-                        'aspect-square rounded-full border transition-[background-color,border-color,box-shadow,transform] duration-500',
+                        'aspect-square rounded-full border will-change-transform transition-[background-color,border-color,transform] duration-500 ease-out',
                         isNew
-                          ? 'bg-[#00ea77] border-[#00ea77] shadow-[0_0_14px_rgba(0,234,119,0.6)] scale-110'
+                          ? 'bg-white border-white scale-110'
                           : found
-                            ? 'bg-black border-black'
-                            : 'bg-transparent border-black/15',
+                            ? 'bg-transparent border-white'
+                            : 'bg-transparent border-white/20',
                       ].join(' ')}
                     />
                   );
                 })}
               </div>
 
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-black/50 font-[400]">
+              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-white/55 font-[400]">
                 <span className="inline-flex items-center gap-2">
-                  <i className="w-2.5 h-2.5 rounded-full border border-black/15" />
+                  <i className="w-2.5 h-2.5 rounded-full border border-white/20" />
                   Not yet heard
                 </span>
                 <span className="inline-flex items-center gap-2">
-                  <i className="w-2.5 h-2.5 rounded-full bg-black border border-black" />
+                  <i className="w-2.5 h-2.5 rounded-full border border-white" />
                   Already heard
                 </span>
                 <span className="inline-flex items-center gap-2">
-                  <i className="w-2.5 h-2.5 rounded-full bg-[#00ea77] border border-[#00ea77]" />
+                  <i className="w-2.5 h-2.5 rounded-full bg-white border border-white" />
                   Found in this conversation
                 </span>
               </div>
@@ -258,11 +245,11 @@ export function TrueFive() {
             {/* Readout */}
             <div>
               <div aria-live="polite">
-                <div className="text-[clamp(4.5rem,13vw,10rem)] leading-[0.85] font-[700] tracking-tighter tabular-nums text-black">
-                  {pct}
-                  <span className="text-[#00995a]">%</span>
+                <div className="text-[clamp(4.5rem,13vw,10rem)] leading-[0.85] font-[700] tracking-tighter tabular-nums text-white">
+                  <motion.span>{pctText}</motion.span>
+                  <span className="text-white/35">%</span>
                 </div>
-                <p className="mt-5 text-sm md:text-base text-black/50 font-[400]">
+                <p className="mt-5 text-sm md:text-base text-white/55 font-[400]">
                   of the design’s real problems found
                 </p>
               </div>
@@ -283,10 +270,10 @@ export function TrueFive() {
                       aria-label={`After conversation ${n}`}
                       className={[
                         'w-12 h-12 rounded-full border text-sm font-[400] transition-all duration-300',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ea77] focus-visible:ring-offset-2',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black',
                         active
-                          ? 'bg-black border-black text-white'
-                          : 'bg-white border-black/15 text-black/60 hover:border-[#00ea77] hover:text-[#00995a] hover:shadow-[0_0_20px_rgba(0,234,119,0.18)]',
+                          ? 'bg-white border-white text-black'
+                          : 'bg-transparent border-white/20 text-white/65 hover:border-white/60 hover:text-white',
                       ].join(' ')}
                     >
                       {n}
@@ -296,31 +283,31 @@ export function TrueFive() {
                 <button
                   type="button"
                   onClick={() => (reduce ? select(5) : play())}
-                  className="ml-2 px-2 py-2 text-sm font-[400] text-black/45 hover:text-[#00995a] underline underline-offset-4 decoration-black/20 hover:decoration-[#00ea77] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ea77] focus-visible:ring-offset-2 rounded"
+                  className="ml-2 px-2 py-2 text-sm font-[400] text-white/55 hover:text-white underline underline-offset-4 decoration-white/25 hover:decoration-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded"
                 >
                   Replay
                 </button>
               </div>
 
               <div className="mt-10 min-h-[9.5rem] max-w-[38ch]" aria-live="polite">
-                <h4 className="text-xl md:text-2xl font-[700] tracking-tight text-black">
+                <h4 className="text-xl md:text-2xl font-[700] tracking-tight text-white">
                   {READOUTS[step].title}
                 </h4>
-                <p className="mt-3 text-base md:text-lg text-black/60 font-[400] leading-relaxed">
+                <p className="mt-3 text-base md:text-lg text-white/65 font-[400] leading-relaxed">
                   {READOUTS[step].body}
                 </p>
               </div>
             </div>
           </div>
 
-          <p className="mt-12 md:mt-16 text-[13px] text-black/40 font-[400] max-w-[62ch] leading-relaxed">
+          <p className="mt-12 md:mt-16 text-[30px] text-white/80 font-semibold max-w-[80ch] leading-relaxed">
             Figures are approximate and follow Nielsen Norman Group’s usability research on how
             many test users a design needs.{' '}
             <a
               href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-black/60 hover:text-[#00995a] underline underline-offset-4 decoration-black/20 hover:decoration-[#00ea77] transition-colors"
+              className="text-white underline underline-offset-4 decoration-white/40 hover:decoration-white transition-colors"
             >
               Read the research
             </a>
