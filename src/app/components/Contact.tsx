@@ -23,7 +23,7 @@ const contactInfo = [
 
 /** Filled field on the panel, with the focus ring doing the work. */
 const inputClass = (invalid: boolean) =>
-  `w-full rounded-xl bg-white border px-4 py-3.5 text-base text-black placeholder:text-black/30 outline-none transition-all duration-200 ${
+  `w-full bg-white border px-4 py-3.5 text-base text-black placeholder:text-black/30 outline-none transition-all duration-200 ${
     invalid
       ? 'border-red-400 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.12)]'
       : 'border-black/10 hover:border-black/20 focus:border-black focus:shadow-[0_0_0_3px_rgba(0,0,0,0.06)]'
@@ -165,7 +165,7 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="rounded-3xl bg-[#f4f4f4] p-6 sm:p-8 md:p-12"
+          className="bg-[#f4f4f4] p-6 sm:p-8 md:p-12"
         >
           {error && (
             <p className="mb-8 text-sm text-red-500">{error}</p>

@@ -112,28 +112,25 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="grid grid-cols-1 auto-rows-fr gap-6 relative"
+            className="grid grid-cols-1 auto-rows-fr relative"
           >
             {values.map((v, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative flex gap-6 p-7 xl:p-9 rounded-[2rem] transition-all overflow-hidden bg-black/[0.03] border border-black/5 hover:border-black/20 shadow-xl h-full"
+                className="group flex gap-6 md:gap-10 py-8 xl:py-10 border-b border-black/10"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/[0.04] to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <motion.span
-                  className="text-sm mt-1 flex-shrink-0 font-mono tracking-widest text-black"
-                >
+                <span className="text-xs mt-2 flex-shrink-0 tabular-nums tracking-widest text-black/35">
                   {v.number}
-                </motion.span>
-                <div className="relative z-10">
-                  <h4 className="mb-2 text-xl font-[700] text-black group-hover:text-black transition-colors duration-300">
+                </span>
+                <div>
+                  <h4 className="mb-2 text-xl font-[700] tracking-tight text-black">
                     {v.title}
                   </h4>
-                  <p className="text-sm leading-relaxed text-black/55 group-hover:text-black/75 transition-colors duration-300">
+                  <p className="text-sm leading-relaxed text-black/55 max-w-[46ch]">
                     {v.desc}
                   </p>
                 </div>
