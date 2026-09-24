@@ -57,10 +57,13 @@ export function About() {
                 high-impact digital solutions, ranging from web and mobile
                 development to custom software and cybersecurity. Built on a
                 proven consulting model, we offer scalable, reliable
-                partnerships designed to drive your business forward. With a
-                strong track record serving clients across the Middle East, UK,
-                Europe, and India, we build systems that solve core business
-                challenges with lasting value.
+                partnerships designed to drive your business forward.
+              </p>
+              <br />
+              <p className="text-white/70 text-base md:text-[1.1rem] leading-relaxed font-light">
+                With a strong track record serving clients across the Middle
+                East, UK, Europe, and India, we build systems that solve core
+                business challenges with lasting value.
               </p>
             </motion.div>
           </div>
