@@ -46,11 +46,11 @@ export function Clients() {
         </motion.div>
       </div>
 
-      {/* Full-bleed so the loop reads as continuous rather than restarting at a
-          container edge. Two identical copies of the row make the seam invisible;
-          the second is hidden from assistive tech. */}
+      {/* Inset to the same container as the heading. Two identical copies of the
+          row make the seam invisible; the second is hidden from assistive tech. */}
+      <div className="mt-14 md:mt-20 px-6 md:px-10 lg:px-16 xl:px-24">
       <div
-        className="mt-14 md:mt-20 overflow-hidden"
+        className="max-w-[1400px] mx-auto overflow-hidden"
         style={{ maskImage: EDGE_FADE, WebkitMaskImage: EDGE_FADE }}
       >
         <div
@@ -74,6 +74,7 @@ export function Clients() {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

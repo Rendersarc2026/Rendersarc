@@ -1,7 +1,7 @@
 'use client';
 
 import { Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -14,11 +14,33 @@ const NAV_ITEMS: { href: string; label: string }[] = [
   { href: '/contact', label: 'Contact' },
 ];
 
+type IndicatorRect = { left: number; width: number };
+
+/** Every page mounts its own Navigation, so the underline's last position is
+    kept here (outside the component) to let it slide from the previous link. */
+let lastIndicator: IndicatorRect | null = null;
+
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const indicatorFrom = useRef(lastIndicator);
+  const [indicator, setIndicator] = useState<IndicatorRect | null>(null);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = linkRefs.current[pathname];
+      const next = el ? { left: el.offsetLeft, width: el.offsetWidth } : null;
+      lastIndicator = next;
+      setIndicator(next);
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,10 +66,7 @@ export function Navigation() {
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
+    <nav
       style={{
         backgroundColor: (scrolled || isOpen) ? 'rgba(255,255,255,0.85)' : '#f7f7f7',
         borderBottom: '1px solid rgba(0,0,0,0.06)',
@@ -55,7 +74,7 @@ export function Navigation() {
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
-      <div className="w-full px-6 md:px-10 lg:px-16 xl:px-24">
+      <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 2xl:px-44">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <button
@@ -68,36 +87,37 @@ export function Navigation() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center">
-            <motion.div className="flex items-center space-x-4 xl:space-x-6" layout>
-            {NAV_ITEMS.map((item, index) => {
+            <div className="relative flex items-center gap-4 xl:gap-6">
+            {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href;
               return (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.05 }}
-                >
+                <div key={item.href}>
                   <Link
+                    ref={(el) => { linkRefs.current[item.href] = el; }}
                     href={item.href}
                     aria-current={isActive ? 'page' : undefined}
                     style={{ color: isActive ? '#000000' : 'rgba(0,0,0,0.8)' }}
                     className="block text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors relative py-2 font-[600] hover:text-black"
                   >
                     {item.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="active-nav-underline"
-                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-black origin-center"
-                        initial={false}
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
                   </Link>
-                </motion.div>
+                </div>
               );
             })}
-            </motion.div>
+            {indicator && (
+              <motion.div
+                aria-hidden
+                className="absolute bottom-0 left-0 h-[2px] bg-black"
+                initial={
+                  indicatorFrom.current
+                    ? { x: indicatorFrom.current.left, width: indicatorFrom.current.width }
+                    : { x: indicator.left, width: indicator.width, scaleX: 0 }
+                }
+                animate={{ x: indicator.left, width: indicator.width, scaleX: 1 }}
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            </div>
           </div>
 
           {/* Mobile toggle */}
@@ -141,6 +161,6 @@ export function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }
