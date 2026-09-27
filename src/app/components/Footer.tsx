@@ -1,22 +1,14 @@
 'use client';
 
-import { Linkedin, Instagram } from 'lucide-react';
 import { motion } from 'motion/react';
-import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '@/assets/Logo-White.png';
 
-const SOCIALS = [
-  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/' },
-  { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/rendersarc/' },
-];
+const EMAIL = 'rendersarcmail@gmail.com';
 
-/** Real routes rather than scroll-by-id, so the links work from every page. */
-const EXPLORE = [
-  { href: '/#services', label: 'What we do' },
-  { href: '/process', label: 'Process' },
-  { href: '/faq', label: 'FAQ' },
-  { href: '/contact', label: 'Contact' },
+const LINKS = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/' },
+  { label: 'Instagram', href: 'https://www.instagram.com/rendersarc/' },
+  { label: '+91 81293 21539', href: 'tel:+918129321539' },
 ];
 
 const LEGAL = [
@@ -34,94 +26,44 @@ export function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-6xl mx-auto px-6 py-14 md:py-16"
+        className="px-5 pt-20 pb-8 md:px-8 md:pt-24"
       >
-        <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr] md:gap-12">
-          {/* Brand */}
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <Image
-              src={Logo}
-              alt="Renders Arc"
-              width={150}
-              height={40}
-              className="h-9 w-auto object-contain"
-            />
-            <p className="mt-5 text-sm leading-relaxed text-white/45 max-w-[30ch]">
-              Designing digital futures with innovation and precision.
-            </p>
-            <div className="mt-6 flex gap-3">
-              {SOCIALS.map(({ icon: Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="w-9 h-9 rounded-full border border-white/15 text-white/60 flex items-center justify-center transition-colors duration-300 hover:bg-white hover:border-white hover:text-black"
-                >
-                  <Icon size={15} />
-                </a>
-              ))}
-            </div>
+            <p className="text-xs text-white/40">Get in touch</p>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="mt-3 block text-xl sm:text-3xl font-semibold tracking-tight transition-opacity duration-300 hover:opacity-50"
+            >
+              {EMAIL}
+            </a>
           </div>
 
-          {/* Explore */}
-          <div>
-            <h4 className="text-[11px] uppercase tracking-widest text-white/35">Explore</h4>
-            <ul className="mt-5 space-y-3">
-              {EXPLORE.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-white/55 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-[11px] uppercase tracking-widest text-white/35">Contact</h4>
-            <ul className="mt-5 space-y-3 text-sm text-white/55">
-              <li>
+          <ul className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/60">
+            {LINKS.map((link) => (
+              <li key={link.label}>
                 <a
-                  href="mailto:rendersarcmail@gmail.com"
+                  href={link.href}
+                  {...(link.href.startsWith('http') && { target: '_blank', rel: 'noopener noreferrer' })}
                   className="hover:text-white transition-colors"
                 >
-                  rendersarcmail@gmail.com
+                  {link.label}
                 </a>
               </li>
-              <li>
-                <a href="tel:+918129321539" className="hover:text-white transition-colors">
-                  +91 81293 21539
-                </a>
-              </li>
-              <li className="text-white/40 leading-relaxed max-w-[26ch]">
-                G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Kerala 682036
-              </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-xs text-white/35">
-            © {currentYear} Renders Arc. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
+        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
+          <p>© {currentYear} Renders Arc</p>
+          <p>G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Kerala 682036</p>
+          <nav className="flex gap-6" aria-label="Legal">
             {LEGAL.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-xs text-white/35 hover:text-white transition-colors"
-              >
+              <Link key={link.href} href={link.href} className="hover:text-white transition-colors">
                 {link.label}
               </Link>
             ))}
-          </div>
+          </nav>
         </div>
       </motion.div>
     </footer>
