@@ -86,7 +86,7 @@ function buildRanks() {
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
-/** A block whose motion children (`rise`, or a heading of `Words`) enter one after another. */
+/** A block whose `rise` children fade up one after another as it scrolls into view. */
 const reveal = {
   initial: 'hidden',
   whileInView: 'show',
@@ -100,57 +100,6 @@ const rise = {
 } as const;
 
 const list = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } } as const;
-
-const words = { hidden: {}, show: { transition: { staggerChildren: 0.04 } } } as const;
-const wordRise = {
-  hidden: { y: '110%' },
-  show: { y: '0%', transition: { duration: 0.8, ease: EASE_OUT } },
-} as const;
-
-type Part = { text: string; className?: string };
-
-/**
- * Splits a heading into words that each rise out of their own mask. Parts carry
- * their own colour; punctuation that touches a word stays in that word's mask so
- * it can never wrap onto a line by itself.
- */
-function Words({ parts }: { parts: Part[] }) {
-  const items: (Part[] | ' ')[] = [];
-  let open = false;
-  for (const { text, className } of parts) {
-    for (const token of text.split(/(\s+)/)) {
-      if (!token) continue;
-      if (/^\s+$/.test(token)) {
-        items.push(' ');
-        open = false;
-        continue;
-      }
-      const last = items[items.length - 1];
-      if (open && Array.isArray(last)) last.push({ text: token, className });
-      else items.push([{ text: token, className }]);
-      open = true;
-    }
-  }
-  return (
-    <>
-      {items.map((item, i) =>
-        item === ' ' ? (
-          ' '
-        ) : (
-          <span key={i} className="inline-block overflow-hidden align-top pb-[0.12em] -mb-[0.12em]">
-            <motion.span className="inline-block" variants={wordRise}>
-              {item.map((part, j) => (
-                <span key={j} className={part.className}>
-                  {part.text}
-                </span>
-              ))}
-            </motion.span>
-          </span>
-        ),
-      )}
-    </>
-  );
-}
 
 /** Reduced-motion visitors get the text fades without the movement. */
 export function TrueFive() {
@@ -233,16 +182,10 @@ function TrueFiveBody() {
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-8 md:pt-12 pb-16 md:pb-24 relative">
         <motion.div {...reveal} className="max-w-[1400px] mx-auto relative">
           <motion.h2
-            variants={words}
+            variants={rise}
             className="text-3xl md:text-5xl lg:text-6xl leading-[1.08] font-[700] tracking-tight max-w-[18ch]"
           >
-            <Words
-              parts={[
-                { text: 'We talk to five real users before we ' },
-                { text: 'design anything', className: 'text-[#00995a]' },
-                { text: '.' },
-              ]}
-            />
+            We talk to five real users before we <span className="text-[#00995a]">design anything</span>.
           </motion.h2>
 
           <motion.div
@@ -255,15 +198,10 @@ function TrueFiveBody() {
               the actual end user, and what they say shapes the brief.
             </motion.p>
             <motion.p
-              variants={words}
+              variants={rise}
               className="text-2xl md:text-3xl font-[700] tracking-tight leading-[1.25] lg:pt-1"
             >
-              <Words
-                parts={[
-                  { text: 'Not a survey. Not a focus group. ', className: 'text-black/35' },
-                  { text: 'Five separate conversations.', className: 'text-black' },
-                ]}
-              />
+              <span className="text-black/35">Not a survey. Not a focus group. </span><span className="text-black">Five separate conversations.</span>
             </motion.p>
           </motion.div>
         </motion.div>
@@ -274,10 +212,10 @@ function TrueFiveBody() {
         <div className="max-w-[1400px] mx-auto">
           <motion.div {...reveal}>
             <motion.h3
-              variants={words}
+              variants={rise}
               className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[20ch]"
             >
-              <Words parts={[{ text: 'Five is where we have heard enough to act.' }]} />
+              Five is where we have heard enough to act.
             </motion.h3>
             <motion.p
               variants={rise}
@@ -430,14 +368,8 @@ function TrueFiveBody() {
       {/* ---------------- Why "True" ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
         <motion.div {...reveal} className="max-w-[1400px] mx-auto">
-          <motion.h3 variants={words} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
-            <Words
-              parts={[
-                { text: 'Why it is called ' },
-                { text: 'True', className: 'text-[#00995a]' },
-                { text: '.' },
-              ]}
-            />
+          <motion.h3 variants={rise} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
+            Why it is called <span className="text-[#00995a]">True</span>.
           </motion.h3>
           <motion.p
             variants={rise}
@@ -494,8 +426,8 @@ function TrueFiveBody() {
       {/* ---------------- What it replaces ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
         <motion.div {...reveal} className="max-w-[1400px] mx-auto">
-          <motion.h3 variants={words} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[22ch]">
-            <Words parts={[{ text: 'Assumptions in a meeting, replaced by people.' }]} />
+          <motion.h3 variants={rise} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[22ch]">
+            Assumptions in a meeting, replaced by people.
           </motion.h3>
           <motion.p
             variants={rise}
@@ -540,8 +472,8 @@ function TrueFiveBody() {
       {/* ---------------- Where it sits ---------------- */}
       <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
         <motion.div {...reveal} className="max-w-[1400px] mx-auto">
-          <motion.h3 variants={words} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
-            <Words parts={[{ text: 'Design starts after, not before.' }]} />
+          <motion.h3 variants={rise} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
+            Design starts after, not before.
           </motion.h3>
           <motion.p
             variants={rise}
@@ -612,18 +544,10 @@ function TrueFiveBody() {
         <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#00ea77]/[0.05] blur-[150px] rounded-full translate-y-1/3 -translate-x-1/3 pointer-events-none" />
         <motion.div {...reveal} className="max-w-[1400px] mx-auto relative">
           <motion.p
-            variants={words}
+            variants={rise}
             className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] font-[700] tracking-tight max-w-[19ch]"
           >
-            <Words
-              parts={[
-                { text: 'Five conversations get you to roughly ' },
-                { text: '85%', className: 'text-[#00995a]' },
-                {
-                  text: ' of the problems a design will actually have, so that is where we stop guessing and start building.',
-                },
-              ]}
-            />
+            Five conversations get you to roughly <span className="text-[#00995a]">85%</span> of the problems a design will actually have, so that is where we stop guessing and start building.
           </motion.p>
           <motion.div variants={rise}>
             <Link
