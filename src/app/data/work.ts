@@ -8,6 +8,8 @@ export type Pillar = {
   title: string;
   description: string;
   items: string[];
+  /** Looping background clip in /public/videos; a same-named .jpg is its poster. */
+  video: string;
 };
 
 export type Category = {
@@ -35,18 +37,21 @@ export const pillars: Pillar[] = [
     description:
       'Naming, identity systems and brand worlds built to hold up across every surface.',
     items: ['Naming', 'Visual identity', 'Brand guidelines', 'Packaging & collateral'],
+    video: '/videos/brand-identity',
   },
   {
     title: 'Digital Products',
     description:
       'Websites, apps and software designed around real user behaviour, not internal guesswork.',
     items: ['Websites', 'Web apps', 'Mobile apps', 'Software & platforms'],
+    video: '/videos/digital-products',
   },
   {
     title: 'Campaigns & Advertising',
     description:
       'Concepts, films and campaigns built to earn attention, not just spend it.',
     items: ['Strategy & concepts', 'Film & content', 'Social & digital ads', 'OOH & print'],
+    video: '/videos/campaigns',
   },
 ];
 

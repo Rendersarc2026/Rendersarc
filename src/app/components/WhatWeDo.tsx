@@ -37,9 +37,22 @@ export function WhatWeDo() {
               </p>
             </div>
 
-            {/* Imagery slot — swap the background for a project still once assets exist */}
-            <div className="bg-[#f4f4f4] min-h-[320px] md:min-h-[460px] flex flex-col justify-end p-6 md:p-8">
-              <ul className="space-y-1 text-sm text-black/70">
+            {/* Stock loops (Mixkit, free licence) until project footage exists. */}
+            <div className="relative overflow-hidden bg-[#f4f4f4] min-h-[320px] md:min-h-[460px] flex flex-col justify-end p-6 md:p-8">
+              <video
+                src={`${pillar.video}.mp4`}
+                poster={`${pillar.video}.jpg`}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              {/* Darkens the bottom so the item list stays legible over any frame. */}
+              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <ul className="relative space-y-1 text-sm text-white/85">
                 {pillar.items.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
