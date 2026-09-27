@@ -11,6 +11,8 @@ import rootsAndLeaps from '@/assets/ourClients/rootsandleaps.png';
 import silentPeak from '@/assets/ourClients/silentpeak.png';
 import skei from '@/assets/ourClients/skei.png';
 import fetchLogo from '@/assets/ourClients/fetch-clean.png';
+import euphrates from '@/assets/ourClients/euphrates.png';
+import tigris from '@/assets/ourClients/tigris.png';
 
 const clients = [
   { name: 'Kala', logo: kala, className: 'h-8 md:h-9 w-auto' },
@@ -20,6 +22,8 @@ const clients = [
   { name: 'Silent Peak', logo: silentPeak, className: 'h-10 md:h-11 w-auto' },
   { name: 'Skei', logo: skei, className: 'h-9 md:h-10 w-auto' },
   { name: 'Fetch', logo: fetchLogo, className: 'h-6 w-auto' },
+  { name: 'Euphrates Asia', logo: euphrates, className: 'h-6 md:h-7 w-auto' },
+  { name: 'Tigris Asia', logo: tigris, className: 'h-4 md:h-5 w-auto' },
 ];
 
 /** Fades the row into the page instead of cutting it off at the viewport edge. */
