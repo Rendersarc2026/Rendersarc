@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import { motion } from 'motion/react';
 
 // Import the logos
@@ -14,17 +14,31 @@ import fetchLogo from '@/assets/ourClients/fetch-clean.png';
 import euphrates from '@/assets/ourClients/euphrates.png';
 import tigris from '@/assets/ourClients/tigris.png';
 
+/**
+ * `weight` nudges logos whose ink is unusually light (thin line work) or heavy
+ * (solid wordmarks) so they read at the same visual weight as the rest.
+ */
 const clients = [
-  { name: 'Kala', logo: kala, className: 'h-8 md:h-9 w-auto' },
-  { name: 'MeTrends', logo: meTrends, className: 'h-5 w-auto' },
-  { name: 'Park Legal', logo: parkLegal, className: 'h-10 md:h-11 w-auto' },
-  { name: 'Roots and Leaps', logo: rootsAndLeaps, className: 'h-5 w-auto' },
-  { name: 'Silent Peak', logo: silentPeak, className: 'h-10 md:h-11 w-auto' },
-  { name: 'Skei', logo: skei, className: 'h-9 md:h-10 w-auto' },
-  { name: 'Fetch', logo: fetchLogo, className: 'h-6 w-auto' },
-  { name: 'Euphrates Asia', logo: euphrates, className: 'h-6 md:h-7 w-auto' },
-  { name: 'Tigris Asia', logo: tigris, className: 'h-4 md:h-5 w-auto' },
+  { name: 'Kala', logo: kala, weight: 1.15 },
+  { name: 'MeTrends', logo: meTrends, weight: 0.9 },
+  { name: 'Park Legal', logo: parkLegal, weight: 1 },
+  { name: 'Roots and Leaps', logo: rootsAndLeaps, weight: 1 },
+  { name: 'Silent Peak', logo: silentPeak, weight: 1 },
+  { name: 'Skei', logo: skei, weight: 1 },
+  { name: 'Fetch', logo: fetchLogo, weight: 0.95 },
+  { name: 'Euphrates Asia', logo: euphrates, weight: 1.15 },
+  { name: 'Tigris Asia', logo: tigris, weight: 0.9 },
 ];
+
+/**
+ * Gives every logo roughly the same area rather than the same height, so wide
+ * wordmarks don't dominate and square marks don't shrink. Returned as a
+ * multiple of `--logo-size` (the edge of an equivalent square).
+ */
+function logoHeight(logo: StaticImageData, weight: number) {
+  const ratio = logo.width / logo.height;
+  return `calc(var(--logo-size) * ${(weight / Math.sqrt(ratio)).toFixed(3)})`;
+}
 
 export function Clients() {
   return (
@@ -48,7 +62,7 @@ export function Clients() {
 
       {/* Logo wall: 5 columns on desktop; flex-wrap keeps a short last row centred. */}
       <div className="mt-14 md:mt-20 px-6 md:px-10 lg:px-16 xl:px-24">
-        <ul className="max-w-[1400px] mx-auto flex flex-wrap justify-center gap-y-14 md:gap-y-20">
+        <ul className="max-w-[1400px] mx-auto flex flex-wrap justify-center gap-y-12 md:gap-y-16 [--logo-size:44px] md:[--logo-size:54px]">
           {clients.map((client, i) => (
             <motion.li
               key={client.name}
@@ -56,12 +70,13 @@ export function Clients() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, ease: 'easeOut', delay: (i % 5) * 0.08 }}
-              className="basis-1/2 md:basis-1/3 lg:basis-1/5 flex items-center justify-center h-12 md:h-14 px-4"
+              className="basis-1/2 md:basis-1/3 lg:basis-1/5 flex items-center justify-center h-20 px-4"
             >
               <Image
                 src={client.logo}
                 alt={`${client.name} logo`}
-                className={`${client.className} max-w-full object-contain`}
+                style={{ height: logoHeight(client.logo, client.weight) }}
+                className="w-auto max-w-full object-contain"
               />
             </motion.li>
           ))}
