@@ -40,7 +40,7 @@ export function WorkGrid() {
   const filters = [{ id: ALL, label: 'All' }, ...categories];
 
   return (
-    <section className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pb-24 md:pb-32">
+    <section className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pt-32 md:pt-40 pb-24 md:pb-32">
       <div className="max-w-[1400px] mx-auto">
         {/* Filters — scroll sideways on small screens rather than wrapping into
             a ragged block above the grid. */}
