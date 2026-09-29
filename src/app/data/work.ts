@@ -144,6 +144,39 @@ export const projects: Project[] = [
   },
 ];
 
+export type CaseStudy = {
+  year: string;
+  services: string[];
+  challenge: string;
+  approach: string;
+  outcome: string;
+  results: { value: string; label: string }[];
+};
+
+/**
+ * Placeholder case study for a project — the same dummy copy for every one,
+ * with the project's own name dropped in. Replace per project with a real
+ * write-up (e.g. a `caseStudy` field on Project) once one exists.
+ */
+export function caseStudyFor(project: Project): CaseStudy {
+  const services = project.categories.map(
+    (id) => categories.find((c) => c.id === id)?.label ?? id,
+  );
+
+  return {
+    year: '2025',
+    services: [...services, 'UI/UX design', 'Development'],
+    challenge: `${project.title} needed a site that did justice to the business behind it. The previous presence was dated, hard to update and did little to turn visitors into enquiries. Placeholder copy — replace with the real brief.`,
+    approach: `We started with the people who would actually use it, mapped what they came looking for, and built the structure around those journeys before a single screen was designed. Identity, interface and motion were developed as one system, then built out with a CMS the ${project.title} team can run themselves. Placeholder copy.`,
+    outcome: `The new site launched on schedule and gives ${project.title} a presence that matches the quality of the work — faster, clearer and easier to keep current. Placeholder copy — replace with real results.`,
+    results: [
+      { value: '2×', label: 'More enquiries' },
+      { value: '40%', label: 'Faster load time' },
+      { value: '6 wks', label: 'Kickoff to launch' },
+    ],
+  };
+}
+
 export type Testimonial = {
   id: string;
   quote: string;

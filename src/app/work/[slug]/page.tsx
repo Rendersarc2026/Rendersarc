@@ -1,0 +1,169 @@
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Navigation } from '../../components/Navigation';
+import { LetsTalk } from '../../components/LetsTalk';
+import { Footer } from '../../components/Footer';
+import { caseStudyFor, projects } from '@/app/data/work';
+
+type Params = { slug: string };
+
+export function generateStaticParams(): Params[] {
+  return projects.map(({ slug }) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
+  if (!project) return {};
+
+  return {
+    title: `${project.title} — Case study — Renders Arc`,
+    description: project.summary,
+  };
+}
+
+export default async function CaseStudyPage({ params }: { params: Promise<Params> }) {
+  const { slug } = await params;
+  const index = projects.findIndex((p) => p.slug === slug);
+  if (index === -1) notFound();
+
+  const project = projects[index];
+  const next = projects[(index + 1) % projects.length];
+  const study = caseStudyFor(project);
+  const host = new URL(project.url).hostname.replace(/^www\./, '');
+
+  const sections = [
+    { heading: 'The challenge', body: study.challenge },
+    { heading: 'Our approach', body: study.approach },
+    { heading: 'The outcome', body: study.outcome },
+  ];
+
+  return (
+    <div className="size-full bg-black relative overflow-x-clip">
+      <Navigation />
+      <main className="relative text-white">
+        <article className="px-6 md:px-10 lg:px-16 xl:px-24 pt-32 md:pt-40 pb-24 md:pb-32">
+          <div className="max-w-[1400px] mx-auto">
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors duration-300"
+            >
+              <ArrowLeft size={16} strokeWidth={1.75} aria-hidden />
+              All work
+            </Link>
+
+            <header className="mt-10 md:mt-14">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/40">Case study</p>
+              <h1 className="mt-6 font-[700] tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,7vw,6rem)]">
+                {project.title}
+              </h1>
+              <p className="mt-6 text-base md:text-lg leading-relaxed text-white/60 max-w-[54ch]">
+                {project.summary}
+              </p>
+            </header>
+
+            <dl className="mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 border-t border-white/10 pt-8">
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Client</dt>
+                <dd className="mt-2 text-sm">{project.title}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Year</dt>
+                <dd className="mt-2 text-sm">{study.year}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Services</dt>
+                <dd className="mt-2 text-sm leading-relaxed">{study.services.join(', ')}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Live site</dt>
+                <dd className="mt-2 text-sm">
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 hover:opacity-70 transition-opacity duration-300"
+                  >
+                    {host}
+                    <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden />
+                  </a>
+                </dd>
+              </div>
+            </dl>
+
+            {project.image && (
+              <div className="mt-12 md:mt-16 relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/[0.06]">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} website`}
+                  fill
+                  priority
+                  sizes="(min-width: 1400px) 1400px, 100vw"
+                  className="object-cover object-top"
+                />
+              </div>
+            )}
+
+            <div className="mt-20 md:mt-32 space-y-16 md:space-y-24">
+              {sections.map((section) => (
+                <section
+                  key={section.heading}
+                  className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 md:gap-12"
+                >
+                  <h2 className="font-[700] tracking-[-0.01em] text-2xl md:text-[28px]">
+                    {section.heading}
+                  </h2>
+                  <p className="text-base md:text-lg leading-relaxed text-white/60 max-w-[62ch]">
+                    {section.body}
+                  </p>
+                </section>
+              ))}
+            </div>
+
+            <section aria-label="Results" className="mt-20 md:mt-32 border-t border-white/10 pt-12">
+              <ul className="grid sm:grid-cols-3 gap-10">
+                {study.results.map((result) => (
+                  <li key={result.label}>
+                    <p className="font-[700] tracking-[-0.03em] text-5xl md:text-6xl">
+                      {result.value}
+                    </p>
+                    <p className="mt-3 text-sm text-white/50">{result.label}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <Link
+              href={`/work/${next.slug}`}
+              className="group mt-20 md:mt-32 flex items-center justify-between gap-6 border-t border-white/10 pt-8"
+            >
+              <span>
+                <span className="block text-[11px] uppercase tracking-[0.2em] text-white/40">
+                  Next project
+                </span>
+                <span className="mt-3 block font-[700] tracking-[-0.02em] text-3xl md:text-5xl transition-opacity duration-300 group-hover:opacity-70">
+                  {next.title}
+                </span>
+              </span>
+              <ArrowRight
+                size={32}
+                strokeWidth={1.5}
+                aria-hidden
+                className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
+        </article>
+        <LetsTalk cta />
+      </main>
+      <Footer />
+    </div>
+  );
+}

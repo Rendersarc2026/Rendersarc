@@ -26,10 +26,6 @@ const clients = [
   { name: 'Tigris Asia', logo: tigris, className: 'h-4 md:h-5 w-auto' },
 ];
 
-/** Fades the row into the page instead of cutting it off at the viewport edge. */
-const EDGE_FADE =
-  'linear-gradient(to right, transparent 0, #000 6rem, #000 calc(100% - 6rem), transparent 100%)';
-
 export function Clients() {
   return (
     <section id="clients" className="bg-white py-24 md:py-32">
@@ -50,35 +46,26 @@ export function Clients() {
         </motion.div>
       </div>
 
-      {/* Inset to the same container as the heading. Two identical copies of the
-          row make the seam invisible; the second is hidden from assistive tech. */}
+      {/* Logo wall: 5 columns on desktop; flex-wrap keeps a short last row centred. */}
       <div className="mt-14 md:mt-20 px-6 md:px-10 lg:px-16 xl:px-24">
-      <div
-        className="max-w-[1400px] mx-auto overflow-hidden"
-        style={{ maskImage: EDGE_FADE, WebkitMaskImage: EDGE_FADE }}
-      >
-        <div
-          className="marquee-track flex w-max items-center"
-          style={{ ['--marquee-duration' as string]: '45s' }}
-        >
-          {[0, 1].map((copy) => (
-            <div key={copy} aria-hidden={copy === 1} className="flex items-center shrink-0">
-              {clients.map((client) => (
-                <div
-                  key={client.name}
-                  className="px-10 md:px-16 flex items-center justify-center"
-                >
-                  <Image
-                    src={client.logo}
-                    alt={copy === 0 ? `${client.name} logo` : ''}
-                    className={`${client.className} object-contain`}
-                  />
-                </div>
-              ))}
-            </div>
+        <ul className="max-w-[1400px] mx-auto flex flex-wrap justify-center gap-y-14 md:gap-y-20">
+          {clients.map((client, i) => (
+            <motion.li
+              key={client.name}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: (i % 5) * 0.08 }}
+              className="basis-1/2 md:basis-1/3 lg:basis-1/5 flex items-center justify-center h-12 md:h-14 px-4"
+            >
+              <Image
+                src={client.logo}
+                alt={`${client.name} logo`}
+                className={`${client.className} max-w-full object-contain`}
+              />
+            </motion.li>
           ))}
-        </div>
-      </div>
+        </ul>
       </div>
     </section>
   );

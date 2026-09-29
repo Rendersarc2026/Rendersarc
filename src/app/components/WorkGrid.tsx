@@ -2,9 +2,10 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, MotionConfig, motion } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { categories, projects, type Project } from '@/app/data/work';
 
 const ALL = 'all';
@@ -118,49 +119,81 @@ export function WorkGrid() {
 
 function WorkCard({ project, delay }: { project: Project; delay: number }) {
   const host = new URL(project.url).hostname.replace(/^www\./, '');
+  const caseStudy = `/work/${project.slug}`;
 
   return (
-    <motion.a
+    <motion.article
       layout
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.97 }}
       transition={{ duration: 0.45, ease: EASE, delay }}
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block focus:outline-none"
+      className="group"
     >
-      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/[0.06] group-focus-visible:ring-2 group-focus-visible:ring-white group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-black">
+      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/[0.06]">
         {project.image && (
           <Image
             src={project.image}
             alt={`${project.title} website`}
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+            className="object-cover object-top transition-[scale,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-hover:blur-md group-has-[:focus-visible]:scale-[1.06] group-has-[:focus-visible]:blur-md"
           />
         )}
-        <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur text-[11px] uppercase tracking-[0.12em] text-black">
+
+        {/* The whole image opens the case study — this is what a tap does on
+            touch screens, where the hover buttons never appear. Keyboard users
+            reach the same page through the title, so it stays out of tab order. */}
+        <Link href={caseStudy} tabIndex={-1} aria-hidden className="absolute inset-0" />
+
+        {/* Hover (or keyboard focus) dims and blurs the shot and brings up both
+            actions. Tailwind's hover variant only applies on hover-capable
+            devices, so touch never gets stuck in this state. */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-3 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-has-[:focus-visible]:opacity-100">
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group-hover:pointer-events-auto inline-flex translate-y-2 items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-[500] text-black transition-[translate,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:opacity-85 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black group-hover:translate-y-0 group-has-[:focus-visible]:translate-y-0"
+          >
+            Visit site
+            <ArrowUpRight size={15} strokeWidth={1.75} aria-hidden />
+          </a>
+          <Link
+            href={caseStudy}
+            className="group-hover:pointer-events-auto inline-flex translate-y-2 items-center gap-1.5 rounded-full border border-white/70 bg-black/20 px-5 py-2.5 text-sm font-[500] text-white backdrop-blur transition-[translate,background-color] delay-75 duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black group-hover:translate-y-0 group-has-[:focus-visible]:translate-y-0"
+          >
+            View case study
+            <ArrowRight size={15} strokeWidth={1.75} aria-hidden />
+          </Link>
+        </div>
+
+        <span className="pointer-events-none absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur text-[11px] uppercase tracking-[0.12em] text-black">
           {labelFor(project.categories[0])}
         </span>
       </div>
 
-      <div className="mt-5 flex items-start justify-between gap-6">
-        <div className="min-w-0">
-          <h2 className="text-white font-[700] tracking-[-0.01em] text-xl md:text-2xl">
+      <div className="mt-5 min-w-0">
+        <h2 className="text-white font-[700] tracking-[-0.01em] text-xl md:text-2xl">
+          <Link
+            href={caseStudy}
+            className="transition-opacity duration-300 hover:opacity-70 focus:outline-none focus-visible:underline"
+          >
             {project.title}
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-white/55 max-w-[46ch]">
-            {project.summary}
-          </p>
-          <p className="mt-3 text-xs text-white/35">{host}</p>
-        </div>
-        <span className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-white/15 text-xs font-[500] text-white/70 transition-colors duration-300 group-hover:bg-white group-hover:border-white group-hover:text-black">
-          Visit site
-          <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden />
-        </span>
+          </Link>
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-white/55 max-w-[46ch]">
+          {project.summary}
+        </p>
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-block text-xs text-white/35 hover:text-white/70 transition-colors duration-300"
+        >
+          {host}
+        </a>
       </div>
-    </motion.a>
+    </motion.article>
   );
 }

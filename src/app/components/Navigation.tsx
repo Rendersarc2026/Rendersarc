@@ -21,9 +21,29 @@ type IndicatorRect = { left: number; width: number };
     kept here (outside the component) to let it slide from the previous link. */
 let lastIndicator: IndicatorRect | null = null;
 
+/** Whether the page directly behind the bar is dark: takes the first element
+    under its centre that isn't the bar itself, then climbs to the nearest
+    ancestor with a solid background. Falls back to light. */
+function isDarkBehind(nav: HTMLElement) {
+  const hit = document
+    .elementsFromPoint(window.innerWidth / 2, nav.offsetHeight / 2)
+    .find((el) => !nav.contains(el));
+
+  for (let el = hit ?? null; el; el = el.parentElement) {
+    const bg = getComputedStyle(el).backgroundColor;
+    const [a, b, c, alpha = 1] = (bg.match(/[\d.]+/g) ?? []).map(Number);
+    if (a === undefined || alpha < 0.5) continue;
+    // Tailwind v4 palette colours compute to oklch(); everything else to rgb().
+    return bg.startsWith('oklch') ? a < 0.5 : 0.2126 * a + 0.7152 * b + 0.0722 * c < 128;
+  }
+  return false;
+}
+
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [dark, setDark] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const indicatorFrom = useRef(lastIndicator);
@@ -43,12 +63,24 @@ export function Navigation() {
   }, [pathname]);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
       setScrolled(window.scrollY > 20);
+      if (navRef.current) setDark(isDarkBehind(navRef.current));
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [pathname]);
 
   useEffect(() => setIsOpen(false), [pathname]);
 
@@ -63,11 +95,17 @@ export function Navigation() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Foreground colour as an "r,g,b" triple, flipped when the page behind is dark.
+  const ink = dark ? '255,255,255' : '0,0,0';
+
   return (
     <nav
+      ref={navRef}
       style={{
-        backgroundColor: (scrolled || isOpen) ? 'rgba(255,255,255,0.85)' : '#f7f7f7',
-        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        backgroundColor: dark
+          ? (scrolled || isOpen) ? 'rgba(0,0,0,0.85)' : '#000000'
+          : (scrolled || isOpen) ? 'rgba(255,255,255,0.85)' : '#f7f7f7',
+        borderBottom: `1px solid rgba(${ink},0.06)`,
         backdropFilter: (scrolled || isOpen) ? 'blur(12px)' : 'none',
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
@@ -79,7 +117,8 @@ export function Navigation() {
             href="/"
             onClick={goHome}
             aria-label="Renders Arc — home"
-            className="shrink-0 text-black uppercase font-bold text-[15px] md:text-[18px] tracking-[0.12em] transition-opacity hover:opacity-70"
+            style={{ color: `rgb(${ink})` }}
+            className="shrink-0 uppercase font-bold text-[15px] md:text-[18px] tracking-[0.12em] transition-[color,opacity] duration-300 hover:opacity-70"
           >
             Renders Arc
           </Link>
@@ -95,8 +134,8 @@ export function Navigation() {
                     ref={(el) => { linkRefs.current[item.href] = el; }}
                     href={item.href}
                     aria-current={isActive ? 'page' : undefined}
-                    style={{ color: isActive ? '#000000' : 'rgba(0,0,0,0.8)' }}
-                    className="block text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors relative py-2 font-[600] hover:text-black"
+                    style={{ color: `rgba(${ink},${isActive ? 1 : 0.8})` }}
+                    className="block text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors duration-300 relative py-2 font-[600]"
                   >
                     {item.label}
                   </Link>
@@ -106,7 +145,8 @@ export function Navigation() {
             {indicator && (
               <motion.div
                 aria-hidden
-                className="absolute bottom-0 left-0 h-[2px] bg-black"
+                className="absolute bottom-0 left-0 h-[2px] transition-colors duration-300"
+                style={{ backgroundColor: `rgb(${ink})` }}
                 initial={
                   indicatorFrom.current
                     ? { x: indicatorFrom.current.left, width: indicatorFrom.current.width }
@@ -121,7 +161,7 @@ export function Navigation() {
 
           {/* Mobile toggle */}
           <div className="lg:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} style={{ color: '#000000' }} className="transition-opacity hover:opacity-60">
+            <button onClick={() => setIsOpen(!isOpen)} style={{ color: `rgb(${ink})` }} className="transition-[color,opacity] duration-300 hover:opacity-60">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -135,7 +175,10 @@ export function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            style={{ backgroundColor: '#ffffff', borderTop: '1px solid rgba(0,0,0,0.06)' }}
+            style={{
+              backgroundColor: dark ? '#000000' : '#ffffff',
+              borderTop: `1px solid rgba(${ink},0.06)`,
+            }}
           >
             <div className="px-6 py-6 space-y-5">
               {NAV_ITEMS.map((item) => (
@@ -143,7 +186,7 @@ export function Navigation() {
                   key={item.href}
                   href={item.href}
                   aria-current={pathname === item.href ? 'page' : undefined}
-                  style={{ color: pathname === item.href ? '#000000' : 'rgba(0,0,0,0.6)' }}
+                  style={{ color: `rgba(${ink},${pathname === item.href ? 1 : 0.6})` }}
                   className="block w-full text-left text-sm tracking-widest uppercase py-1 font-[600]"
                 >
                   {item.label}
@@ -151,7 +194,7 @@ export function Navigation() {
               ))}
               <Link
                 href="/contact"
-                style={{ border: '1px solid rgba(0,0,0,0.2)', color: '#000000' }}
+                style={{ border: `1px solid rgba(${ink},0.2)`, color: `rgb(${ink})` }}
                 className="block w-full mt-2 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-[500] text-center"
               >
                 Get in touch
