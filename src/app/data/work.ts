@@ -1,9 +1,8 @@
 /**
- * Content for the "What we do" and "What we build, specifically" sections.
- * Copy and imagery are placeholders — replace the strings and add `image`
- * paths (anything under /public) as real work comes in.
+ * Content for the "What we do" section, the /work portfolio and the smaller
+ * pages. Portfolio thumbnails live in /public/work — a 1440×900 capture of each
+ * site's landing view.
  */
-
 export type Pillar = {
   title: string;
   description: string;
@@ -11,25 +10,6 @@ export type Pillar = {
   /** Looping background clip in /public/videos; a same-named .jpg is its poster. */
   video: string;
 };
-
-export type Category = {
-  id: string;
-  label: string;
-};
-
-export type Project = {
-  slug: string;
-  title: string;
-  /** Must match a Category id */
-  category: string;
-  summary: string;
-  approach: string;
-  /** Path under /public. Falls back to a solid placeholder block when omitted. */
-  image?: string;
-};
-
-const LOREM =
-  'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper.';
 
 export const pillars: Pillar[] = [
   {
@@ -55,75 +35,82 @@ export const pillars: Pillar[] = [
   },
 ];
 
+export type Category = {
+  id: string;
+  label: string;
+};
+
+export type Project = {
+  slug: string;
+  title: string;
+  /** One line on who the client is and what the site does. */
+  summary: string;
+  /** Live site the card opens. */
+  url: string;
+  /** Category ids. A project can sit in more than one filter. */
+  categories: string[];
+  /** Path under /public. Falls back to a solid placeholder block when omitted. */
+  image?: string;
+};
+
 export const categories: Category[] = [
-  { id: 'ecommerce', label: 'E-commerce' },
-  { id: 'marketing', label: 'Marketing & Brand Websites' },
-  { id: 'web-apps', label: 'Web Applications' },
-  { id: 'mobile-apps', label: 'Mobile Apps' },
-  { id: 'software', label: 'Software & Platforms' },
+  { id: 'websites', label: 'Websites' },
+  { id: 'interactive-ui', label: 'Websites - Interactive UI' },
+  { id: 'ecommerce', label: 'Ecommerce' },
+  { id: 'custom-software', label: 'Custom Softwares / Web Application' },
+  { id: 'mobile-apps', label: 'Mobile Applications' },
 ];
 
 export const projects: Project[] = [
   {
-    slug: 'al-reeb-shopify',
-    title: 'Al Reeb Shopify Page',
-    category: 'ecommerce',
-    summary: LOREM,
-    approach: LOREM,
+    slug: 'sella',
+    title: 'Sella',
+    summary: 'Furniture studio concept with a configurable 3D chair built in three.js.',
+    url: 'https://sella.rendersarc.com/',
+    categories: ['interactive-ui'],
+    image: '/work/sella.png',
   },
   {
-    slug: 'storefront-replatform',
-    title: 'Storefront Replatform',
-    category: 'ecommerce',
-    summary: LOREM,
-    approach: LOREM,
+    slug: 'backwater',
+    title: 'Backwater',
+    summary: 'Kerala fish restaurant on the edge of Vembanad Lake, Kumarakom.',
+    url: 'https://backwater.rendersarc.com/',
+    categories: ['websites'],
+    image: '/work/backwater.png',
   },
   {
-    slug: 'brand-site-refresh',
-    title: 'Brand Site Refresh',
-    category: 'marketing',
-    summary: LOREM,
-    approach: LOREM,
+    slug: 'kala-interiors',
+    title: 'The Kala Interiors',
+    summary: 'Interior design studio for residential, commercial and hospitality spaces.',
+    url: 'https://www.thekalainteriors.com/',
+    categories: ['websites'],
+    image: '/work/kala-interiors.png',
   },
   {
-    slug: 'campaign-microsite',
-    title: 'Campaign Microsite',
-    category: 'marketing',
-    summary: LOREM,
-    approach: LOREM,
+    slug: 'roots-and-leaps',
+    title: 'Roots & Leaps',
+    summary: 'Global management consulting and advisory firm.',
+    url: 'https://www.rootsandleaps.com/',
+    categories: ['websites'],
+    image: '/work/roots-and-leaps.png',
   },
   {
-    slug: 'operations-dashboard',
-    title: 'Operations Dashboard',
-    category: 'web-apps',
-    summary: LOREM,
-    approach: LOREM,
+    slug: 'euphrates-asia',
+    title: 'Euphrates Asia',
+    summary: 'Brand equity and narrative advisory for founders and market leaders across Asia.',
+    url: 'https://www.euphratesasia.com/',
+    categories: ['websites'],
+    image: '/work/euphrates-asia.png',
   },
   {
-    slug: 'booking-portal',
-    title: 'Booking Portal',
-    category: 'web-apps',
-    summary: LOREM,
-    approach: LOREM,
-  },
-  {
-    slug: 'field-service-app',
-    title: 'Field Service App',
-    category: 'mobile-apps',
-    summary: LOREM,
-    approach: LOREM,
-  },
-  {
-    slug: 'inventory-platform',
-    title: 'Inventory Platform',
-    category: 'software',
-    summary: LOREM,
-    approach: LOREM,
+    slug: 'fetch-advertising',
+    title: 'Fetch',
+    summary: 'Influencer marketing platform connecting brands with creators.',
+    url: 'https://fetchadvertising.tech/',
+    categories: ['custom-software'],
+    image: '/work/fetch-advertising.png',
   },
 ];
-
-export const projectsByCategory = (categoryId: string) =>
-  projects.filter((p) => p.category === categoryId);
 
 export type Testimonial = {
   id: string;
