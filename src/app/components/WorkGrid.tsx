@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { categories, projects, type Project } from '@/app/data/work';
 
@@ -78,27 +78,41 @@ export function WorkGrid() {
           })}
         </div>
 
-        <div className="mt-10 md:mt-14 grid md:grid-cols-2 gap-x-4 gap-y-12 md:gap-y-16">
-          {visible.map((project) => (
-            <WorkCard key={project.slug} project={project} />
-          ))}
-        </div>
-
-        {visible.length === 0 && (
-          <div className="mt-10 md:mt-14 rounded-2xl bg-white/[0.06] px-6 py-24 text-center">
-            <p className="text-white font-[600] text-lg">Projects coming soon</p>
-            <p className="mt-2 text-sm text-white/50">
-              Nothing published under {labelFor(active)} yet — have a look at the rest of our
-              work.
-            </p>
-            <button
-              onClick={() => select(ALL)}
-              className="mt-6 px-5 py-2.5 rounded-full border border-white/15 text-sm text-white/70 hover:border-white hover:text-white transition-colors duration-300"
-            >
-              Show all projects
-            </button>
-          </div>
-        )}
+        {/* Keyed on the filter so each switch fades the old results out before
+            the new ones rise in. `initial={false}` leaves the first render to
+            the load animation above. */}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            className="mt-10 md:mt-14"
+          >
+            {visible.length > 0 ? (
+              <div className="grid md:grid-cols-2 gap-x-4 gap-y-12 md:gap-y-16">
+                {visible.map((project) => (
+                  <WorkCard key={project.slug} project={project} />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl bg-white/[0.06] px-6 py-24 text-center">
+                <p className="text-white font-[600] text-lg">Projects coming soon</p>
+                <p className="mt-2 text-sm text-white/50">
+                  Nothing published under {labelFor(active)} yet — have a look at the rest of
+                  our work.
+                </p>
+                <button
+                  onClick={() => select(ALL)}
+                  className="mt-6 px-5 py-2.5 rounded-full border border-white/15 text-sm text-white/70 hover:border-white hover:text-white transition-colors duration-300"
+                >
+                  Show all projects
+                </button>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </motion.div>
     </section>
   );

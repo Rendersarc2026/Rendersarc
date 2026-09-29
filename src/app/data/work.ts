@@ -110,6 +110,38 @@ export const projects: Project[] = [
     categories: ['custom-software'],
     image: '/work/fetch-advertising.png',
   },
+  {
+    slug: 'travel-link-uae',
+    title: 'Travel Link UAE',
+    summary: 'Luxury chauffeur service in Dubai with a premium fleet and 24/7 booking.',
+    url: 'https://travellinkuae.com/',
+    categories: ['websites'],
+    image: '/work/travel-link-uae.png',
+  },
+  {
+    slug: 'wow-gel-nails',
+    title: 'WOW Nails',
+    summary: 'Online store for TPO-free gel nail polish, with a shade lab for browsing colours.',
+    url: 'https://wowgelnails.com/',
+    categories: ['ecommerce'],
+    image: '/work/wow-gel-nails.png',
+  },
+  {
+    slug: 'tit',
+    title: 'TIT',
+    summary: 'Bilingual Saudi store for smart TVs, home and kitchen appliances.',
+    url: 'https://tit.com.sa/',
+    categories: ['ecommerce'],
+    image: '/work/tit.png',
+  },
+  {
+    slug: 'areej-alarab',
+    title: 'Areej Alarab',
+    summary: 'Bilingual fragrance store carrying Arabian perfume houses and bakhoor.',
+    url: 'https://areejalarab.online/',
+    categories: ['ecommerce'],
+    image: '/work/areej-alarab.png',
+  },
 ];
 
 export type Testimonial = {
