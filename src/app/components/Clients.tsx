@@ -71,7 +71,7 @@ export function Clients() {
                   <Image
                     src={client.logo}
                     alt={copy === 0 ? `${client.name} logo` : ''}
-                    className={`${client.className} object-contain grayscale opacity-45 hover:opacity-100 transition-opacity duration-500`}
+                    className={`${client.className} object-contain`}
                   />
                 </div>
               ))}

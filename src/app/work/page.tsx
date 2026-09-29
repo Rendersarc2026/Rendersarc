@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   return (
-    <div className="size-full bg-white relative overflow-x-clip">
+    <div className="size-full bg-black relative overflow-x-clip">
       <Navigation />
       <main className="relative">
         <h1 className="sr-only">Work</h1>
