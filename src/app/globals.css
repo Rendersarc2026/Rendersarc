@@ -180,6 +180,12 @@
     line-height: 1.5;
   }
 
+  /* Tailwind v4 no longer gives buttons a pointer cursor. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
   input {
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);

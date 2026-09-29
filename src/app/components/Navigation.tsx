@@ -1,10 +1,10 @@
 'use client';
 
 import { Menu, X } from 'lucide-react';
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, type MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 /** Each item is its own route; the logo still scrolls home to the top. */
 const NAV_ITEMS: { href: string; label: string }[] = [
@@ -25,7 +25,6 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const indicatorFrom = useRef(lastIndicator);
   const [indicator, setIndicator] = useState<IndicatorRect | null>(null);
@@ -53,16 +52,14 @@ export function Navigation() {
 
   useEffect(() => setIsOpen(false), [pathname]);
 
-  /** Logo behaviour: scroll home when already there, otherwise route home. No
-      hash either way, so the address bar stays clean. */
-  const goHome = () => {
+  /** Logo behaviour: a real link home (so it prefetches and opens in a new
+      tab), but scroll to the top instead when already on the home page. */
+  const goHome = (e: MouseEvent<HTMLAnchorElement>) => {
     setIsOpen(false);
 
-    if (pathname !== '/') {
-      router.push('/');
-      return;
-    }
+    if (pathname !== '/') return;
 
+    e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -78,13 +75,14 @@ export function Navigation() {
       <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 2xl:px-44">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <button
+          <Link
+            href="/"
             onClick={goHome}
-            aria-label="Renders Arc — back to top"
+            aria-label="Renders Arc — home"
             className="shrink-0 text-black uppercase font-bold text-[15px] md:text-[18px] tracking-[0.12em] transition-opacity hover:opacity-70"
           >
             Renders Arc
-          </button>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center">
