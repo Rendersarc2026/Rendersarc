@@ -117,6 +117,9 @@ export function WorkGrid() {
  * same way whether the grid is one column or two.
  */
 function WorkCard({ project, delay }: { project: Project; delay: number }) {
+  const cover = project.caseStudy?.cover;
+  const thumb = cover ?? project.image;
+
   return (
     <motion.article
       layout
@@ -131,13 +134,13 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
         className="group flex flex-col gap-5 bg-black p-5 @xl:grid @xl:aspect-[5/3] @xl:grid-cols-[1fr_44%_1fr] @xl:items-center @xl:gap-0 @xl:p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
       >
         <div className="relative aspect-[16/10] overflow-hidden bg-white/[0.06] @xl:col-start-2 @xl:row-start-1">
-          {project.image && (
+          {thumb && (
             <Image
-              src={project.image}
-              alt={`${project.title} website`}
+              src={thumb}
+              alt={`${project.title} ${cover ? 'platform' : 'website'}`}
               fill
               sizes="(min-width: 1024px) 22vw, (min-width: 768px) 44vw, 100vw"
-              className="object-cover object-top"
+              className={`object-cover ${cover ? 'object-center' : 'object-top'}`}
             />
           )}
           <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-white/90 text-[9px] uppercase tracking-[0.12em] text-black">
