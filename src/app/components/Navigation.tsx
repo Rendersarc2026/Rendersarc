@@ -44,8 +44,11 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dark, setDark] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+  // On the home page the bar stays out of the way until the scroll-driven hero
+  // has played out. Starts hidden there so it doesn't flash in on load.
+  const [hidden, setHidden] = useState(pathname === '/');
+  const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const indicatorFrom = useRef(lastIndicator);
   const [indicator, setIndicator] = useState<IndicatorRect | null>(null);
@@ -68,7 +71,10 @@ export function Navigation() {
     const update = () => {
       frame = 0;
       setScrolled(window.scrollY > 20);
-      if (navRef.current) setDark(isDarkBehind(navRef.current));
+      if (!navRef.current) return;
+      setDark(isDarkBehind(navRef.current));
+      const hero = document.getElementById('hero');
+      setHidden(!!hero && hero.getBoundingClientRect().bottom > navRef.current.offsetHeight);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -109,7 +115,9 @@ export function Navigation() {
         borderBottom: `1px solid rgba(${ink},0.06)`,
         backdropFilter: (scrolled || isOpen) ? 'blur(12px)' : 'none',
       }}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        hidden && !isOpen ? '-translate-y-full focus-within:translate-y-0' : ''
+      }`}
     >
       <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 2xl:px-44">
         <div className="flex justify-between items-center h-20">

@@ -13,7 +13,7 @@ const HERO_VIDEO: string | null = null;
  * sticks to the viewport while scroll progress (0–1) drives four beats:
  *   1. "There is a space"
  *   2. "between"
- *   3. a window opens between "your imagination" and "and reality"
+ *   3. "your imagination", then "and reality", then a window opens between them
  *   4. the window grows to fill the screen and "RENDERS ARC" fades in
  */
 export function Hero() {
@@ -47,25 +47,27 @@ export function Hero() {
   const betweenOpacity = useTransform(p, [0.16, 0.22, 0.3, 0.36], [0, 1, 1, 0]);
   const betweenY = useTransform(p, [0.16, 0.22, 0.3, 0.36], [24, 0, 0, -24]);
 
+  // "your imagination", then "and reality", then the window opens between them.
+  const leftOpacity = useTransform(p, [0.36, 0.42, 0.66, 0.74], [0, 1, 1, 0]);
+  const leftX = useTransform(p, [0.36, 0.42, 0.66, 0.74], [-40, 0, 0, -80]);
+  const rightOpacity = useTransform(p, [0.43, 0.49, 0.66, 0.74], [0, 1, 1, 0]);
+  const rightX = useTransform(p, [0.43, 0.49, 0.66, 0.74], [40, 0, 0, 80]);
+
   // Window: `open` widens it from a slit to its framed size, `fill` takes it
   // edge to edge. Framed size comes from --rx/--ry so it can differ by breakpoint.
-  const open = useTransform(p, [0.36, 0.5], [0, 1]);
-  const fill = useTransform(p, [0.58, 0.82], [0, 1]);
+  const open = useTransform(p, [0.5, 0.6], [0, 1]);
+  const fill = useTransform(p, [0.66, 0.86], [0, 1]);
   const radius = useTransform(fill, [0, 1], [24, 0]);
   const clipPath = useMotionTemplate`inset(calc(var(--ry) * (1 - ${fill})) calc((50% - (50% - var(--rx)) * ${open}) * (1 - ${fill})) round ${radius}px)`;
-  const mediaScale = useTransform(p, [0.36, 0.82], [1.15, 1]);
+  const mediaScale = useTransform(p, [0.5, 0.86], [1.15, 1]);
 
-  const sideOpacity = useTransform(p, [0.38, 0.5, 0.58, 0.68], [0, 1, 1, 0]);
-  const leftX = useTransform(p, [0.38, 0.5, 0.58, 0.68], [-40, 0, 0, -80]);
-  const rightX = useTransform(leftX, (x) => -x);
-
-  const brandOpacity = useTransform(p, [0.8, 0.9], [0, 1]);
-  const brandScale = useTransform(p, [0.8, 0.95], [0.94, 1]);
+  const brandOpacity = useTransform(p, [0.84, 0.93], [0, 1]);
+  const brandScale = useTransform(p, [0.84, 0.97], [0.94, 1]);
 
   const word = 'text-white font-[400] tracking-[-0.01em] leading-[1.3] text-[clamp(1.25rem,2.2vw,2rem)] text-center';
 
   return (
-    <section id="hero" ref={ref} className="relative h-[450svh] bg-black">
+    <section id="hero" ref={ref} className="relative h-[500svh] bg-black">
       <h1 className="sr-only">There is a space between your imagination and reality. Renders Arc.</h1>
 
       <div
@@ -107,7 +109,7 @@ export function Hero() {
 
         {/* Below md the words sit above and below the window rather than beside it. */}
         <motion.p
-          style={{ opacity: sideOpacity, x: leftX }}
+          style={{ opacity: leftOpacity, x: leftX }}
           className={`${word} absolute inset-x-0 top-[22%] md:inset-x-auto md:top-1/2 md:left-0 md:w-[33%] md:-translate-y-1/2`}
         >
           your
@@ -116,7 +118,7 @@ export function Hero() {
         </motion.p>
 
         <motion.p
-          style={{ opacity: sideOpacity, x: rightX }}
+          style={{ opacity: rightOpacity, x: rightX }}
           className={`${word} absolute inset-x-0 bottom-[22%] md:inset-x-auto md:bottom-auto md:top-1/2 md:right-0 md:w-[33%] md:-translate-y-1/2`}
         >
           and
