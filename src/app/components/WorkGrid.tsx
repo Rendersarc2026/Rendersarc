@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, MotionConfig, motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { categories, projects, type Project } from '@/app/data/work';
 
 const ALL = 'all';
@@ -112,13 +112,20 @@ export function WorkGrid() {
 }
 
 /**
- * Black panel: title on the left, screenshot in the middle, summary and arrow
- * on the right. Lays out by its own width (container query) so it stacks the
- * same way whether the grid is one column or two.
+ * Black panel: title on the left, screenshot in the middle, summary on the
+ * right. Lays out by its own width (container query) so it stacks the same way
+ * whether the grid is one column or two. On hover (or keyboard focus) the panel
+ * blurs and offers "Case study" and "View site"; on touch screens, which have
+ * no hover, tapping anywhere opens the case study.
  */
 function WorkCard({ project, delay }: { project: Project; delay: number }) {
   const cover = project.caseStudy?.cover;
   const thumb = cover ?? project.image;
+  const href = `/work/${project.slug}`;
+  // Buttons only take clicks while the overlay is showing, so invisible ones
+  // never swallow a tap meant for the card.
+  const action =
+    'pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black';
 
   return (
     <motion.article
@@ -129,39 +136,54 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
       transition={{ duration: 0.45, ease: EASE, delay }}
       className="@container"
     >
-      <Link
-        href={`/work/${project.slug}`}
-        className="group flex flex-col gap-5 bg-black p-5 @xl:grid @xl:aspect-[5/3] @xl:grid-cols-[1fr_44%_1fr] @xl:items-center @xl:gap-0 @xl:p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-      >
-        <div className="relative aspect-[16/10] overflow-hidden bg-white/[0.06] @xl:col-start-2 @xl:row-start-1">
-          {thumb && (
-            <Image
-              src={thumb}
-              alt={`${project.title} ${cover ? 'platform' : 'website'}`}
-              fill
-              sizes="(min-width: 1024px) 22vw, (min-width: 768px) 44vw, 100vw"
-              className={`object-cover ${cover ? 'object-center' : 'object-top'}`}
-            />
-          )}
-          <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-white/90 text-[9px] uppercase tracking-[0.12em] text-black">
-            {labelFor(project.categories[0])}
-          </span>
+      <div className="group relative overflow-hidden bg-black">
+        <div className="flex flex-col gap-5 p-5 transition-[filter] duration-500 group-hover:blur-[6px] group-focus-within:blur-[6px] @xl:grid @xl:aspect-[5/3] @xl:grid-cols-[1fr_44%_1fr] @xl:items-center @xl:gap-0 @xl:p-0">
+          <div className="relative aspect-[16/10] overflow-hidden bg-white/[0.06] @xl:col-start-2 @xl:row-start-1">
+            {thumb && (
+              <Image
+                src={thumb}
+                alt={`${project.title} ${cover ? 'platform' : 'website'}`}
+                fill
+                sizes="(min-width: 1024px) 22vw, (min-width: 768px) 44vw, 100vw"
+                className={`object-cover ${cover ? 'object-center' : 'object-top'}`}
+              />
+            )}
+            <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-white/90 text-[9px] uppercase tracking-[0.12em] text-black">
+              {labelFor(project.categories[0])}
+            </span>
+          </div>
+
+          <h2 className="text-white font-[400] tracking-[-0.01em] text-2xl leading-tight @xl:col-start-1 @xl:row-start-1 @xl:px-[7%] @3xl:text-[1.75rem]">
+            {project.title}
+          </h2>
+
+          <p className="text-xs leading-snug text-white/80 @xl:col-start-3 @xl:row-start-1 @xl:px-[7%] @xl:text-[11px]">
+            {project.summary}
+          </p>
         </div>
 
-        <h2 className="text-white font-[400] tracking-[-0.01em] text-2xl leading-tight @xl:col-start-1 @xl:row-start-1 @xl:px-[7%] @3xl:text-[1.75rem]">
-          {project.title}
-        </h2>
+        {/* Whole-card link for touch screens; keyboard users get the buttons. */}
+        <Link href={href} tabIndex={-1} aria-hidden className="absolute inset-0" />
 
-        <p className="flex items-end gap-1.5 text-xs leading-snug text-white/80 @xl:col-start-3 @xl:row-start-1 @xl:px-[7%] @xl:text-[11px]">
-          <span>{project.summary}</span>
-          <ArrowRight
-            size={14}
-            strokeWidth={1.75}
-            aria-hidden
-            className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-          />
-        </p>
-      </Link>
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-3 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100">
+          <Link href={href} className={`${action} bg-white text-black hover:bg-white/85`}>
+            Case study
+            <span className="sr-only">: {project.title}</span>
+          </Link>
+          {!project.hideSiteLink && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${action} border border-white/40 text-white hover:border-white`}
+            >
+              View site
+              <ArrowUpRight size={15} strokeWidth={2} aria-hidden />
+              <span className="sr-only">of {project.title} (opens in a new tab)</span>
+            </a>
+          )}
+        </div>
+      </div>
     </motion.article>
   );
 }
