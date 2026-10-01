@@ -40,3 +40,7 @@ coverage/
 
 # OS files
 Thumbs.db
+
+# Tooling output
+.playwright-mcp/
+*.tsbuildinfo

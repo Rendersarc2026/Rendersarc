@@ -5,10 +5,11 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
-const montserrat = Montserrat({ 
-  subsets: ['latin'], 
+// Montserrat is a variable font: leaving `weight` unset ships one file that
+// covers every weight, instead of a separate file per listed weight.
+const montserrat = Montserrat({
+  subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['100', '200', '300', '400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
