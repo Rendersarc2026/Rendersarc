@@ -40,9 +40,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   const host = new URL(project.url).hostname.replace(/^www\./, '');
 
   const sections = [
-    { heading: 'The challenge', body: study.challenge },
+    { heading: 'The problem', body: study.problem },
     { heading: 'Our approach', body: study.approach },
-    { heading: 'The outcome', body: study.outcome },
   ];
 
   return (
@@ -69,15 +68,21 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               </p>
             </header>
 
-            <dl className="mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 border-t border-white/10 pt-8">
+            <dl
+              className={`mt-12 md:mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/10 pt-8 ${
+                study.year ? 'md:grid-cols-4' : 'md:grid-cols-3'
+              }`}
+            >
               <div>
                 <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Client</dt>
                 <dd className="mt-2 text-sm">{project.title}</dd>
               </div>
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Year</dt>
-                <dd className="mt-2 text-sm">{study.year}</dd>
-              </div>
+              {study.year && (
+                <div>
+                  <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Year</dt>
+                  <dd className="mt-2 text-sm">{study.year}</dd>
+                </div>
+              )}
               <div>
                 <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Services</dt>
                 <dd className="mt-2 text-sm leading-relaxed">{study.services.join(', ')}</dd>
@@ -125,20 +130,51 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                   </p>
                 </section>
               ))}
+
+              {study.changes && (
+                <section className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-12">
+                  <h2 className="font-[700] tracking-[-0.01em] text-2xl md:text-[28px]">
+                    What we changed
+                  </h2>
+                  <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-10 md:gap-y-12">
+                    {study.changes.map((change) => (
+                      <li key={change.title} className="border-t border-white/10 pt-5">
+                        <h3 className="font-[600] text-lg">{change.title}</h3>
+                        <p className="mt-2 text-base leading-relaxed text-white/60">{change.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              <section className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 md:gap-12">
+                <h2 className="font-[700] tracking-[-0.01em] text-2xl md:text-[28px]">The result</h2>
+                <p className="text-xl md:text-[28px] leading-snug tracking-[-0.01em] text-white/60 max-w-[40ch]">
+                  {study.result.text}
+                  {study.result.emphasis && (
+                    <>
+                      {' '}
+                      <strong className="font-[600] text-white">{study.result.emphasis}</strong>
+                    </>
+                  )}
+                </p>
+              </section>
             </div>
 
-            <section aria-label="Results" className="mt-20 md:mt-32 border-t border-white/10 pt-12">
-              <ul className="grid sm:grid-cols-3 gap-10">
-                {study.results.map((result) => (
-                  <li key={result.label}>
-                    <p className="font-[700] tracking-[-0.03em] text-5xl md:text-6xl">
-                      {result.value}
-                    </p>
-                    <p className="mt-3 text-sm text-white/50">{result.label}</p>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {study.stats && (
+              <section aria-label="Results" className="mt-20 md:mt-32 border-t border-white/10 pt-12">
+                <ul className="grid sm:grid-cols-3 gap-10">
+                  {study.stats.map((stat) => (
+                    <li key={stat.label}>
+                      <p className="font-[700] tracking-[-0.03em] text-5xl md:text-6xl">
+                        {stat.value}
+                      </p>
+                      <p className="mt-3 text-sm text-white/50">{stat.label}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             <Link
               href={`/work/${next.slug}`}

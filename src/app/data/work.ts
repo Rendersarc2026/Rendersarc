@@ -51,6 +51,8 @@ export type Project = {
   categories: string[];
   /** Path under /public. Falls back to a solid placeholder block when omitted. */
   image?: string;
+  /** The project's own write-up. Without one the case study page shows placeholder copy. */
+  caseStudy?: CaseStudyContent;
 };
 
 export const categories: Category[] = [
@@ -109,6 +111,25 @@ export const projects: Project[] = [
     url: 'https://fetchadvertising.tech/',
     categories: ['custom-software'],
     image: '/work/fetch-advertising.png',
+    caseStudy: {
+      problem:
+        'Campaigns were spread across chats, sheets and separate workflows, making information and decisions harder to manage.',
+      approach:
+        'We studied Fetch’s workflow and brought communication, campaign data, approvals and reporting into one platform.',
+      changes: [
+        { title: 'Connected Communication', body: 'All campaign conversations in one place.' },
+        {
+          title: 'Smarter Decisions',
+          body: 'Integrated Meta to bring accurate influencer data into the platform.',
+        },
+        { title: 'Better Control', body: 'Centralised budgets, pricing and approvals.' },
+        { title: 'Connected Insights', body: 'Campaign performance and reporting stay together.' },
+      ],
+      result: {
+        text: 'A single platform that helps Fetch',
+        emphasis: 'communicate better, make more informed decisions and manage campaigns with clarity.',
+      },
+    },
   },
   {
     slug: 'travel-link-uae',
@@ -144,32 +165,42 @@ export const projects: Project[] = [
   },
 ];
 
-export type CaseStudy = {
-  year: string;
-  services: string[];
-  challenge: string;
+export type CaseStudyContent = {
+  year?: string;
+  problem: string;
   approach: string;
-  outcome: string;
-  results: { value: string; label: string }[];
+  /** "What we changed" — short titled points. */
+  changes?: { title: string; body: string }[];
+  /** Closing statement; `emphasis` follows `text` and is set in bold. */
+  result: { text: string; emphasis?: string };
+  /** Headline numbers. The results strip is hidden without them. */
+  stats?: { value: string; label: string }[];
 };
 
+export type CaseStudy = CaseStudyContent & { services: string[] };
+
 /**
- * Placeholder case study for a project — the same dummy copy for every one,
- * with the project's own name dropped in. Replace per project with a real
- * write-up (e.g. a `caseStudy` field on Project) once one exists.
+ * Case study for a project: its own `caseStudy` content when it has one,
+ * otherwise the same dummy copy for every project with its name dropped in.
  */
 export function caseStudyFor(project: Project): CaseStudy {
-  const services = project.categories.map(
-    (id) => categories.find((c) => c.id === id)?.label ?? id,
-  );
+  const services = [
+    ...project.categories.map((id) => categories.find((c) => c.id === id)?.label ?? id),
+    'UI/UX design',
+    'Development',
+  ];
+
+  if (project.caseStudy) return { ...project.caseStudy, services };
 
   return {
     year: '2025',
-    services: [...services, 'UI/UX design', 'Development'],
-    challenge: `${project.title} needed a site that did justice to the business behind it. The previous presence was dated, hard to update and did little to turn visitors into enquiries. Placeholder copy — replace with the real brief.`,
+    services,
+    problem: `${project.title} needed a site that did justice to the business behind it. The previous presence was dated, hard to update and did little to turn visitors into enquiries. Placeholder copy — replace with the real brief.`,
     approach: `We started with the people who would actually use it, mapped what they came looking for, and built the structure around those journeys before a single screen was designed. Identity, interface and motion were developed as one system, then built out with a CMS the ${project.title} team can run themselves. Placeholder copy.`,
-    outcome: `The new site launched on schedule and gives ${project.title} a presence that matches the quality of the work — faster, clearer and easier to keep current. Placeholder copy — replace with real results.`,
-    results: [
+    result: {
+      text: `The new site launched on schedule and gives ${project.title} a presence that matches the quality of the work — faster, clearer and easier to keep current. Placeholder copy — replace with real results.`,
+    },
+    stats: [
       { value: '2×', label: 'More enquiries' },
       { value: '40%', label: 'Faster load time' },
       { value: '6 wks', label: 'Kickoff to launch' },
