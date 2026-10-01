@@ -6,6 +6,8 @@
 export type Pillar = {
   title: string;
   description: string;
+  /** Longer copy shown under the video card. */
+  body: string;
   items: string[];
   /** Looping background clip in /public/videos; a same-named .jpg is its poster. */
   video: string;
@@ -16,6 +18,8 @@ export const pillars: Pillar[] = [
     title: 'Brand & Identity',
     description:
       'Naming, identity systems and brand worlds built to hold up across every surface.',
+    body:
+      'We start with what the business stands for and work outward: a name that travels, a mark that scales from favicon to billboard, and a system of type, colour and tone that teams can actually use. Every identity ships with guidelines and production-ready assets, so the brand stays consistent long after launch.',
     items: ['Naming', 'Visual identity', 'Brand guidelines', 'Packaging & collateral'],
     video: '/videos/brand-identity',
   },
@@ -23,6 +27,8 @@ export const pillars: Pillar[] = [
     title: 'Digital Products',
     description:
       'Websites, apps and software designed around real user behaviour, not internal guesswork.',
+    body:
+      'From marketing sites to full platforms, we take products from research and wireframes through interface design and engineering. We build on modern, maintainable stacks, test with real users along the way, and stay on after launch to measure, iterate and keep things fast.',
     items: ['Websites', 'Web apps', 'Mobile apps', 'Software & platforms'],
     video: '/videos/digital-products',
   },
@@ -30,6 +36,8 @@ export const pillars: Pillar[] = [
     title: 'Campaigns & Advertising',
     description:
       'Concepts, films and campaigns built to earn attention, not just spend it.',
+    body:
+      'We find the idea worth saying, then make it work everywhere it needs to live — film, social, digital and print. Strategy, creative and production sit under one roof, so campaigns move from concept to rollout quickly and every asset reads as part of the same story.',
     items: ['Strategy & concepts', 'Film & content', 'Social & digital ads', 'OOH & print'],
     video: '/videos/campaigns',
   },
@@ -112,6 +120,7 @@ export const projects: Project[] = [
     categories: ['custom-software'],
     image: '/work/fetch-advertising.png',
     caseStudy: {
+      cover: '/work/fetch-dashboard.png',
       problem:
         'Campaigns were spread across chats, sheets and separate workflows, making information and decisions harder to manage.',
       approach:
@@ -167,6 +176,8 @@ export const projects: Project[] = [
 
 export type CaseStudyContent = {
   year?: string;
+  /** 16:9 hero shot under /public, e.g. a device mockup. Defaults to the 16:10 card screenshot. */
+  cover?: string;
   problem: string;
   approach: string;
   /** "What we changed" — short titled points. */

@@ -38,6 +38,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   const next = projects[(index + 1) % projects.length];
   const study = caseStudyFor(project);
   const host = new URL(project.url).hostname.replace(/^www\./, '');
+  const hero = study.cover ?? project.image;
 
   const sections = [
     { heading: 'The problem', body: study.problem },
@@ -103,15 +104,19 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               </div>
             </dl>
 
-            {project.image && (
-              <div className="mt-12 md:mt-16 relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/[0.06]">
+            {hero && (
+              <div
+                className={`mt-12 md:mt-16 relative rounded-2xl overflow-hidden bg-white/[0.06] ${
+                  study.cover ? 'aspect-video' : 'aspect-[16/10]'
+                }`}
+              >
                 <Image
-                  src={project.image}
-                  alt={`${project.title} website`}
+                  src={hero}
+                  alt={`${project.title} ${study.cover ? 'platform' : 'website'}`}
                   fill
                   priority
                   sizes="(min-width: 1400px) 1400px, 100vw"
-                  className="object-cover object-top"
+                  className={`object-cover ${study.cover ? 'object-center' : 'object-top'}`}
                 />
               </div>
             )}
