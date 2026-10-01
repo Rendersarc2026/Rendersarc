@@ -59,7 +59,7 @@ export function WhatWeDo() {
               </ul>
             </div>
 
-            <p className="pt-5 md:px-6 text-[13px] leading-snug text-black/70 md:text-justify hyphens-auto">
+            <p className="pt-5 md:px-6 text-[13px] font-[500] leading-snug text-black/80 md:text-justify hyphens-auto">
               {pillar.body}
             </p>
           </motion.div>
