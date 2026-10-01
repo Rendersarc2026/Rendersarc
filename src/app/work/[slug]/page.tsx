@@ -37,7 +37,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   const project = projects[index];
   const next = projects[(index + 1) % projects.length];
   const study = caseStudyFor(project);
-  const host = new URL(project.url).hostname.replace(/^www\./, '');
   const hero = study.cover ?? project.image;
 
   const sections = [
@@ -67,42 +66,24 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               <p className="mt-6 text-base md:text-lg leading-relaxed text-white/60 max-w-[54ch]">
                 {project.summary}
               </p>
-            </header>
-
-            <dl
-              className={`mt-12 md:mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/10 pt-8 ${
-                study.year ? 'md:grid-cols-4' : 'md:grid-cols-3'
-              }`}
-            >
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Client</dt>
-                <dd className="mt-2 text-sm">{project.title}</dd>
-              </div>
-              {study.year && (
-                <div>
-                  <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Year</dt>
-                  <dd className="mt-2 text-sm">{study.year}</dd>
-                </div>
+              {!project.hideSiteLink && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-8 md:mt-10 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-white/85"
+                >
+                  Visit site
+                  <ArrowUpRight
+                    size={16}
+                    strokeWidth={2}
+                    aria-hidden
+                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
               )}
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Services</dt>
-                <dd className="mt-2 text-sm leading-relaxed">{study.services.join(', ')}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/40">Live site</dt>
-                <dd className="mt-2 text-sm">
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 hover:opacity-70 transition-opacity duration-300"
-                  >
-                    {host}
-                    <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden />
-                  </a>
-                </dd>
-              </div>
-            </dl>
+            </header>
 
             {hero && (
               <div

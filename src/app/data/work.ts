@@ -55,6 +55,8 @@ export type Project = {
   summary: string;
   /** Live site the card opens. */
   url: string;
+  /** Leave the "Visit site" button off the case study, e.g. for a login-only platform. */
+  hideSiteLink?: boolean;
   /** Category ids. A project can sit in more than one filter. */
   categories: string[];
   /** Path under /public. Falls back to a solid placeholder block when omitted. */
@@ -117,6 +119,7 @@ export const projects: Project[] = [
     title: 'Fetch',
     summary: 'Influencer marketing platform connecting brands with creators.',
     url: 'https://fetchadvertising.tech/',
+    hideSiteLink: true,
     categories: ['custom-software'],
     image: '/work/fetch-advertising.png',
     caseStudy: {
