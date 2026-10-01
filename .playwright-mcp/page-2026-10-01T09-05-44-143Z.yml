@@ -1,0 +1,171 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e5]:
+        - link "Renders Arc — home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - text: Renders Arc
+        - generic [ref=e8]:
+          - link "Work" [ref=e10] [cursor=pointer]:
+            - /url: /work
+          - link "Process" [ref=e12] [cursor=pointer]:
+            - /url: /process
+          - link "About" [ref=e14] [cursor=pointer]:
+            - /url: /about
+          - link "FAQ" [ref=e16] [cursor=pointer]:
+            - /url: /faq
+          - link "Contact" [ref=e18] [cursor=pointer]:
+            - /url: /contact
+    - main [ref=e19]:
+      - generic [ref=e20]:
+        - heading "There is a space between your imagination and reality. Renders Arc." [level=1] [ref=e21]
+        - generic [aria-hidden] [ref=e22]:
+          - paragraph [ref=e25]: There is a space
+          - paragraph [ref=e26]: between
+          - paragraph [ref=e27]: your imagination
+          - paragraph [ref=e28]: and reality
+          - paragraph [ref=e29]: RENDERS ARC
+      - generic [ref=e30]:
+        - heading "What we do" [level=2] [ref=e32]
+        - generic [ref=e33]:
+          - generic [ref=e34]:
+            - generic [ref=e35]:
+              - heading "Brand & Identity" [level=3] [ref=e36]
+              - paragraph [ref=e37]: Naming, identity systems and brand worlds built to hold up across every surface.
+            - list [ref=e41]:
+              - listitem [ref=e42]: Naming
+              - listitem [ref=e43]: Visual identity
+              - listitem [ref=e44]: Brand guidelines
+              - listitem [ref=e45]: Packaging & collateral
+            - paragraph [ref=e46]: "We start with what the business stands for and work outward: a name that travels, a mark that scales from favicon to billboard, and a system of type, colour and tone that teams can actually use. Every identity ships with guidelines and production-ready assets, so the brand stays consistent long after launch."
+          - generic [ref=e47]:
+            - generic [ref=e48]:
+              - heading "Digital Products" [level=3] [ref=e49]
+              - paragraph [ref=e50]: Websites, apps and software designed around real user behaviour, not internal guesswork.
+            - list [ref=e54]:
+              - listitem [ref=e55]: Websites
+              - listitem [ref=e56]: Web apps
+              - listitem [ref=e57]: Mobile apps
+              - listitem [ref=e58]: Software & platforms
+            - paragraph [ref=e59]: From marketing sites to full platforms, we take products from research and wireframes through interface design and engineering. We build on modern, maintainable stacks, test with real users along the way, and stay on after launch to measure, iterate and keep things fast.
+          - generic [ref=e60]:
+            - generic [ref=e61]:
+              - heading "Campaigns & Advertising" [level=3] [ref=e62]
+              - paragraph [ref=e63]: Concepts, films and campaigns built to earn attention, not just spend it.
+            - list [ref=e67]:
+              - listitem [ref=e68]: Strategy & concepts
+              - listitem [ref=e69]: Film & content
+              - listitem [ref=e70]: Social & digital ads
+              - listitem [ref=e71]: OOH & print
+            - paragraph [ref=e72]: We find the idea worth saying, then make it work everywhere it needs to live — film, social, digital and print. Strategy, creative and production sit under one roof, so campaigns move from concept to rollout quickly and every asset reads as part of the same story.
+      - generic [ref=e74]:
+        - heading "What we build, specifically" [level=2] [ref=e75]: What we build,specifically
+        - list [ref=e76]:
+          - listitem [ref=e77]:
+            - link "Websites" [ref=e78] [cursor=pointer]:
+              - /url: /work?category=websites
+          - listitem [ref=e79]:
+            - link "Websites - Interactive UI" [ref=e80] [cursor=pointer]:
+              - /url: /work?category=interactive-ui
+          - listitem [ref=e81]:
+            - link "Ecommerce" [ref=e82] [cursor=pointer]:
+              - /url: /work?category=ecommerce
+          - listitem [ref=e83]:
+            - link "Custom Softwares / Web Application" [ref=e84] [cursor=pointer]:
+              - /url: /work?category=custom-software
+          - listitem [ref=e85]:
+            - link "Mobile Applications" [ref=e86] [cursor=pointer]:
+              - /url: /work?category=mobile-apps
+        - link "View our work" [ref=e88] [cursor=pointer]:
+          - /url: /work
+      - generic [ref=e91]:
+        - generic [ref=e93]:
+          - heading "Trusted by" [level=2] [ref=e94]
+          - paragraph [ref=e95]: Brands we've built, shipped and scaled with.
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - img "Kala logo" [ref=e99]
+          - listitem [ref=e100]:
+            - img "MeTrends logo" [ref=e101]
+          - listitem [ref=e102]:
+            - img "Park Legal logo" [ref=e103]
+          - listitem [ref=e104]:
+            - img "Roots and Leaps logo" [ref=e105]
+          - listitem [ref=e106]:
+            - img "Silent Peak logo" [ref=e107]
+          - listitem [ref=e108]:
+            - img "Skei logo" [ref=e109]
+          - listitem [ref=e110]:
+            - img "Fetch logo" [ref=e111]
+          - listitem [ref=e112]:
+            - img "Euphrates Asia logo" [ref=e113]
+          - listitem [ref=e114]:
+            - img "Tigris Asia logo" [ref=e115]
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - heading "Real stories" [level=2] [ref=e119]
+          - paragraph [ref=e120]: "Real stories from teams we've partnered with:"
+        - generic [ref=e121]:
+          - button "Previous testimonials" [disabled]
+          - generic [ref=e122]:
+            - figure [ref=e123]:
+              - blockquote [ref=e124]: “Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit”
+              - generic [ref=e130]:
+                - paragraph [ref=e131]: Lorem ipsum
+                - paragraph [ref=e132]: Lorem ipsum
+            - figure [ref=e133]:
+              - blockquote [ref=e134]: “Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit”
+              - generic [ref=e140]:
+                - paragraph [ref=e141]: Lorem ipsum
+                - paragraph [ref=e142]: Lorem ipsum
+            - figure [ref=e143]:
+              - blockquote [ref=e144]: “Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit”
+              - generic [ref=e150]:
+                - paragraph [ref=e151]: Lorem ipsum
+                - paragraph [ref=e152]: Lorem ipsum
+            - figure [ref=e153]:
+              - blockquote [ref=e154]: “Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit”
+              - generic [ref=e160]:
+                - paragraph [ref=e161]: Lorem ipsum
+                - paragraph [ref=e162]: Lorem ipsum
+            - figure [ref=e163]:
+              - blockquote [ref=e164]: “Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit”
+              - generic [ref=e170]:
+                - paragraph [ref=e171]: Lorem ipsum
+                - paragraph [ref=e172]: Lorem ipsum
+            - figure [ref=e173]:
+              - blockquote [ref=e174]: “Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit”
+              - generic [ref=e180]:
+                - paragraph [ref=e181]: Lorem ipsum
+                - paragraph [ref=e182]: Lorem ipsum
+          - button "Next testimonials" [ref=e183] [cursor=pointer]
+      - generic [ref=e187]:
+        - heading "Let's talk." [level=2] [ref=e188]
+        - link "Start a project" [ref=e190] [cursor=pointer]:
+          - /url: /contact
+    - contentinfo [ref=e193]:
+      - generic [ref=e194]:
+        - generic [ref=e195]:
+          - generic [ref=e196]:
+            - paragraph [ref=e197]: Get in touch
+            - link "rendersarcmail@gmail.com" [ref=e198] [cursor=pointer]:
+              - /url: mailto:rendersarcmail@gmail.com
+          - list [ref=e199]:
+            - listitem [ref=e200]:
+              - link "LinkedIn" [ref=e201] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/renders-arc-a701ba3b0/
+            - listitem [ref=e202]:
+              - link "Instagram" [ref=e203] [cursor=pointer]:
+                - /url: https://www.instagram.com/rendersarc/
+            - listitem [ref=e204]:
+              - link "+91 81293 21539" [ref=e205] [cursor=pointer]:
+                - /url: tel:+918129321539
+        - generic [ref=e206]:
+          - paragraph [ref=e207]: © 2026 Renders Arc
+          - paragraph [ref=e208]: G-48, 1st Cross Rd, Panampilly Nagar, Kochi, Kerala 682036
+          - navigation "Legal" [ref=e209]:
+            - link "Terms" [ref=e210] [cursor=pointer]:
+              - /url: /terms
+            - link "Privacy" [ref=e211] [cursor=pointer]:
+              - /url: /privacy
+  - region "Notifications alt+T"
