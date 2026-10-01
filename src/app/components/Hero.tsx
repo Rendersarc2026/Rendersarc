@@ -19,7 +19,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-svh flex flex-col justify-center bg-black text-white px-6 md:px-12 lg:px-20 xl:px-32 2xl:px-44 pt-32 md:pt-40 pb-16 md:pb-24"
+      className="min-h-svh flex flex-col justify-center bg-black text-white px-gutter pt-32 md:pt-40 pb-16 md:pb-24"
     >
       <motion.h1
         {...fadeUp(0)}

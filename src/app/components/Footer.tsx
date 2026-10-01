@@ -26,7 +26,7 @@ export function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="px-5 pt-20 pb-8 md:px-8 md:pt-24"
+        className="px-gutter pt-20 pb-8 md:pt-24"
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>

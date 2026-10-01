@@ -43,13 +43,13 @@ function logoHeight(logo: StaticImageData, weight: number) {
 export function Clients() {
   return (
     <section id="clients" className="bg-white py-24 md:py-32">
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24">
+      <div className="px-gutter">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="max-w-[1400px] mx-auto"
+         
         >
           <h2 className="text-black font-[700] uppercase tracking-[-0.01em] text-2xl md:text-[28px]">
             Trusted by
@@ -61,8 +61,8 @@ export function Clients() {
       </div>
 
       {/* Logo wall: 5 columns on desktop; flex-wrap keeps a short last row centred. */}
-      <div className="mt-14 md:mt-20 px-6 md:px-10 lg:px-16 xl:px-24">
-        <ul className="max-w-[1400px] mx-auto flex flex-wrap justify-center gap-y-12 md:gap-y-16 [--logo-size:44px] md:[--logo-size:54px]">
+      <div className="mt-14 md:mt-20 px-gutter">
+        <ul className="flex flex-wrap justify-center gap-y-12 md:gap-y-16 [--logo-size:44px] md:[--logo-size:54px]">
           {clients.map((client, i) => (
             <motion.li
               key={client.name}

@@ -25,10 +25,10 @@ export function About() {
     <>
       <section
         id="about"
-        className="min-h-[calc(100svh-5rem)] bg-black flex items-center justify-center py-20 px-6 relative overflow-hidden text-white"
+        className="min-h-[calc(100svh-5rem)] bg-black flex items-center justify-center py-20 px-gutter relative overflow-hidden text-white"
       >
-        <div className="max-w-[1400px] mx-auto w-full relative">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center px-12 md:px-20">
+        <div className="w-full relative">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
             {/* Left Column: Heading */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -72,9 +72,9 @@ export function About() {
 
       <section
         id="about-vision"
-        className="py-20 md:py-32 px-6 bg-white relative overflow-hidden"
+        className="py-20 md:py-32 px-gutter bg-white relative overflow-hidden"
       >
-        <div className="max-w-6xl mx-auto relative z-10">
+        <div className="relative z-10">
           {/* Vision Narrative */}
           <div className="mb-24">
             <motion.div

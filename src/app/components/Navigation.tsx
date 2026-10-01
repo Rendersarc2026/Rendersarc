@@ -114,7 +114,7 @@ export function Navigation({ dark: startDark = false }: { dark?: boolean }) {
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
-      <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 2xl:px-44">
+      <div className="w-full px-gutter">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link

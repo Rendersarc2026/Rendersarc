@@ -193,6 +193,12 @@
   }
 }
 
+/* One side margin for every page: scales with the viewport so the
+   proportions stay the same on any screen width. */
+@utility px-gutter {
+  padding-inline: max(1.5rem, 9.2vw);
+}
+
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar {

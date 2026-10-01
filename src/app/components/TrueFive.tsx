@@ -179,8 +179,8 @@ function TrueFiveBody() {
       className="bg-white text-black selection:bg-[#00ea77]/30 overflow-hidden"
     >
       {/* ---------------- Opening ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 pt-8 md:pt-12 pb-16 md:pb-24 relative">
-        <motion.div {...reveal} className="max-w-[1400px] mx-auto relative">
+      <div className="px-gutter pt-8 md:pt-12 pb-16 md:pb-24 relative">
+        <motion.div {...reveal} className="relative">
           <motion.h2
             variants={rise}
             className="text-3xl md:text-5xl lg:text-6xl leading-[1.08] font-[700] tracking-tight max-w-[18ch]"
@@ -208,8 +208,8 @@ function TrueFiveBody() {
       </div>
 
       {/* ---------------- Why five: the dot stage ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 bg-black text-white">
-        <div className="max-w-[1400px] mx-auto">
+      <div className="px-gutter py-16 md:py-24 bg-black text-white">
+        <div>
           <motion.div {...reveal}>
             <motion.h3
               variants={rise}
@@ -366,8 +366,8 @@ function TrueFiveBody() {
       </div>
 
       {/* ---------------- Why "True" ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
-        <motion.div {...reveal} className="max-w-[1400px] mx-auto">
+      <div className="px-gutter py-16 md:py-24 border-t border-black/10">
+        <motion.div {...reveal}>
           <motion.h3 variants={rise} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
             Why it is called <span className="text-[#00995a]">True</span>.
           </motion.h3>
@@ -424,8 +424,8 @@ function TrueFiveBody() {
       </div>
 
       {/* ---------------- What it replaces ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
-        <motion.div {...reveal} className="max-w-[1400px] mx-auto">
+      <div className="px-gutter py-16 md:py-24 border-t border-black/10">
+        <motion.div {...reveal}>
           <motion.h3 variants={rise} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight max-w-[22ch]">
             Assumptions in a meeting, replaced by people.
           </motion.h3>
@@ -470,8 +470,8 @@ function TrueFiveBody() {
       </div>
 
       {/* ---------------- Where it sits ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-16 md:py-24 border-t border-black/10">
-        <motion.div {...reveal} className="max-w-[1400px] mx-auto">
+      <div className="px-gutter py-16 md:py-24 border-t border-black/10">
+        <motion.div {...reveal}>
           <motion.h3 variants={rise} className="text-2xl md:text-4xl font-[700] tracking-tight leading-tight">
             Design starts after, not before.
           </motion.h3>
@@ -540,9 +540,9 @@ function TrueFiveBody() {
       </div>
 
       {/* ---------------- Close ---------------- */}
-      <div className="px-6 md:px-10 lg:px-16 xl:px-24 py-20 md:py-32 border-t border-black/10 relative">
+      <div className="px-gutter py-20 md:py-32 border-t border-black/10 relative">
         <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#00ea77]/[0.05] blur-[150px] rounded-full translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-        <motion.div {...reveal} className="max-w-[1400px] mx-auto relative">
+        <motion.div {...reveal} className="relative">
           <motion.p
             variants={rise}
             className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] font-[700] tracking-tight max-w-[19ch]"

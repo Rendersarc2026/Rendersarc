@@ -1,14 +1,17 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Navigation } from '../../components/Navigation';
 import { LetsTalk } from '../../components/LetsTalk';
 import { Footer } from '../../components/Footer';
-import { caseStudyFor, projects } from '@/app/data/work';
+import { caseStudyFor, categories, projects } from '@/app/data/work';
 
 type Params = { slug: string };
+
+const GALLERY_SLOTS = 3;
 
 export function generateStaticParams(): Params[] {
   return projects.map(({ slug }) => ({ slug }));
@@ -38,32 +41,23 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   const next = projects[(index + 1) % projects.length];
   const study = caseStudyFor(project);
   const hero = study.cover ?? project.image;
-
-  const sections = [
-    { heading: 'The problem', body: study.problem },
-    { heading: 'Our approach', body: study.approach },
-  ];
+  const category = categories.find((c) => c.id === project.categories[0])?.label;
+  const gallery = Array.from({ length: GALLERY_SLOTS }, (_, i) => study.gallery?.[i]);
 
   return (
-    <div className="size-full bg-black relative overflow-x-clip">
-      <Navigation dark />
-      <main className="relative text-white">
-        <article className="px-6 md:px-10 lg:px-16 xl:px-24 pt-32 md:pt-40 pb-24 md:pb-32">
-          <div className="max-w-[1400px] mx-auto">
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors duration-300"
-            >
-              <ArrowLeft size={16} strokeWidth={1.75} aria-hidden />
-              All work
-            </Link>
-
-            <header className="mt-10 md:mt-14">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-white/40">Case study</p>
-              <h1 className="mt-6 font-[700] tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,7vw,6rem)]">
+    <div className="size-full bg-white relative overflow-x-clip">
+      <Navigation />
+      <main className="relative text-black">
+        <article className="px-gutter pt-32 md:pt-40 pb-24 md:pb-32">
+          {/* Source order is title, visuals, write-up, so phones read them in
+              that order; from lg the visuals move to the left column, spanning
+              both rows, with the title and write-up stacked on the right. */}
+          <div className="grid gap-12 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-20 lg:gap-y-0">
+            <header className="@container lg:col-start-2 lg:row-start-1 lg:text-right">
+              <h1 className="uppercase font-[500] tracking-[-0.03em] leading-[0.95] break-words text-[clamp(2.5rem,13cqw,6.5rem)]">
                 {project.title}
               </h1>
-              <p className="mt-6 text-base md:text-lg leading-relaxed text-white/60 max-w-[54ch]">
+              <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-black/70 lg:ml-auto lg:text-justify">
                 {project.summary}
               </p>
               {!project.hideSiteLink && (
@@ -71,11 +65,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group mt-8 md:mt-10 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-white/85"
+                  className="group mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black text-white text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-black/80"
                 >
                   Visit site
                   <ArrowUpRight
-                    size={16}
+                    size={15}
                     strokeWidth={2}
                     aria-hidden
                     className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -85,107 +79,117 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               )}
             </header>
 
-            {hero && (
-              <div
-                className={`mt-12 md:mt-16 relative rounded-2xl overflow-hidden bg-white/[0.06] ${
-                  study.cover ? 'aspect-video' : 'aspect-[16/10]'
-                }`}
-              >
-                <Image
-                  src={hero}
-                  alt={`${project.title} ${study.cover ? 'platform' : 'website'}`}
-                  fill
-                  priority
-                  sizes="(min-width: 1400px) 1400px, 100vw"
-                  className={`object-cover ${study.cover ? 'object-center' : 'object-top'}`}
-                />
+            <div className="lg:col-start-1 lg:row-start-1 lg:row-span-2">
+              <div className="relative aspect-[16/10] overflow-hidden bg-black/[0.06]">
+                {hero && (
+                  <Image
+                    src={hero}
+                    alt={`${project.title} ${study.cover ? 'platform' : 'website'}`}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className={`object-cover ${study.cover ? 'object-center' : 'object-top'}`}
+                  />
+                )}
+                {category && (
+                  <span className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-white text-xs uppercase tracking-[0.12em] text-black">
+                    {category}
+                  </span>
+                )}
               </div>
-            )}
 
-            <div className="mt-20 md:mt-32 space-y-16 md:space-y-24">
-              {sections.map((section) => (
-                <section
-                  key={section.heading}
-                  className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 md:gap-12"
-                >
-                  <h2 className="font-[700] tracking-[-0.01em] text-2xl md:text-[28px]">
-                    {section.heading}
-                  </h2>
-                  <p className="text-base md:text-lg leading-relaxed text-white/60 max-w-[62ch]">
-                    {section.body}
-                  </p>
-                </section>
-              ))}
+              <div className="mt-4 grid grid-cols-3 gap-4">
+                {gallery.map((src, i) => (
+                  <div key={i} className="relative aspect-[3/4] overflow-hidden bg-neutral-800">
+                    {src && (
+                      <Image
+                        src={src}
+                        alt={`${project.title} — detail ${i + 1}`}
+                        fill
+                        sizes="(min-width: 1024px) 16vw, 33vw"
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
 
-              {study.changes && (
-                <section className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-12">
-                  <h2 className="font-[700] tracking-[-0.01em] text-2xl md:text-[28px]">
-                    What we changed
-                  </h2>
-                  <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-10 md:gap-y-12">
-                    {study.changes.map((change) => (
-                      <li key={change.title} className="border-t border-white/10 pt-5">
-                        <h3 className="font-[600] text-lg">{change.title}</h3>
-                        <p className="mt-2 text-base leading-relaxed text-white/60">{change.body}</p>
+            <div className="lg:col-start-2 lg:row-start-2">
+              <div className="lg:mt-24 space-y-10 md:space-y-12">
+                <Row heading="The problem">{study.problem}</Row>
+                <Row heading="Our approach">{study.approach}</Row>
+                {study.changes && (
+                  <Row heading="What we changed">
+                    <ul className="space-y-2 text-left">
+                      {study.changes.map((change) => (
+                        <li key={change.title}>
+                          <span className="font-[600] text-black">{change.title}.</span>{' '}
+                          {change.body}
+                        </li>
+                      ))}
+                    </ul>
+                  </Row>
+                )}
+                <Row heading="The result">
+                  {study.result.text}
+                  {study.result.emphasis && (
+                    <>
+                      {' '}
+                      <strong className="font-[600] text-black">{study.result.emphasis}</strong>
+                    </>
+                  )}
+                </Row>
+              </div>
+
+              {study.stats && (
+                <section aria-label="Results" className="mt-12 md:mt-14 border-t border-black/20 pt-8">
+                  <ul className="grid grid-cols-3 gap-4 text-center">
+                    {study.stats.map((stat) => (
+                      <li key={stat.label}>
+                        <p className="font-[500] tracking-[-0.02em] text-2xl md:text-4xl">{stat.value}</p>
+                        <p className="mt-2 text-[11px] md:text-xs text-black/60">{stat.label}</p>
                       </li>
                     ))}
                   </ul>
                 </section>
               )}
-
-              <section className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 md:gap-12">
-                <h2 className="font-[700] tracking-[-0.01em] text-2xl md:text-[28px]">The result</h2>
-                <p className="text-xl md:text-[28px] leading-snug tracking-[-0.01em] text-white/60 max-w-[40ch]">
-                  {study.result.text}
-                  {study.result.emphasis && (
-                    <>
-                      {' '}
-                      <strong className="font-[600] text-white">{study.result.emphasis}</strong>
-                    </>
-                  )}
-                </p>
-              </section>
             </div>
-
-            {study.stats && (
-              <section aria-label="Results" className="mt-20 md:mt-32 border-t border-white/10 pt-12">
-                <ul className="grid sm:grid-cols-3 gap-10">
-                  {study.stats.map((stat) => (
-                    <li key={stat.label}>
-                      <p className="font-[700] tracking-[-0.03em] text-5xl md:text-6xl">
-                        {stat.value}
-                      </p>
-                      <p className="mt-3 text-sm text-white/50">{stat.label}</p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            <Link
-              href={`/work/${next.slug}`}
-              className="group mt-20 md:mt-32 flex items-center justify-between gap-6 border-t border-white/10 pt-8"
-            >
-              <span>
-                <span className="block text-[11px] uppercase tracking-[0.2em] text-white/40">
-                  Next project
-                </span>
-                <span className="mt-3 block font-[700] tracking-[-0.02em] text-3xl md:text-5xl transition-opacity duration-300 group-hover:opacity-70">
-                  {next.title}
-                </span>
-              </span>
-              <ArrowRight
-                size={32}
-                strokeWidth={1.5}
-                aria-hidden
-                className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
           </div>
+
+          <Link
+            href={`/work/${next.slug}`}
+            className="group mt-20 md:mt-32 flex items-center justify-between gap-6 border-t border-black/10 pt-8"
+          >
+            <span>
+              <span className="block text-[11px] uppercase tracking-[0.2em] text-black/40">
+                Next project
+              </span>
+              <span className="mt-3 block font-[700] tracking-[-0.02em] text-3xl md:text-5xl transition-opacity duration-300 group-hover:opacity-70">
+                {next.title}
+              </span>
+            </span>
+            <ArrowRight
+              size={32}
+              strokeWidth={1.5}
+              aria-hidden
+              className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </Link>
         </article>
         <LetsTalk cta />
       </main>
       <Footer />
     </div>
+  );
+}
+
+/** Heading on the left, copy as a narrower block pushed to the right. */
+function Row({ heading, children }: { heading: string; children: ReactNode }) {
+  return (
+    <section className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] md:items-center md:gap-8">
+      <h2 className="font-[500] text-base md:text-lg">{heading}</h2>
+      <div className="text-sm leading-relaxed text-black/70 md:text-justify">{children}</div>
+    </section>
   );
 }

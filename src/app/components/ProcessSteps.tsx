@@ -5,8 +5,8 @@ import { processSteps } from '@/app/data/work';
 
 export function ProcessSteps() {
   return (
-    <section id="process" className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pb-24 md:pb-32">
-      <div className="max-w-[1400px] mx-auto">
+    <section id="process" className="bg-white px-gutter pb-24 md:pb-32">
+      <div>
         {processSteps.map((step, i) => (
           <motion.article
             key={step.number}

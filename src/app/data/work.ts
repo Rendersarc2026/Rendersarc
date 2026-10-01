@@ -181,6 +181,8 @@ export type CaseStudyContent = {
   year?: string;
   /** 16:9 hero shot under /public, e.g. a device mockup. Defaults to the 16:10 card screenshot. */
   cover?: string;
+  /** Up to three portrait (3:4) shots under /public for the row under the hero. Empty slots show a plain block. */
+  gallery?: string[];
   problem: string;
   approach: string;
   /** "What we changed" — short titled points. */

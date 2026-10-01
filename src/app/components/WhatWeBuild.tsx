@@ -11,7 +11,7 @@ import { categories } from '@/app/data/work';
  */
 export function WhatWeBuild() {
   return (
-    <section id="projects" className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 pb-24 md:pb-32">
+    <section id="projects" className="bg-white px-gutter pb-24 md:pb-32">
       <div className="rounded-[2rem] bg-[#f4f4f4] px-6 py-24 md:py-32 flex flex-col items-center text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

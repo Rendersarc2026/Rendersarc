@@ -48,11 +48,11 @@ export function WorkGrid() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <section className="min-h-svh bg-white px-4 md:px-6 lg:px-7 pt-32 md:pt-40 pb-24 md:pb-32">
-        <div className="max-w-[1600px] mx-auto">
+      <section className="min-h-svh bg-white px-gutter pt-32 md:pt-40 pb-24 md:pb-32">
+        <div>
           {/* Filters — centred plain-text tabs that scroll sideways on small
               screens rather than wrapping into a ragged block. */}
-          <div className="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto scrollbar-none">
+          <div className="-mx-[max(1.5rem,9.2vw)] px-[max(1.5rem,9.2vw)] md:mx-0 md:px-0 overflow-x-auto scrollbar-none">
             <div
               role="group"
               aria-label="Filter projects by category"

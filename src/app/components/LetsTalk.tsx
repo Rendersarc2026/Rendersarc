@@ -10,8 +10,8 @@ import Link from 'next/link';
  */
 export function LetsTalk({ cta = false }: { cta?: boolean }) {
   return (
-    <section id="contact" className="bg-white px-6 md:px-10 lg:px-16 xl:px-24 py-32 md:py-48">
-      <div className="max-w-[1400px] mx-auto">
+    <section id="contact" className="bg-white px-gutter py-32 md:py-48">
+      <div>
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
