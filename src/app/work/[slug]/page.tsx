@@ -47,7 +47,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
 
   return (
     <div className="size-full bg-black relative overflow-x-clip">
-      <Navigation />
+      <Navigation dark />
       <main className="relative text-white">
         <article className="px-6 md:px-10 lg:px-16 xl:px-24 pt-32 md:pt-40 pb-24 md:pb-32">
           <div className="max-w-[1400px] mx-auto">

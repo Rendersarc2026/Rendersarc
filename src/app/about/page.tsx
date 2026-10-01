@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="size-full bg-white relative overflow-x-clip">
-      <Navigation />
+      <Navigation dark />
       <main className="relative pt-20">
         <About />
       </main>

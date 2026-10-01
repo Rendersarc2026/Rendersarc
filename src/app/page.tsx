@@ -15,7 +15,7 @@ const LetsTalk = dynamic(() => import('./components/LetsTalk').then((mod) => mod
 export default function Home() {
   return (
     <div className="size-full bg-white relative overflow-x-clip">
-      <Navigation />
+      <Navigation dark />
       <main className="relative">
         <Hero />
         <WhatWeDo />
