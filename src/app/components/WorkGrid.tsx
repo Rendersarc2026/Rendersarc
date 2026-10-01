@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState, type PointerEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -115,17 +115,35 @@ export function WorkGrid() {
  * Black panel: title on the left, screenshot in the middle, summary on the
  * right. Lays out by its own width (container query) so it stacks the same way
  * whether the grid is one column or two. On hover (or keyboard focus) the panel
- * blurs and offers "Case study" and "View site"; on touch screens, which have
- * no hover, tapping anywhere opens the case study.
+ * blurs and offers "Case study" and "View site" — only those buttons navigate.
+ * Touch screens have no hover, so there a tap on the card toggles the overlay.
  */
 function WorkCard({ project, delay }: { project: Project; delay: number }) {
   const cover = project.caseStudy?.cover;
   const thumb = cover ?? project.image;
   const href = `/work/${project.slug}`;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+
+  // Close a tapped-open overlay when the next tap lands outside this card.
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: globalThis.PointerEvent) => {
+      if (!cardRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
+
+  const toggle = (e: PointerEvent) => {
+    if (e.pointerType === 'mouse' || (e.target as Element).closest('a')) return;
+    setOpen((o) => !o);
+  };
+
   // Buttons only take clicks while the overlay is showing, so invisible ones
   // never swallow a tap meant for the card.
   const action =
-    'pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black';
+    'pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto group-data-[open]:pointer-events-auto inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black';
 
   return (
     <motion.article
@@ -136,8 +154,13 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
       transition={{ duration: 0.45, ease: EASE, delay }}
       className="@container"
     >
-      <div className="group relative overflow-hidden bg-black">
-        <div className="flex flex-col gap-5 p-5 transition-[filter] duration-500 group-hover:blur-[6px] group-focus-within:blur-[6px] @xl:grid @xl:aspect-[5/3] @xl:grid-cols-[1fr_44%_1fr] @xl:items-center @xl:gap-0 @xl:p-0">
+      <div
+        ref={cardRef}
+        data-open={open || undefined}
+        onPointerUp={toggle}
+        className="group relative overflow-hidden bg-black"
+      >
+        <div className="flex flex-col gap-5 p-5 transition-[filter] duration-500 group-hover:blur-[6px] group-focus-within:blur-[6px] group-data-[open]:blur-[6px] @xl:grid @xl:aspect-[5/3] @xl:grid-cols-[1fr_44%_1fr] @xl:items-center @xl:gap-0 @xl:p-0">
           <div className="relative aspect-[16/10] overflow-hidden bg-white/[0.06] @xl:col-start-2 @xl:row-start-1">
             {thumb && (
               <Image
@@ -162,10 +185,7 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
           </p>
         </div>
 
-        {/* Whole-card link for touch screens; keyboard users get the buttons. */}
-        <Link href={href} tabIndex={-1} aria-hidden className="absolute inset-0" />
-
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-3 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-3 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100 group-data-[open]:opacity-100">
           <Link href={href} className={`${action} bg-white text-black hover:bg-white/85`}>
             Case study
             <span className="sr-only">: {project.title}</span>
