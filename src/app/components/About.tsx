@@ -25,7 +25,7 @@ export function About() {
     <>
       <section
         id="about"
-        className="min-h-screen bg-black flex items-center justify-center py-20 px-6 relative overflow-hidden text-white"
+        className="min-h-[calc(100svh-5rem)] bg-black flex items-center justify-center py-20 px-6 relative overflow-hidden text-white"
       >
         <div className="max-w-[1400px] mx-auto w-full relative">
           <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center px-12 md:px-20">

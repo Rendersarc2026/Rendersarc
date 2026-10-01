@@ -21,12 +21,13 @@ type IndicatorRect = { left: number; width: number };
     kept here (outside the component) to let it slide from the previous link. */
 let lastIndicator: IndicatorRect | null = null;
 
-/** Whether the page directly behind the bar is dark: takes the first element
-    under its centre that isn't the bar itself, then climbs to the nearest
+/** Whether the page at the bar is dark: takes the first element just below its
+    bottom edge (pages pad their top by the bar's height, so the strip directly
+    behind it is usually bare page background), then climbs to the nearest
     ancestor with a solid background. Falls back to light. */
 function isDarkBehind(nav: HTMLElement) {
   const hit = document
-    .elementsFromPoint(window.innerWidth / 2, nav.offsetHeight / 2)
+    .elementsFromPoint(window.innerWidth / 2, nav.offsetHeight + 1)
     .find((el) => !nav.contains(el));
 
   for (let el = hit ?? null; el; el = el.parentElement) {
