@@ -38,39 +38,36 @@ export function Hero() {
 
       <motion.h1
         {...fadeUp(0)}
-        className="max-w-[16ch] font-[500] tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,6.5vw,6rem)]"
+        className="max-w-[30ch] font-[500] tracking-[-0.02em] leading-[1.15] text-[clamp(1.75rem,3.6vw,3.5rem)]"
       >
-        There is a space between your imagination and reality.
+        Renders Arc is a strategy-led digital studio powered by True&nbsp;5, our tested methodology
+        for understanding user psychology before design begins.{' '}
+        <span className="text-white/55">
+          We turn real user behaviour into better digital experiences.
+        </span>
       </motion.h1>
 
       <motion.div
         {...fadeUp(0.15)}
-        className="mt-10 md:mt-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
+        className="mt-10 md:mt-14 flex flex-col sm:flex-row sm:flex-wrap gap-3"
       >
-        <p className="max-w-[46ch] text-base md:text-lg leading-relaxed text-white/60">
-          We craft purposeful digital experiences — from strategy and branding to web design and
-          marketing — built to elevate your business.
-        </p>
-
-        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 lg:shrink-0">
-          <Link
-            href="/contact"
-            className="group inline-flex items-center justify-center gap-2.5 px-5 sm:px-7 py-3.5 text-[15px] sm:text-base rounded-full bg-white text-black font-medium tracking-wide transition-colors duration-300 hover:bg-white/85"
-          >
-            Start a project
-            <MoveRight
-              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-              strokeWidth={2}
-              aria-hidden
-            />
-          </Link>
-          <Link
-            href="/work"
-            className="inline-flex items-center justify-center px-5 sm:px-7 py-3.5 text-[15px] sm:text-base rounded-full border border-white/20 text-white font-medium tracking-wide transition-colors duration-300 hover:border-white"
-          >
-            See our work
-          </Link>
-        </div>
+        <Link
+          href="/contact"
+          className="group inline-flex items-center justify-center gap-2.5 px-5 sm:px-7 py-3.5 text-[15px] sm:text-base rounded-full bg-white text-black font-medium tracking-wide transition-colors duration-300 hover:bg-white/85"
+        >
+          Start a project
+          <MoveRight
+            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+            strokeWidth={2}
+            aria-hidden
+          />
+        </Link>
+        <Link
+          href="/work"
+          className="inline-flex items-center justify-center px-5 sm:px-7 py-3.5 text-[15px] sm:text-base rounded-full border border-white/20 text-white font-medium tracking-wide transition-colors duration-300 hover:border-white"
+        >
+          See our work
+        </Link>
       </motion.div>
 
     </section>
