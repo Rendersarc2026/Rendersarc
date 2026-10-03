@@ -6,6 +6,14 @@ import { Pool } from 'pg';
  */
 const globalForDb = globalThis as unknown as { pgPool?: Pool };
 
+// Without it pg silently falls back to localhost:5432, which fails the build
+// with a bare ECONNREFUSED.
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    'DATABASE_URL is not set. Add it (with NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_BUCKET) to .env.local, or to the Vercel project for deploys.',
+  );
+}
+
 export const db =
   globalForDb.pgPool ??
   new Pool({
