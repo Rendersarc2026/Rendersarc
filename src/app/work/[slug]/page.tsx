@@ -13,6 +13,7 @@ import { Gallery } from './Gallery';
 type Params = { slug: string };
 
 const GALLERY_SLOTS = 3;
+const PHONE_GALLERY_SLOTS = 5;
 
 export function generateStaticParams(): Params[] {
   return projects.map(({ slug }) => ({ slug }));
@@ -43,7 +44,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   const study = caseStudyFor(project);
   const hero = study.cover ?? project.image;
   const category = categories.find((c) => c.id === project.categories[0])?.label;
-  const gallery = Array.from({ length: GALLERY_SLOTS }, (_, i) => project.gallery?.[i]);
+  const isApp = Boolean(project.apps?.length);
+  const gallery = Array.from(
+    { length: isApp ? PHONE_GALLERY_SLOTS : GALLERY_SLOTS },
+    (_, i) => project.gallery?.[i],
+  );
 
   return (
     <div className="size-full bg-white relative overflow-x-clip">
@@ -78,6 +83,23 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                   <span className="sr-only">(opens in a new tab)</span>
                 </a>
               )}
+              {project.apps && (
+                <ul className="mt-8 space-y-4">
+                  {project.apps.map((app) => (
+                    <li key={app.name}>
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-black/40">{app.name}</p>
+                      <div className="mt-2 flex flex-wrap gap-2 lg:justify-end">
+                        {app.appStore && (
+                          <StoreLink href={app.appStore} label="App Store" app={app.name} />
+                        )}
+                        {app.googlePlay && (
+                          <StoreLink href={app.googlePlay} label="Google Play" app={app.name} />
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </header>
 
             {/* Pinned while the write-up scrolls past it — only on screens tall
@@ -101,7 +123,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 )}
               </div>
 
-              <Gallery title={project.title} slots={gallery} />
+              <Gallery title={project.title} slots={gallery} phone={isApp} />
             </div>
 
             <div className="lg:col-start-2 lg:row-start-2">
@@ -170,6 +192,27 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
       </main>
       <Footer />
     </div>
+  );
+}
+
+/** Outlined pill linking to an app's store listing. */
+function StoreLink({ href, label, app }: { href: string; label: string; app: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-black/20 text-sm font-medium tracking-wide transition-colors duration-300 hover:border-black"
+    >
+      {label}
+      <ArrowUpRight
+        size={15}
+        strokeWidth={2}
+        aria-hidden
+        className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+      />
+      <span className="sr-only">: {app} (opens in a new tab)</span>
+    </a>
   );
 }
 

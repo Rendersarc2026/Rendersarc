@@ -5,8 +5,20 @@ import Image from 'next/image';
 import * as Dialog from '@radix-ui/react-dialog';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
-/** Row of landscape shots under the case study hero; a filled tile opens it full size. */
-export function Gallery({ title, slots }: { title: string; slots: (string | undefined)[] }) {
+/**
+ * Row of shots under the case study hero — landscape, or narrower phone screens
+ * for an app project; a filled tile opens it full size.
+ */
+export function Gallery({
+  title,
+  slots,
+  phone = false,
+}: {
+  title: string;
+  slots: (string | undefined)[];
+  phone?: boolean;
+}) {
+  const tile = phone ? 'aspect-[9/19.5] rounded-xl' : 'aspect-[16/10]';
   const images = slots.filter((src): src is string => Boolean(src));
   const [open, setOpen] = useState<number | null>(null);
 
@@ -15,7 +27,7 @@ export function Gallery({ title, slots }: { title: string; slots: (string | unde
 
   return (
     <>
-      <div className="mt-4 grid grid-cols-3 gap-4">
+      <div className={`mt-4 grid gap-4 ${phone ? 'grid-cols-5 gap-2 md:gap-4' : 'grid-cols-3'}`}>
         {slots.map((src, i) =>
           src ? (
             <button
@@ -23,18 +35,18 @@ export function Gallery({ title, slots }: { title: string; slots: (string | unde
               type="button"
               onClick={() => setOpen(images.indexOf(src))}
               aria-label={`View ${title} detail ${i + 1}`}
-              className="group relative aspect-[16/10] overflow-hidden bg-neutral-800 cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              className={`group relative ${tile} overflow-hidden bg-neutral-800 cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black`}
             >
               <Image
                 src={src}
                 alt={`${title} — detail ${i + 1}`}
                 fill
-                sizes="(min-width: 1024px) 16vw, 33vw"
+                sizes={phone ? '(min-width: 1024px) 10vw, 20vw' : '(min-width: 1024px) 16vw, 33vw'}
                 className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </button>
           ) : (
-            <div key={i} className="aspect-[16/10] bg-neutral-800" />
+            <div key={i} className={`${tile} bg-neutral-800`} />
           ),
         )}
       </div>
@@ -55,12 +67,14 @@ export function Gallery({ title, slots }: { title: string; slots: (string | unde
               {title} — detail {(open ?? 0) + 1} of {images.length}
             </Dialog.Title>
             {open !== null && (
-              <div className="relative w-full max-w-6xl aspect-[16/10]">
+              <div
+                className={`relative ${phone ? 'h-full max-h-[85svh] aspect-[9/19.5]' : 'w-full max-w-6xl aspect-[16/10]'}`}
+              >
                 <Image
                   src={images[open]}
                   alt={`${title} — detail ${open + 1}`}
                   fill
-                  sizes="(min-width: 1200px) 1152px, 100vw"
+                  sizes={phone ? '(min-width: 768px) 420px, 100vw' : '(min-width: 1200px) 1152px, 100vw'}
                   className="object-contain"
                 />
               </div>

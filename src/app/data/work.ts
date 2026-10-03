@@ -61,10 +61,19 @@ export type Project = {
   categories: string[];
   /** Path under /public. Falls back to a solid placeholder block when omitted. */
   image?: string;
-  /** Up to three landscape (16:10) desktop shots under /public for the row under the case study hero. Empty slots show a plain block. */
+  /** Up to three landscape (16:10) desktop shots under /public for the row under the case study hero, or up to five phone screens when `apps` is set. Empty slots show a plain block. */
   gallery?: string[];
+  /** Store listings for a mobile app project. Its gallery then shows phone screens. */
+  apps?: AppListing[];
   /** The project's own write-up. Without one the case study page shows placeholder copy. */
   caseStudy?: CaseStudyContent;
+};
+
+export type AppListing = {
+  /** Which app, e.g. "Customer app". */
+  name: string;
+  appStore?: string;
+  googlePlay?: string;
 };
 
 export const categories: Category[] = [
@@ -104,6 +113,19 @@ export const projects: Project[] = [
         emphasis: 'communicate better, make more informed decisions and manage campaigns with clarity.',
       },
     },
+  },
+  {
+    slug: 'skeiland',
+    title: 'Skeiland',
+    summary: 'Crowd-sourced map of hidden places across India for Skei Ice Creams.',
+    url: 'https://skeiicecream.com/skeiland',
+    categories: ['interactive-ui'],
+    image: '/work/skeiland.jpg',
+    gallery: [
+      '/work/gallery/skeiland-1.jpg',
+      '/work/gallery/skeiland-2.jpg',
+      '/work/gallery/skeiland-3.jpg',
+    ],
   },
   {
     slug: 'kala-interiors',
@@ -155,6 +177,33 @@ export const projects: Project[] = [
       '/work/gallery/areej-alarab-1.jpg',
       '/work/gallery/areej-alarab-2.jpg',
       '/work/gallery/areej-alarab-3.jpg',
+    ],
+  },
+  {
+    slug: 'foodzone',
+    title: 'Foodzone',
+    summary: 'Grocery ordering and delivery apps for a supermarket chain in Dubai and Sharjah.',
+    url: 'https://foodzone.ae/',
+    categories: ['mobile-apps', 'ecommerce'],
+    image: '/work/foodzone.jpg',
+    gallery: [
+      '/work/gallery/foodzone-1.jpg',
+      '/work/gallery/foodzone-2.jpg',
+      '/work/gallery/foodzone-3.jpg',
+      '/work/gallery/foodzone-4.jpg',
+      '/work/gallery/foodzone-5.jpg',
+    ],
+    apps: [
+      {
+        name: 'Customer app',
+        appStore: 'https://apps.apple.com/ae/app/foodzone-customer/id6756630471',
+        googlePlay: 'https://play.google.com/store/apps/details?id=com.foodzone.customer_app',
+      },
+      {
+        name: 'Delivery app',
+        appStore: 'https://apps.apple.com/ae/app/foodzone-delivery/id6757369953',
+        googlePlay: 'https://play.google.com/store/apps/details?id=com.foodzone.deliveryapp',
+      },
     ],
   },
   {
