@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { MoveRight } from 'lucide-react';
+import { storageUrl } from '@/app/lib/storage';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -19,8 +20,22 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-svh flex flex-col justify-center bg-black text-white px-gutter pt-32 md:pt-40 pb-16 md:pb-24"
+      className="relative isolate overflow-hidden min-h-svh flex flex-col justify-center bg-black text-white px-gutter pt-32 md:pt-40 pb-16 md:pb-24"
     >
+      <video
+        src={storageUrl('videos/hero.mp4')}
+        poster={storageUrl('videos/hero.jpg')}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden
+        className="absolute inset-0 -z-10 w-full h-full object-cover"
+      />
+      {/* Keeps the copy legible over the brightest frames. */}
+      <div aria-hidden className="absolute inset-0 -z-10 bg-black/45" />
+
       <motion.h1
         {...fadeUp(0)}
         className="max-w-[16ch] font-[500] tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,6.5vw,6rem)]"
