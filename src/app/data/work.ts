@@ -61,6 +61,8 @@ export type Project = {
   categories: string[];
   /** Path under /public. Falls back to a solid placeholder block when omitted. */
   image?: string;
+  /** Up to three landscape (16:10) desktop shots under /public for the row under the case study hero. Empty slots show a plain block. */
+  gallery?: string[];
   /** The project's own write-up. Without one the case study page shows placeholder copy. */
   caseStudy?: CaseStudyContent;
 };
@@ -74,46 +76,6 @@ export const categories: Category[] = [
 ];
 
 export const projects: Project[] = [
-  {
-    slug: 'sella',
-    title: 'Sella',
-    summary: 'Furniture studio concept with a configurable 3D chair built in three.js.',
-    url: 'https://sella.rendersarc.com/',
-    categories: ['interactive-ui'],
-    image: '/work/sella.png',
-  },
-  {
-    slug: 'backwater',
-    title: 'Backwater',
-    summary: 'Kerala fish restaurant on the edge of Vembanad Lake, Kumarakom.',
-    url: 'https://backwater.rendersarc.com/',
-    categories: ['websites'],
-    image: '/work/backwater.png',
-  },
-  {
-    slug: 'kala-interiors',
-    title: 'The Kala Interiors',
-    summary: 'Interior design studio for residential, commercial and hospitality spaces.',
-    url: 'https://www.thekalainteriors.com/',
-    categories: ['websites'],
-    image: '/work/kala-interiors.png',
-  },
-  {
-    slug: 'roots-and-leaps',
-    title: 'Roots & Leaps',
-    summary: 'Global management consulting and advisory firm.',
-    url: 'https://www.rootsandleaps.com/',
-    categories: ['websites'],
-    image: '/work/roots-and-leaps.png',
-  },
-  {
-    slug: 'euphrates-asia',
-    title: 'Euphrates Asia',
-    summary: 'Brand equity and narrative advisory for founders and market leaders across Asia.',
-    url: 'https://www.euphratesasia.com/',
-    categories: ['websites'],
-    image: '/work/euphrates-asia.png',
-  },
   {
     slug: 'fetch-advertising',
     title: 'Fetch',
@@ -144,12 +106,17 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: 'travel-link-uae',
-    title: 'Travel Link UAE',
-    summary: 'Luxury chauffeur service in Dubai with a premium fleet and 24/7 booking.',
-    url: 'https://travellinkuae.com/',
+    slug: 'kala-interiors',
+    title: 'The Kala Interiors',
+    summary: 'Interior design studio for residential, commercial and hospitality spaces.',
+    url: 'https://www.thekalainteriors.com/',
     categories: ['websites'],
-    image: '/work/travel-link-uae.png',
+    image: '/work/kala-interiors.png',
+    gallery: [
+      '/work/gallery/kala-interiors-1.jpg',
+      '/work/gallery/kala-interiors-2.jpg',
+      '/work/gallery/kala-interiors-3.jpg',
+    ],
   },
   {
     slug: 'wow-gel-nails',
@@ -158,6 +125,11 @@ export const projects: Project[] = [
     url: 'https://wowgelnails.com/',
     categories: ['ecommerce'],
     image: '/work/wow-gel-nails.png',
+    gallery: [
+      '/work/gallery/wow-gel-nails-1.jpg',
+      '/work/gallery/wow-gel-nails-2.jpg',
+      '/work/gallery/wow-gel-nails-3.jpg',
+    ],
   },
   {
     slug: 'tit',
@@ -166,6 +138,11 @@ export const projects: Project[] = [
     url: 'https://tit.com.sa/',
     categories: ['ecommerce'],
     image: '/work/tit.png',
+    gallery: [
+      '/work/gallery/tit-1.jpg',
+      '/work/gallery/tit-2.jpg',
+      '/work/gallery/tit-3.jpg',
+    ],
   },
   {
     slug: 'areej-alarab',
@@ -174,6 +151,72 @@ export const projects: Project[] = [
     url: 'https://areejalarab.online/',
     categories: ['ecommerce'],
     image: '/work/areej-alarab.png',
+    gallery: [
+      '/work/gallery/areej-alarab-1.jpg',
+      '/work/gallery/areej-alarab-2.jpg',
+      '/work/gallery/areej-alarab-3.jpg',
+    ],
+  },
+  {
+    slug: 'sella',
+    title: 'Sella',
+    summary: 'Furniture studio concept with a configurable 3D chair built in three.js.',
+    url: 'https://sella.rendersarc.com/',
+    categories: ['interactive-ui'],
+    image: '/work/sella.png',
+    gallery: [
+      '/work/gallery/sella-1.jpg',
+      '/work/gallery/sella-2.jpg',
+      '/work/gallery/sella-3.jpg',
+    ],
+  },
+  {
+    slug: 'backwater',
+    title: 'Backwater',
+    summary: 'Kerala fish restaurant on the edge of Vembanad Lake, Kumarakom.',
+    url: 'https://backwater.rendersarc.com/',
+    categories: ['websites'],
+    image: '/work/backwater.png',
+    gallery: [
+      '/work/gallery/backwater-1.jpg',
+      '/work/gallery/backwater-2.jpg',
+      '/work/gallery/backwater-3.jpg',
+    ],
+  },
+  {
+    slug: 'roots-and-leaps',
+    title: 'Roots & Leaps',
+    summary: 'Global management consulting and advisory firm.',
+    url: 'https://www.rootsandleaps.com/',
+    categories: ['websites'],
+    image: '/work/roots-and-leaps.png',
+    gallery: [
+      '/work/gallery/roots-and-leaps-1.jpg',
+      '/work/gallery/roots-and-leaps-2.jpg',
+      '/work/gallery/roots-and-leaps-3.jpg',
+    ],
+  },
+  {
+    slug: 'euphrates-asia',
+    title: 'Euphrates Asia',
+    summary: 'Brand equity and narrative advisory for founders and market leaders across Asia.',
+    url: 'https://www.euphratesasia.com/',
+    categories: ['websites'],
+    image: '/work/euphrates-asia.png',
+    gallery: ['/work/gallery/euphrates-asia-1.jpg'],
+  },
+  {
+    slug: 'travel-link-uae',
+    title: 'Travel Link UAE',
+    summary: 'Luxury chauffeur service in Dubai with a premium fleet and 24/7 booking.',
+    url: 'https://travellinkuae.com/',
+    categories: ['websites'],
+    image: '/work/travel-link-uae.png',
+    gallery: [
+      '/work/gallery/travel-link-uae-1.jpg',
+      '/work/gallery/travel-link-uae-2.jpg',
+      '/work/gallery/travel-link-uae-3.jpg',
+    ],
   },
 ];
 
@@ -181,8 +224,6 @@ export type CaseStudyContent = {
   year?: string;
   /** 16:9 hero shot under /public, e.g. a device mockup. Defaults to the 16:10 card screenshot. */
   cover?: string;
-  /** Up to three portrait (3:4) shots under /public for the row under the hero. Empty slots show a plain block. */
-  gallery?: string[];
   problem: string;
   approach: string;
   /** "What we changed" — short titled points. */

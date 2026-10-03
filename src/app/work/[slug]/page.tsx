@@ -8,6 +8,7 @@ import { Navigation } from '../../components/Navigation';
 import { LetsTalk } from '../../components/LetsTalk';
 import { Footer } from '../../components/Footer';
 import { caseStudyFor, categories, projects } from '@/app/data/work';
+import { Gallery } from './Gallery';
 
 type Params = { slug: string };
 
@@ -42,7 +43,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   const study = caseStudyFor(project);
   const hero = study.cover ?? project.image;
   const category = categories.find((c) => c.id === project.categories[0])?.label;
-  const gallery = Array.from({ length: GALLERY_SLOTS }, (_, i) => study.gallery?.[i]);
+  const gallery = Array.from({ length: GALLERY_SLOTS }, (_, i) => project.gallery?.[i]);
 
   return (
     <div className="size-full bg-white relative overflow-x-clip">
@@ -100,21 +101,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 )}
               </div>
 
-              <div className="mt-4 grid grid-cols-3 gap-4">
-                {gallery.map((src, i) => (
-                  <div key={i} className="relative aspect-[3/4] overflow-hidden bg-neutral-800">
-                    {src && (
-                      <Image
-                        src={src}
-                        alt={`${project.title} — detail ${i + 1}`}
-                        fill
-                        sizes="(min-width: 1024px) 16vw, 33vw"
-                        className="object-cover"
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
+              <Gallery title={project.title} slots={gallery} />
             </div>
 
             <div className="lg:col-start-2 lg:row-start-2">
