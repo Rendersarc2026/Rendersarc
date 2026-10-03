@@ -83,8 +83,10 @@ export function Navigation({
       setScrolled(window.scrollY > 20);
       if (!navRef.current) return;
       setDark(isDarkBehind(navRef.current));
-      const media = overlay && document.querySelector('[data-nav-overlay]');
-      setOverMedia(Boolean(media) && media.getBoundingClientRect().bottom > navRef.current.offsetHeight);
+      const media = overlay ? document.querySelector('[data-nav-overlay]') : null;
+      setOverMedia(
+        media !== null && media.getBoundingClientRect().bottom > navRef.current.offsetHeight,
+      );
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);

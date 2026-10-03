@@ -2,14 +2,16 @@
 
 import { motion } from 'motion/react';
 import Link from 'next/link';
+import { Instagram, Linkedin, Mail, Phone, type LucideIcon } from 'lucide-react';
 
 const EMAIL = 'rendersarcmail@gmail.com';
 
-const LINKS = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/rendersarc/' },
-  { label: '+91 81293 21539', href: 'tel:+918129321539' },
+const SOCIALS: { label: string; href: string; Icon: LucideIcon }[] = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/renders-arc-a701ba3b0/', Icon: Linkedin },
+  { label: 'Instagram', href: 'https://www.instagram.com/rendersarc/', Icon: Instagram },
 ];
+
+const PHONE = { label: '+91 81293 21539', href: 'tel:+918129321539' };
 
 const LEGAL = [
   { href: '/terms', label: 'Terms' },
@@ -33,24 +35,36 @@ export function Footer() {
             <p className="text-xs text-white/40">Get in touch</p>
             <a
               href={`mailto:${EMAIL}`}
-              className="mt-3 block text-xl sm:text-3xl font-semibold tracking-tight transition-opacity duration-300 hover:opacity-50"
+              className="mt-3 inline-flex items-center gap-3 sm:gap-4 text-xl sm:text-3xl font-semibold tracking-tight transition-opacity duration-300 hover:opacity-50"
             >
+              <Mail strokeWidth={1.75} aria-hidden className="size-5 sm:size-7 shrink-0" />
               {EMAIL}
             </a>
           </div>
 
-          <ul className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/60">
-            {LINKS.map((link) => (
-              <li key={link.label}>
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/60">
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <li key={label}>
                 <a
-                  href={link.href}
-                  {...(link.href.startsWith('http') && { target: '_blank', rel: 'noopener noreferrer' })}
-                  className="hover:text-white transition-colors"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${label} (opens in a new tab)`}
+                  className="grid size-10 place-items-center rounded-full border border-white/15 transition-colors duration-300 hover:border-white hover:text-white"
                 >
-                  {link.label}
+                  <Icon size={18} strokeWidth={1.75} aria-hidden />
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href={PHONE.href}
+                className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-white"
+              >
+                <Phone size={16} strokeWidth={1.75} aria-hidden />
+                {PHONE.label}
+              </a>
+            </li>
           </ul>
         </div>
 
