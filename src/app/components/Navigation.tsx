@@ -43,8 +43,9 @@ function isDarkBehind(nav: HTMLElement) {
 /** `dark`: whether the page opens on a dark section. Seeds the colour the bar
     is server-rendered with, so it doesn't flash light on load before the
     scroll check below can look at the page.
-    `overlay`: the page's first section runs up under the bar, so the bar is
-    see-through until the page scrolls (or the menu opens). */
+    `overlay`: the page opens with media running up under the bar (marked
+    `data-nav-overlay`), so the bar stays see-through while that media is behind
+    it, and only takes its solid look once scrolled past it (or the menu opens). */
 export function Navigation({
   dark: startDark = false,
   overlay = false,
@@ -54,6 +55,7 @@ export function Navigation({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [overMedia, setOverMedia] = useState(overlay);
   const [dark, setDark] = useState(startDark);
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
@@ -79,7 +81,10 @@ export function Navigation({
     const update = () => {
       frame = 0;
       setScrolled(window.scrollY > 20);
-      if (navRef.current) setDark(isDarkBehind(navRef.current));
+      if (!navRef.current) return;
+      setDark(isDarkBehind(navRef.current));
+      const media = overlay && document.querySelector('[data-nav-overlay]');
+      setOverMedia(Boolean(media) && media.getBoundingClientRect().bottom > navRef.current.offsetHeight);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -92,7 +97,7 @@ export function Navigation({
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
     };
-  }, [pathname]);
+  }, [pathname, overlay]);
 
   useEffect(() => setIsOpen(false), [pathname]);
 
@@ -107,6 +112,9 @@ export function Navigation({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // See-through while the opening media is behind the bar.
+  const clear = overMedia && !isOpen;
+
   // Foreground colour as an "r,g,b" triple, flipped when the page behind is dark.
   const ink = dark ? '255,255,255' : '0,0,0';
 
@@ -114,13 +122,13 @@ export function Navigation({
     <nav
       ref={navRef}
       style={{
-        backgroundColor: overlay && !scrolled && !isOpen
+        backgroundColor: clear
           ? 'transparent'
           : dark
             ? (scrolled || isOpen) ? 'rgba(0,0,0,0.85)' : '#000000'
             : (scrolled || isOpen) ? 'rgba(255,255,255,0.85)' : '#f7f7f7',
-        borderBottom: `1px solid rgba(${ink},${overlay && !scrolled && !isOpen ? 0 : 0.06})`,
-        backdropFilter: (scrolled || isOpen) ? 'blur(12px)' : 'none',
+        borderBottom: `1px solid rgba(${ink},${clear ? 0 : 0.06})`,
+        backdropFilter: !clear && (scrolled || isOpen) ? 'blur(12px)' : 'none',
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >

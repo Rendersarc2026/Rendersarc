@@ -20,7 +20,7 @@ export function Hero() {
     // splits 495 : 295 between the rest of the video and the copy, as in the
     // design. The copy's share grows if its text needs more room (small phones).
     <section id="hero" className="h-svh min-h-[560px] flex flex-col bg-white text-black">
-      <div className="relative min-h-0 basis-20 grow-[495] overflow-hidden bg-black">
+      <div data-nav-overlay className="relative min-h-0 basis-20 grow-[495] overflow-hidden bg-black">
         <video
           src={storageUrl('videos/hero.mp4')}
           poster={storageUrl('videos/hero.jpg')}
