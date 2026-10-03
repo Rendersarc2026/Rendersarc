@@ -48,7 +48,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
 
   return (
     <MotionConfig reducedMotion="user">
-      <section className="min-h-svh bg-white px-gutter pt-32 md:pt-40 pb-24 md:pb-32">
+      <section className="min-h-svh bg-white px-gutter pt-30 md:pt-32 pb-24 md:pb-32">
         <div>
           {/* Filters — centred plain-text tabs that scroll sideways on small
               screens rather than wrapping into a ragged block. */}
