@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react';
 import { pillars } from '@/app/data/work';
+import { storageUrl } from '@/app/lib/storage';
 
 export function WhatWeDo() {
   return (
@@ -40,8 +41,8 @@ export function WhatWeDo() {
             {/* Stock loops (Mixkit, free licence) until project footage exists. */}
             <div className="relative overflow-hidden bg-[#f4f4f4] min-h-[320px] md:min-h-[460px] flex flex-col justify-end p-6 md:p-8">
               <video
-                src={`${pillar.video}.mp4`}
-                poster={`${pillar.video}.jpg`}
+                src={storageUrl(`${pillar.video}.mp4`)}
+                poster={storageUrl(`${pillar.video}.jpg`)}
                 autoPlay
                 muted
                 loop

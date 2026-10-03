@@ -1,7 +1,8 @@
 /**
- * Content for the "What we do" section, the /work portfolio and the smaller
- * pages. Portfolio thumbnails live in /public/work — a 1440×900 capture of each
- * site's landing view.
+ * Content for the "What we do" section and the smaller pages. The portfolio
+ * itself lives in the Supabase `projects` table (see ./projects.ts), with its
+ * images in the Storage bucket — a 1440×900 capture of each site's landing view
+ * for the card.
  */
 export type Pillar = {
   title: string;
@@ -9,7 +10,7 @@ export type Pillar = {
   /** Longer copy shown under the video card. */
   body: string;
   items: string[];
-  /** Looping background clip in /public/videos; a same-named .jpg is its poster. */
+  /** Looping background clip's key in the Storage bucket, without extension; a same-named .jpg is its poster. */
   video: string;
 };
 
@@ -21,7 +22,7 @@ export const pillars: Pillar[] = [
     body:
       'We start with what the business stands for and work outward: a name that travels, a mark that scales from favicon to billboard, and a system of type, colour and tone that teams can actually use. Every identity ships with guidelines and production-ready assets, so the brand stays consistent long after launch.',
     items: ['Naming', 'Visual identity', 'Brand guidelines', 'Packaging & collateral'],
-    video: '/videos/brand-identity',
+    video: 'videos/brand-identity',
   },
   {
     title: 'Digital Products',
@@ -30,7 +31,7 @@ export const pillars: Pillar[] = [
     body:
       'From marketing sites to full platforms, we take products from research and wireframes through interface design and engineering. We build on modern, maintainable stacks, test with real users along the way, and stay on after launch to measure, iterate and keep things fast.',
     items: ['Websites', 'Web apps', 'Mobile apps', 'Software & platforms'],
-    video: '/videos/digital-products',
+    video: 'videos/digital-products',
   },
   {
     title: 'Campaigns & Advertising',
@@ -39,7 +40,7 @@ export const pillars: Pillar[] = [
     body:
       'We find the idea worth saying, then make it work everywhere it needs to live — film, social, digital and print. Strategy, creative and production sit under one roof, so campaigns move from concept to rollout quickly and every asset reads as part of the same story.',
     items: ['Strategy & concepts', 'Film & content', 'Social & digital ads', 'OOH & print'],
-    video: '/videos/campaigns',
+    video: 'videos/campaigns',
   },
 ];
 
@@ -59,9 +60,9 @@ export type Project = {
   hideSiteLink?: boolean;
   /** Category ids. A project can sit in more than one filter. */
   categories: string[];
-  /** Path under /public. Falls back to a solid placeholder block when omitted. */
+  /** Image URL. Falls back to a solid placeholder block when omitted. */
   image?: string;
-  /** Up to three landscape (16:10) desktop shots under /public for the row under the case study hero, or up to five phone screens when `apps` is set. Empty slots show a plain block. */
+  /** Up to three landscape (16:10) desktop shot URLs for the row under the case study hero, or up to five phone screens when `apps` is set. Empty slots show a plain block. */
   gallery?: string[];
   /** Store listings for a mobile app project. Its gallery then shows phone screens. */
   apps?: AppListing[];
@@ -84,194 +85,9 @@ export const categories: Category[] = [
   { id: 'mobile-apps', label: 'Mobile Applications' },
 ];
 
-export const projects: Project[] = [
-  {
-    slug: 'fetch-advertising',
-    title: 'Fetch',
-    summary: 'Influencer marketing platform connecting brands with creators.',
-    url: 'https://fetchadvertising.tech/',
-    hideSiteLink: true,
-    categories: ['custom-software'],
-    image: '/work/fetch-advertising.png',
-    caseStudy: {
-      cover: '/work/fetch-dashboard.png',
-      problem:
-        'Campaigns were spread across chats, sheets and separate workflows, making information and decisions harder to manage.',
-      approach:
-        'We studied Fetch’s workflow and brought communication, campaign data, approvals and reporting into one platform.',
-      changes: [
-        { title: 'Connected Communication', body: 'All campaign conversations in one place.' },
-        {
-          title: 'Smarter Decisions',
-          body: 'Integrated Meta to bring accurate influencer data into the platform.',
-        },
-        { title: 'Better Control', body: 'Centralised budgets, pricing and approvals.' },
-        { title: 'Connected Insights', body: 'Campaign performance and reporting stay together.' },
-      ],
-      result: {
-        text: 'A single platform that helps Fetch',
-        emphasis: 'communicate better, make more informed decisions and manage campaigns with clarity.',
-      },
-    },
-  },
-  {
-    slug: 'skeiland',
-    title: 'Skeiland',
-    summary: 'Crowd-sourced map of hidden places across India for Skei Ice Creams.',
-    url: 'https://skeiicecream.com/skeiland',
-    categories: ['interactive-ui'],
-    image: '/work/skeiland.jpg',
-    gallery: [
-      '/work/gallery/skeiland-1.jpg',
-      '/work/gallery/skeiland-2.jpg',
-      '/work/gallery/skeiland-3.jpg',
-    ],
-  },
-  {
-    slug: 'kala-interiors',
-    title: 'The Kala Interiors',
-    summary: 'Interior design studio for residential, commercial and hospitality spaces.',
-    url: 'https://www.thekalainteriors.com/',
-    categories: ['websites'],
-    image: '/work/kala-interiors.png',
-    gallery: [
-      '/work/gallery/kala-interiors-1.jpg',
-      '/work/gallery/kala-interiors-2.jpg',
-      '/work/gallery/kala-interiors-3.jpg',
-    ],
-  },
-  {
-    slug: 'wow-gel-nails',
-    title: 'WOW Nails',
-    summary: 'Online store for TPO-free gel nail polish, with a shade lab for browsing colours.',
-    url: 'https://wowgelnails.com/',
-    categories: ['ecommerce'],
-    image: '/work/wow-gel-nails.png',
-    gallery: [
-      '/work/gallery/wow-gel-nails-1.jpg',
-      '/work/gallery/wow-gel-nails-2.jpg',
-      '/work/gallery/wow-gel-nails-3.jpg',
-    ],
-  },
-  {
-    slug: 'tit',
-    title: 'TIT',
-    summary: 'Bilingual Saudi store for smart TVs, home and kitchen appliances.',
-    url: 'https://tit.com.sa/',
-    categories: ['ecommerce'],
-    image: '/work/tit.png',
-    gallery: [
-      '/work/gallery/tit-1.jpg',
-      '/work/gallery/tit-2.jpg',
-      '/work/gallery/tit-3.jpg',
-    ],
-  },
-  {
-    slug: 'areej-alarab',
-    title: 'Areej Alarab',
-    summary: 'Bilingual fragrance store carrying Arabian perfume houses and bakhoor.',
-    url: 'https://areejalarab.online/',
-    categories: ['ecommerce'],
-    image: '/work/areej-alarab.png',
-    gallery: [
-      '/work/gallery/areej-alarab-1.jpg',
-      '/work/gallery/areej-alarab-2.jpg',
-      '/work/gallery/areej-alarab-3.jpg',
-    ],
-  },
-  {
-    slug: 'foodzone',
-    title: 'Foodzone',
-    summary: 'Grocery ordering and delivery apps for a supermarket chain in Dubai and Sharjah.',
-    url: 'https://foodzone.ae/',
-    categories: ['mobile-apps', 'ecommerce'],
-    image: '/work/foodzone.jpg',
-    gallery: [
-      '/work/gallery/foodzone-1.jpg',
-      '/work/gallery/foodzone-2.jpg',
-      '/work/gallery/foodzone-3.jpg',
-      '/work/gallery/foodzone-4.jpg',
-      '/work/gallery/foodzone-5.jpg',
-    ],
-    apps: [
-      {
-        name: 'Customer app',
-        appStore: 'https://apps.apple.com/ae/app/foodzone-customer/id6756630471',
-        googlePlay: 'https://play.google.com/store/apps/details?id=com.foodzone.customer_app',
-      },
-      {
-        name: 'Delivery app',
-        appStore: 'https://apps.apple.com/ae/app/foodzone-delivery/id6757369953',
-        googlePlay: 'https://play.google.com/store/apps/details?id=com.foodzone.deliveryapp',
-      },
-    ],
-  },
-  {
-    slug: 'sella',
-    title: 'Sella',
-    summary: 'Furniture studio concept with a configurable 3D chair built in three.js.',
-    url: 'https://sella.rendersarc.com/',
-    categories: ['interactive-ui'],
-    image: '/work/sella.png',
-    gallery: [
-      '/work/gallery/sella-1.jpg',
-      '/work/gallery/sella-2.jpg',
-      '/work/gallery/sella-3.jpg',
-    ],
-  },
-  {
-    slug: 'backwater',
-    title: 'Backwater',
-    summary: 'Kerala fish restaurant on the edge of Vembanad Lake, Kumarakom.',
-    url: 'https://backwater.rendersarc.com/',
-    categories: ['websites'],
-    image: '/work/backwater.png',
-    gallery: [
-      '/work/gallery/backwater-1.jpg',
-      '/work/gallery/backwater-2.jpg',
-      '/work/gallery/backwater-3.jpg',
-    ],
-  },
-  {
-    slug: 'roots-and-leaps',
-    title: 'Roots & Leaps',
-    summary: 'Global management consulting and advisory firm.',
-    url: 'https://www.rootsandleaps.com/',
-    categories: ['websites'],
-    image: '/work/roots-and-leaps.png',
-    gallery: [
-      '/work/gallery/roots-and-leaps-1.jpg',
-      '/work/gallery/roots-and-leaps-2.jpg',
-      '/work/gallery/roots-and-leaps-3.jpg',
-    ],
-  },
-  {
-    slug: 'euphrates-asia',
-    title: 'Euphrates Asia',
-    summary: 'Brand equity and narrative advisory for founders and market leaders across Asia.',
-    url: 'https://www.euphratesasia.com/',
-    categories: ['websites'],
-    image: '/work/euphrates-asia.png',
-    gallery: ['/work/gallery/euphrates-asia-1.jpg'],
-  },
-  {
-    slug: 'travel-link-uae',
-    title: 'Travel Link UAE',
-    summary: 'Luxury chauffeur service in Dubai with a premium fleet and 24/7 booking.',
-    url: 'https://travellinkuae.com/',
-    categories: ['websites'],
-    image: '/work/travel-link-uae.png',
-    gallery: [
-      '/work/gallery/travel-link-uae-1.jpg',
-      '/work/gallery/travel-link-uae-2.jpg',
-      '/work/gallery/travel-link-uae-3.jpg',
-    ],
-  },
-];
-
 export type CaseStudyContent = {
   year?: string;
-  /** 16:9 hero shot under /public, e.g. a device mockup. Defaults to the 16:10 card screenshot. */
+  /** 16:9 hero shot URL, e.g. a device mockup. Defaults to the 16:10 card screenshot. */
   cover?: string;
   problem: string;
   approach: string;

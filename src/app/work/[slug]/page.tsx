@@ -7,7 +7,8 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Navigation } from '../../components/Navigation';
 import { LetsTalk } from '../../components/LetsTalk';
 import { Footer } from '../../components/Footer';
-import { caseStudyFor, categories, projects } from '@/app/data/work';
+import { caseStudyFor, categories } from '@/app/data/work';
+import { getProjects } from '@/app/data/projects';
 import { Gallery } from './Gallery';
 
 type Params = { slug: string };
@@ -15,8 +16,12 @@ type Params = { slug: string };
 const GALLERY_SLOTS = 3;
 const PHONE_GALLERY_SLOTS = 5;
 
-export function generateStaticParams(): Params[] {
-  return projects.map(({ slug }) => ({ slug }));
+// Projects come from the database: re-read at most every five minutes, and
+// slugs added after the build render on first visit.
+export const revalidate = 300;
+
+export async function generateStaticParams(): Promise<Params[]> {
+  return (await getProjects()).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -25,7 +30,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = (await getProjects()).find((p) => p.slug === slug);
   if (!project) return {};
 
   return {
@@ -36,6 +41,7 @@ export async function generateMetadata({
 
 export default async function CaseStudyPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
+  const projects = await getProjects();
   const index = projects.findIndex((p) => p.slug === slug);
   if (index === -1) notFound();
 

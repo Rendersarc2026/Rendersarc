@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
-import { categories, projects, type Project } from '@/app/data/work';
+import { categories, type Project } from '@/app/data/work';
 
 const ALL = 'all';
 
@@ -18,7 +18,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  * Filterable portfolio grid. The active filter lives in `?category=` so the
  * home-page links can deep-link into it and a filtered view can be shared.
  */
-export function WorkGrid() {
+export function WorkGrid({ projects }: { projects: Project[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
