@@ -42,8 +42,16 @@ function isDarkBehind(nav: HTMLElement) {
 
 /** `dark`: whether the page opens on a dark section. Seeds the colour the bar
     is server-rendered with, so it doesn't flash light on load before the
-    scroll check below can look at the page. */
-export function Navigation({ dark: startDark = false }: { dark?: boolean }) {
+    scroll check below can look at the page.
+    `overlay`: the page's first section runs up under the bar, so the bar is
+    see-through until the page scrolls (or the menu opens). */
+export function Navigation({
+  dark: startDark = false,
+  overlay = false,
+}: {
+  dark?: boolean;
+  overlay?: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dark, setDark] = useState(startDark);
@@ -106,10 +114,12 @@ export function Navigation({ dark: startDark = false }: { dark?: boolean }) {
     <nav
       ref={navRef}
       style={{
-        backgroundColor: dark
-          ? (scrolled || isOpen) ? 'rgba(0,0,0,0.85)' : '#000000'
-          : (scrolled || isOpen) ? 'rgba(255,255,255,0.85)' : '#f7f7f7',
-        borderBottom: `1px solid rgba(${ink},0.06)`,
+        backgroundColor: overlay && !scrolled && !isOpen
+          ? 'transparent'
+          : dark
+            ? (scrolled || isOpen) ? 'rgba(0,0,0,0.85)' : '#000000'
+            : (scrolled || isOpen) ? 'rgba(255,255,255,0.85)' : '#f7f7f7',
+        borderBottom: `1px solid rgba(${ink},${overlay && !scrolled && !isOpen ? 0 : 0.06})`,
         backdropFilter: (scrolled || isOpen) ? 'blur(12px)' : 'none',
       }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"

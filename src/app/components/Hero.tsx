@@ -16,11 +16,11 @@ function fadeUp(delay: number) {
 
 export function Hero() {
   return (
-    // Below the 80px bar the screen splits 495 : 295 between the video band and
-    // the copy, as in the design. The copy's share grows if its text needs more
-    // room (small phones).
-    <section id="hero" className="h-svh min-h-[560px] pt-20 flex flex-col bg-white text-black">
-      <div className="relative min-h-0 basis-0 grow-[495] overflow-hidden bg-black">
+    // The video runs up under the transparent 80px bar; below the bar the screen
+    // splits 495 : 295 between the rest of the video and the copy, as in the
+    // design. The copy's share grows if its text needs more room (small phones).
+    <section id="hero" className="h-svh min-h-[560px] flex flex-col bg-white text-black">
+      <div className="relative min-h-0 basis-20 grow-[495] overflow-hidden bg-black">
         <video
           src={storageUrl('videos/hero.mp4')}
           poster={storageUrl('videos/hero.jpg')}
