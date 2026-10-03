@@ -34,15 +34,19 @@ export function Hero() {
         />
       </div>
 
-      <div className="basis-0 grow-[295] px-gutter pt-[clamp(1.5rem,3.7vw,3.5rem)] pb-8">
-        <motion.h1
-          {...fadeUp(0.1)}
-          className="max-w-[60ch] font-[400] tracking-[-0.01em] leading-[1.5] text-[clamp(1.125rem,2.1vw,2.25rem)]"
-        >
-          Renders Arc is a strategy-led digital studio powered by True&nbsp;5, our tested
-          methodology for understanding user psychology before design begins.
-          <span className="block">We turn real behaviour into better digital experiences.</span>
-        </motion.h1>
+      {/* Padding sits on an inner box: on the flex item itself it would count
+          toward its share and throw the split off. */}
+      <div className="basis-0 grow-[295]">
+        <div className="px-gutter pt-[clamp(1.5rem,3.7vw,3.5rem)] pb-8">
+          <motion.h1
+            {...fadeUp(0.1)}
+            className="max-w-[60ch] font-[400] tracking-[-0.01em] leading-[1.5] text-[clamp(1.125rem,2.1vw,2.25rem)]"
+          >
+            Renders Arc is a strategy-led digital studio powered by True&nbsp;5, our tested
+            methodology for understanding user psychology before design begins.
+            <span className="block">We turn real behaviour into better digital experiences.</span>
+          </motion.h1>
+        </div>
       </div>
     </section>
   );
