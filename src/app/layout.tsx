@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Montserrat } from "next/font/google";
+import { Montserrat, Newsreader } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -10,6 +10,12 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-sans',
+});
+
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
 });
 
 export const metadata: Metadata = {
@@ -28,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", montserrat.variable)}>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", montserrat.variable, newsreader.variable)}>
       <body suppressHydrationWarning>
         <SmoothScroll>
           {children}

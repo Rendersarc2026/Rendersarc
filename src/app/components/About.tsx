@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { GlobalPresence } from "./GlobalPresence";
 
 const values = [
   {
@@ -69,6 +70,8 @@ export function About() {
           </div>
         </div>
       </section>
+
+      <GlobalPresence />
 
       <section
         id="about-vision"
