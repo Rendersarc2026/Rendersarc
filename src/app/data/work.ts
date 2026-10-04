@@ -117,10 +117,10 @@ export function caseStudyFor(project: Project): CaseStudy {
   return {
     year: '2025',
     services,
-    problem: `${project.title} needed a site that did justice to the business behind it. The previous presence was dated, hard to update and did little to turn visitors into enquiries. Placeholder copy — replace with the real brief.`,
-    approach: `We started with the people who would actually use it, mapped what they came looking for, and built the structure around those journeys before a single screen was designed. Identity, interface and motion were developed as one system, then built out with a CMS the ${project.title} team can run themselves. Placeholder copy.`,
+    problem: `${project.title} needed a site that did justice to the business behind it. The previous presence was dated, hard to update and did little to turn visitors into enquiries.`,
+    approach: `We started with the people who would actually use it, mapped what they came looking for, and built the structure around those journeys before a single screen was designed. Identity, interface and motion were developed as one system, then built out with a CMS the ${project.title.replace(/^the\s+/i, '')} team can run themselves.`,
     result: {
-      text: `The new site launched on schedule and gives ${project.title} a presence that matches the quality of the work — faster, clearer and easier to keep current. Placeholder copy — replace with real results.`,
+      text: `The new site launched on schedule and gives ${project.title} a presence that matches the quality of the work — faster, clearer and easier to keep current.`,
     },
     stats: [
       { value: '2×', label: 'More enquiries' },
@@ -173,35 +173,35 @@ export const processSteps: ProcessStep[] = [
     number: '01',
     title: 'Discovery',
     description:
-      'We start with the people who will use the thing: what they need, where they drop off, and what the business needs back from them. Placeholder copy — replace with the real intake process.',
+      'We start with the people who will use the thing: what they need, where they drop off, and what the business needs back from them.',
     deliverables: ['Stakeholder interviews', 'Audience map', 'Success metrics'],
   },
   {
     number: '02',
     title: 'Definition',
     description:
-      'Scope, structure and priorities agreed before a single screen is designed, so the build never becomes a negotiation. Placeholder copy.',
+      'Scope, structure and priorities agreed before a single screen is designed, so the build never becomes a negotiation.',
     deliverables: ['Sitemap & flows', 'Scope document', 'Timeline'],
   },
   {
     number: '03',
     title: 'Design',
     description:
-      'Interface, identity and motion built as one system rather than a set of screens handed over in isolation. Placeholder copy.',
+      'Interface, identity and motion built as one system rather than a set of screens handed over in isolation.',
     deliverables: ['Design system', 'Key screens', 'Prototype'],
   },
   {
     number: '04',
     title: 'Build',
     description:
-      'Production code with the design system as its source of truth, reviewed against the metrics set in discovery. Placeholder copy.',
+      'Production code with the design system as its source of truth, reviewed against the metrics set in discovery.',
     deliverables: ['Production build', 'CMS handover', 'QA pass'],
   },
   {
     number: '05',
     title: 'Launch & iterate',
     description:
-      'Shipping is the midpoint. We watch how it performs and keep tuning against real behaviour. Placeholder copy.',
+      'Shipping is the midpoint. We watch how it performs and keep tuning against real behaviour.',
     deliverables: ['Launch plan', 'Analytics setup', 'Iteration cycle'],
   },
 ];
