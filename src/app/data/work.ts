@@ -139,16 +139,25 @@ export type Testimonial = {
   avatar?: string;
 };
 
-const QUOTE =
-  'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit';
-
 export const testimonials: Testimonial[] = [
-  { id: 't1', quote: QUOTE, name: 'Lorem ipsum', role: 'Lorem ipsum' },
-  { id: 't2', quote: QUOTE, name: 'Lorem ipsum', role: 'Lorem ipsum' },
-  { id: 't3', quote: QUOTE, name: 'Lorem ipsum', role: 'Lorem ipsum' },
-  { id: 't4', quote: QUOTE, name: 'Lorem ipsum', role: 'Lorem ipsum' },
-  { id: 't5', quote: QUOTE, name: 'Lorem ipsum', role: 'Lorem ipsum' },
-  { id: 't6', quote: QUOTE, name: 'Lorem ipsum', role: 'Lorem ipsum' },
+  { 
+    id: 't2', 
+    quote: "Working on the Fetch project with them was a seamless experience. They understood our requirements perfectly and built a highly performant and intuitive application. Their technical expertise and design sensibilities are top-notch.", 
+    name: 'Dilkush', 
+    role: 'Fetch'
+  },
+  { 
+    id: 't3', 
+    quote: "They transformed our digital infrastructure across both Tigris and Euphrates Asia. Their strategic approach to our complex multi-brand architecture gave us a unified, scalable solution that looks incredible and performs flawlessly.", 
+    name: 'Ajnas', 
+    role: 'Tigris Asia & Euphrates Asia'
+  },
+  { 
+    id: 't1', 
+    quote: "The team delivered exceptional work for Kala Interiors. Their attention to detail and ability to translate our vision into a stunning digital experience was truly impressive. The new platform has completely elevated our brand presence.", 
+    name: 'Rehiyan', 
+    role: 'Kala Interiors'
+  },
 ];
 
 export type ProcessStep = {
