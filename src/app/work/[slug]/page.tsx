@@ -111,7 +111,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
             {/* Pinned while the write-up scrolls past it — only on screens tall
                 enough to show the whole column, so the tiles are never cut off. */}
             <div className="lg:col-start-1 lg:row-start-1 lg:row-span-2 lg:self-start lg:[@media(min-height:800px)]:sticky lg:[@media(min-height:800px)]:top-28">
-              <div className="relative aspect-[16/10] overflow-hidden bg-black/[0.06]">
+              <div className="relative aspect-[16/10] overflow-hidden bg-black">
                 {project.video ? (
                   <video
                     src={project.video}
@@ -122,7 +122,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                     playsInline
                     preload="metadata"
                     aria-hidden
-                    className="absolute inset-0 w-full h-full object-cover object-top"
+                    className="absolute inset-0 w-full h-full object-contain object-center"
                   />
                 ) : hero ? (
                   <Image
