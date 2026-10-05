@@ -170,7 +170,9 @@ function WorkCard({
         className="group relative overflow-hidden bg-black"
       >
         <div className="flex flex-col gap-5 p-5 transition-[filter] duration-500 group-hover:blur-[6px] group-focus-within:blur-[6px] group-data-[open]:blur-[6px] @xl:grid @xl:aspect-[5/3] @xl:grid-cols-[1fr_44%_1fr] @xl:items-center @xl:gap-0 @xl:p-0">
-          <div className="relative aspect-[16/10] overflow-hidden bg-black @xl:col-start-2 @xl:row-start-1">
+          <div
+            className={`relative ${project.video ? 'aspect-video' : 'aspect-[16/10]'} overflow-hidden bg-black @xl:col-start-2 @xl:row-start-1`}
+          >
             {project.video ? (
               <video
                 src={project.video}
@@ -181,7 +183,7 @@ function WorkCard({
                 playsInline
                 preload="metadata"
                 aria-hidden
-                className="absolute inset-0 w-full h-full object-contain object-center"
+                className="w-full h-full object-contain"
               />
             ) : thumb ? (
               <Image

@@ -15,9 +15,14 @@ const videos = [
     filename: 'backwater.mp4',
   },
   {
-    source: '/home/abin/Downloads/KALA.BRAND.mp4',
+    source: '/home/abin/Downloads/kala.mp4',
     slug: 'kala-interiors',
     filename: 'kala-interiors.mp4',
+  },
+  {
+    source: '/home/abin/Downloads/skei.mp4',
+    slug: 'skeiland',
+    filename: 'skeiland.mp4',
   },
   {
     source: '/home/abin/Downloads/shopify -areej alarab.mp4',
