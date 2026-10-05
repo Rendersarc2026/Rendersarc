@@ -7,7 +7,7 @@ import { storageUrl } from '@/app/lib/storage';
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const HEADLINE_CLASS =
-  'font-serif font-[700] tracking-[-0.01em] leading-[1.25] text-[clamp(1.75rem,3.35vw,3.5rem)]';
+  'font-serif font-[600] tracking-[-0.01em] leading-[1.25] text-[clamp(1.75rem,3.35vw,3.5rem)]';
 const INTRO_CLASS =
   'max-w-[47rem] text-center font-[400] leading-[1.35] text-[clamp(1.125rem,1.7vw,1.75rem)]';
 

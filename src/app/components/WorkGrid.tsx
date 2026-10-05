@@ -176,7 +176,7 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
             </span>
           </div>
 
-          <h2 className="text-white font-[400] tracking-[-0.01em] text-2xl leading-tight @xl:col-start-1 @xl:row-start-1 @xl:px-[7%] @3xl:text-[1.75rem]">
+          <h2 className="text-center text-white font-[400] tracking-[-0.01em] text-2xl leading-tight @xl:col-start-1 @xl:row-start-1 @xl:px-[7%] @3xl:text-[1.75rem]">
             {project.title}
           </h2>
 
