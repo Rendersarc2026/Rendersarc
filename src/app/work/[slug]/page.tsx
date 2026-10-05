@@ -112,7 +112,19 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 enough to show the whole column, so the tiles are never cut off. */}
             <div className="lg:col-start-1 lg:row-start-1 lg:row-span-2 lg:self-start lg:[@media(min-height:800px)]:sticky lg:[@media(min-height:800px)]:top-28">
               <div className="relative aspect-[16/10] overflow-hidden bg-black/[0.06]">
-                {hero && (
+                {project.video ? (
+                  <video
+                    src={project.video}
+                    poster={hero}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-hidden
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
+                ) : hero ? (
                   <Image
                     src={hero}
                     alt={`${project.title} ${study.cover ? 'platform' : 'website'}`}
@@ -121,7 +133,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     className={`object-cover ${study.cover ? 'object-center' : 'object-top'}`}
                   />
-                )}
+                ) : null}
                 {category && (
                   <span className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-white text-xs uppercase tracking-[0.12em] text-black">
                     {category}

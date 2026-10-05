@@ -14,6 +14,7 @@ type ProjectRow = {
   gallery: string[];
   apps: AppListing[] | null;
   case_study: CaseStudyContent | null;
+  video: string | null;
 };
 
 function toProject(row: ProjectRow): Project {
@@ -26,6 +27,7 @@ function toProject(row: ProjectRow): Project {
     hideSiteLink: row.hide_site_link || undefined,
     categories: row.categories,
     image: row.image ? storageUrl(row.image) : undefined,
+    video: row.video ? storageUrl(row.video) : undefined,
     gallery: row.gallery.length ? row.gallery.map(storageUrl) : undefined,
     apps: row.apps ?? undefined,
     caseStudy: study
@@ -37,7 +39,7 @@ function toProject(row: ProjectRow): Project {
 /** Every portfolio project in display order. Deduped within a render. */
 export const getProjects = cache(async (): Promise<Project[]> => {
   const { rows } = await db.query<ProjectRow>(
-    `select slug, title, summary, url, hide_site_link, categories, image, gallery, apps, case_study
+    `select slug, title, summary, url, hide_site_link, categories, image, gallery, apps, case_study, video
        from public.projects
       order by position, slug`,
   );

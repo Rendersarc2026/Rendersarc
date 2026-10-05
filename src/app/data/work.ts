@@ -66,6 +66,8 @@ export type Project = {
   gallery?: string[];
   /** Store listings for a mobile app project. Its gallery then shows phone screens. */
   apps?: AppListing[];
+  /** Video preview URL. */
+  video?: string;
   /** The project's own write-up. Without one the case study page shows placeholder copy. */
   caseStudy?: CaseStudyContent;
 };

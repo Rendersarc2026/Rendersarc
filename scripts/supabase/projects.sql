@@ -10,6 +10,7 @@ create table if not exists public.projects (
   hide_site_link boolean not null default false,
   categories     text[] not null default '{}',
   image          text,
+  video          text,
   gallery        text[] not null default '{}',
   -- [{ name, appStore?, googlePlay? }] for mobile app projects.
   apps           jsonb,

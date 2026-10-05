@@ -162,7 +162,19 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
       >
         <div className="flex flex-col gap-5 p-5 transition-[filter] duration-500 group-hover:blur-[6px] group-focus-within:blur-[6px] group-data-[open]:blur-[6px] @xl:grid @xl:aspect-[5/3] @xl:grid-cols-[1fr_44%_1fr] @xl:items-center @xl:gap-0 @xl:p-0">
           <div className="relative aspect-[16/10] overflow-hidden bg-white/[0.06] @xl:col-start-2 @xl:row-start-1">
-            {thumb && (
+            {project.video ? (
+              <video
+                src={project.video}
+                poster={thumb}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              />
+            ) : thumb ? (
               <Image
                 src={thumb}
                 alt={`${project.title} ${cover ? 'platform' : 'website'}`}
@@ -170,7 +182,7 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
                 sizes="(min-width: 1024px) 22vw, (min-width: 768px) 44vw, 100vw"
                 className={`object-cover ${cover ? 'object-center' : 'object-top'}`}
               />
-            )}
+            ) : null}
             <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-white/90 text-[9px] uppercase tracking-[0.12em] text-black">
               {labelFor(project.categories[0])}
             </span>
