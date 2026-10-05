@@ -86,6 +86,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
                   key={project.slug}
                   project={project}
                   delay={firstRender.current ? 0.3 + Math.min(i, 5) * 0.08 : 0}
+                  showTag={active === ALL}
                 />
               ))}
             </AnimatePresence>
@@ -118,7 +119,15 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
  * blurs and offers "Case study" and "View site" — only those buttons navigate.
  * Touch screens have no hover, so there a tap on the card toggles the overlay.
  */
-function WorkCard({ project, delay }: { project: Project; delay: number }) {
+function WorkCard({
+  project,
+  delay,
+  showTag = true,
+}: {
+  project: Project;
+  delay: number;
+  showTag?: boolean;
+}) {
   const cover = project.caseStudy?.cover;
   const thumb = cover ?? project.image;
   const href = `/work/${project.slug}`;
@@ -183,9 +192,11 @@ function WorkCard({ project, delay }: { project: Project; delay: number }) {
                 className={`object-cover ${cover ? 'object-center' : 'object-top'}`}
               />
             ) : null}
-            <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-white/90 text-[9px] uppercase tracking-[0.12em] text-black">
-              {labelFor(project.categories[0])}
-            </span>
+            {showTag && (
+              <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-white/90 text-[9px] uppercase tracking-[0.12em] text-black">
+                {labelFor(project.categories[0])}
+              </span>
+            )}
           </div>
 
           <h2 className="text-center text-white font-[400] tracking-[-0.01em] text-2xl leading-tight @xl:col-start-1 @xl:row-start-1 @xl:px-[7%] @3xl:text-[1.75rem]">
