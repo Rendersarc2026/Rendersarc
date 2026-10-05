@@ -87,18 +87,29 @@ export const categories: Category[] = [
   { id: 'mobile-apps', label: 'Mobile Applications' },
 ];
 
+export type CaseStudySection = {
+  heading: string;
+  body?: string;
+  items?: string[];
+  highlight?: string;
+};
+
 export type CaseStudyContent = {
   year?: string;
   /** 16:9 hero shot URL, e.g. a device mockup. Defaults to the 16:10 card screenshot. */
   cover?: string;
+  /** Optional custom tagline overriding the summary on the case study header. */
+  tagline?: string;
   problem: string;
   approach: string;
   /** "What we changed" — short titled points. */
   changes?: { title: string; body: string }[];
   /** Closing statement; `emphasis` follows `text` and is set in bold. */
-  result: { text: string; emphasis?: string };
+  result: { text: string; emphasis?: string; points?: string[] };
   /** Headline numbers. The results strip is hidden without them. */
   stats?: { value: string; label: string }[];
+  /** Custom narrative sections if the case study has unique thematic headings. */
+  sections?: CaseStudySection[];
 };
 
 export type CaseStudy = CaseStudyContent & { services: string[] };

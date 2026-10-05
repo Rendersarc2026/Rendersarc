@@ -70,7 +70,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 {project.title}
               </h1>
               <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-black/70 lg:ml-auto lg:text-justify">
-                {project.summary}
+                {study.tagline ?? project.summary}
               </p>
               {!project.hideSiteLink && (
                 <a
@@ -148,29 +148,77 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
 
             <div className="lg:col-start-2 lg:row-start-2">
               <div className="lg:mt-24 space-y-10 md:space-y-12">
-                <Row heading="The problem">{study.problem}</Row>
-                <Row heading="Our approach">{study.approach}</Row>
-                {study.changes && (
-                  <Row heading="What we changed">
-                    <ul className="space-y-2 text-left">
-                      {study.changes.map((change) => (
-                        <li key={change.title}>
-                          <span className="font-[600] text-black">{change.title}.</span>{' '}
-                          {change.body}
-                        </li>
-                      ))}
-                    </ul>
-                  </Row>
+                {study.sections && study.sections.length > 0 ? (
+                  study.sections.map((section, idx) => (
+                    <Row key={idx} heading={section.heading}>
+                      {section.items && section.items.length > 0 && (
+                        <ul className="space-y-1 text-left font-[600] text-black mb-3">
+                          {section.items.map((item, i) => (
+                            <li key={i}>{item}</li>
+                          ))}
+                        </ul>
+                      )}
+                      {section.body && (
+                        <p className="whitespace-pre-line leading-relaxed">{section.body}</p>
+                      )}
+                      {section.highlight && (
+                        <p className="font-[600] text-black text-base md:text-lg">
+                          {section.highlight}
+                        </p>
+                      )}
+                    </Row>
+                  ))
+                ) : (
+                  <>
+                    <Row heading="The problem">{study.problem}</Row>
+                    <Row heading="Our approach">{study.approach}</Row>
+                    {study.changes && (
+                      <Row heading="What we changed">
+                        <ul className="space-y-2 text-left">
+                          {study.changes.map((change) => (
+                            <li key={change.title}>
+                              <span className="font-[600] text-black">{change.title}.</span>{' '}
+                              {change.body}
+                            </li>
+                          ))}
+                        </ul>
+                      </Row>
+                    )}
+                    <Row heading="The result">
+                      <p>
+                        {study.result.text}
+                        {study.result.emphasis && (
+                          <>
+                            {' '}
+                            <strong className="font-[600] text-black">{study.result.emphasis}</strong>
+                          </>
+                        )}
+                      </p>
+                      {study.result.points && study.result.points.length > 0 && (
+                        <ul className="mt-4 space-y-2 text-left">
+                          {study.result.points.map((point, i) => {
+                            const parts = point.split(' — ');
+                            const [title, desc] = parts.length === 2 ? parts : [null, point];
+                            return (
+                              <li key={i} className="flex items-start gap-2">
+                                <span aria-hidden className="text-black">•</span>
+                                <span>
+                                  {title ? (
+                                    <>
+                                      <strong className="font-[600] text-black">{title}</strong> — {desc}
+                                    </>
+                                  ) : (
+                                    point
+                                  )}
+                                </span>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </Row>
+                  </>
                 )}
-                <Row heading="The result">
-                  {study.result.text}
-                  {study.result.emphasis && (
-                    <>
-                      {' '}
-                      <strong className="font-[600] text-black">{study.result.emphasis}</strong>
-                    </>
-                  )}
-                </Row>
               </div>
 
               {study.stats && (
@@ -239,7 +287,7 @@ function StoreLink({ href, label, app }: { href: string; label: string; app: str
 /** Heading on the left, copy as a narrower block pushed to the right. */
 function Row({ heading, children }: { heading: string; children: ReactNode }) {
   return (
-    <section className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] md:items-center md:gap-8">
+    <section className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] md:items-start md:gap-8">
       <h2 className="font-[500] text-base md:text-lg">{heading}</h2>
       <div className="text-sm leading-relaxed text-black/70 md:text-justify">{children}</div>
     </section>
