@@ -6,8 +6,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-/** Each item is its own route; the logo still scrolls home to the top. */
+/** Each item is its own route; Home (like the logo) scrolls to the top when
+    already on the home page. */
 const NAV_ITEMS: { href: string; label: string }[] = [
+  { href: '/', label: 'Home' },
   { href: '/work', label: 'Work' },
   { href: '/process', label: 'Process' },
   { href: '/about', label: 'About' },
@@ -157,6 +159,7 @@ export function Navigation({
                   <Link
                     ref={(el) => { linkRefs.current[item.href] = el; }}
                     href={item.href}
+                    onClick={item.href === '/' ? goHome : undefined}
                     aria-current={isActive ? 'page' : undefined}
                     style={{ color: `rgba(${ink},${isActive ? 1 : 0.8})` }}
                     className="block text-xs xl:text-[13px] tracking-[0.06em] uppercase transition-colors duration-300 relative py-2 font-[600]"
@@ -209,6 +212,7 @@ export function Navigation({
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={item.href === '/' ? goHome : undefined}
                   aria-current={pathname === item.href ? 'page' : undefined}
                   style={{ color: `rgba(${ink},${pathname === item.href ? 1 : 0.6})` }}
                   className="block w-full text-left text-sm tracking-widest uppercase py-1 font-[600]"
